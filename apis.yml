@@ -1,0 +1,158 @@
+aid: lancedb
+url: https://raw.githubusercontent.com/api-evangelist/lancedb/refs/heads/main/apis.yml
+name: LanceDB
+kind: company
+description: >-
+  LanceDB is an open-source, developer-friendly, embedded multimodal vector
+  database built on the Lance columnar storage format. It supports vector,
+  full-text, hybrid, and SQL search across billions of vectors and multimodal
+  data (text, images, video, point clouds). LanceDB ships as an embedded OSS
+  library with Python, TypeScript / JavaScript, and Rust SDKs, and is also
+  offered as LanceDB Enterprise - a distributed and managed multimodal lakehouse
+  - with integrations into Apache Arrow, Pandas, Polars, DuckDB, Ray, Apache
+  Spark, LangChain, LlamaIndex, and Hugging Face.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Vector Database
+  - Multimodal
+  - Lance Format
+  - RAG
+  - Open Source
+  - Lakehouse
+created: '2026-05-23'
+modified: '2026-05-23'
+specificationVersion: '0.19'
+apis:
+  - aid: lancedb:oss
+    name: LanceDB OSS Library
+    description: >-
+      Open-source, embedded, serverless multimodal vector database. Provides
+      table create / drop / list, insert / upsert / delete, vector / full-text /
+      hybrid / SQL search, automatic versioning, and pluggable embedding
+      functions. Apache-2.0 licensed.
+    humanURL: https://docs.lancedb.com/
+    baseURL: https://github.com/lancedb/lancedb
+    tags:
+      - Open Source
+      - Embedded
+      - Vector Database
+    properties:
+      - type: Documentation
+        url: https://docs.lancedb.com/
+      - type: Repository
+        url: https://github.com/lancedb/lancedb
+      - type: Quickstart
+        url: https://docs.lancedb.com/quickstart
+  - aid: lancedb:enterprise
+    name: LanceDB Enterprise
+    description: >-
+      Distributed, managed multimodal lakehouse built on the Lance format,
+      offering curation, deduplication, feature engineering with Python UDFs,
+      unified vector / full-text / hybrid search, and direct training from
+      curated tables. Sold to enterprise customers via contact@lancedb.com.
+    humanURL: https://lancedb.com/
+    baseURL: https://lancedb.com/
+    tags:
+      - Enterprise
+      - Managed
+      - Lakehouse
+    properties:
+      - type: Documentation
+        url: https://docs.lancedb.com/
+      - type: Sales
+        url: https://lancedb.com/contact
+  - aid: lancedb:lance-format
+    name: Lance Format
+    description: >-
+      Open-source columnar storage format optimized for multimodal AI data -
+      zero-copy reads, automatic versioning, fast random access, and Arrow
+      interop. Powers the LanceDB OSS and Enterprise products and integrates
+      with DuckDB, Pandas, Polars, Ray, Apache Spark, and Hugging Face.
+    humanURL: https://lance.org
+    baseURL: https://github.com/lancedb/lance
+    tags:
+      - File Format
+      - Columnar
+      - Arrow
+      - Open Source
+    properties:
+      - type: Documentation
+        url: https://lance.org
+      - type: Repository
+        url: https://github.com/lancedb/lance
+  - aid: lancedb:python-sdk
+    name: LanceDB Python SDK
+    description: >-
+      Primary client library for LanceDB OSS and Enterprise, with first-class
+      support for Arrow, Pandas, and Polars data frames and pluggable embedding
+      functions.
+    humanURL: https://docs.lancedb.com/
+    baseURL: https://github.com/lancedb/lancedb
+    tags:
+      - SDK
+      - Python
+    properties:
+      - type: Documentation
+        url: https://docs.lancedb.com/
+      - type: Repository
+        url: https://github.com/lancedb/lancedb
+  - aid: lancedb:typescript-sdk
+    name: LanceDB TypeScript SDK
+    description: >-
+      Node.js / TypeScript client library for LanceDB OSS and Enterprise.
+    humanURL: https://docs.lancedb.com/
+    baseURL: https://github.com/lancedb/lancedb
+    tags:
+      - SDK
+      - TypeScript
+      - JavaScript
+      - Node.js
+    properties:
+      - type: Documentation
+        url: https://docs.lancedb.com/
+      - type: Repository
+        url: https://github.com/lancedb/lancedb
+  - aid: lancedb:rust-sdk
+    name: LanceDB Rust SDK
+    description: >-
+      Native Rust client library; the LanceDB core and storage layer are written
+      in Rust.
+    humanURL: https://docs.lancedb.com/
+    baseURL: https://github.com/lancedb/lancedb
+    tags:
+      - SDK
+      - Rust
+    properties:
+      - type: Documentation
+        url: https://docs.lancedb.com/
+      - type: Repository
+        url: https://github.com/lancedb/lancedb
+common:
+  - type: Website
+    url: https://lancedb.com/
+  - type: Documentation
+    url: https://docs.lancedb.com/
+  - type: GitHub
+    url: https://github.com/lancedb
+  - type: Discord
+    url: https://discord.com/invite/G5DcmnZWKB
+  - type: Trust
+    url: https://trust.lancedb.com/
+  - type: Support
+    url: mailto:support@lancedb.com
+integrations:
+  - name: Apache Arrow
+  - name: Apache Spark
+  - name: DuckDB
+  - name: Pandas
+  - name: Polars
+  - name: Ray
+  - name: Hugging Face
+  - name: LangChain
+  - name: LlamaIndex
+  - name: Databricks
+  - name: Amazon Web Services
+  - name: NVIDIA
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
