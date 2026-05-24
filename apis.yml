@@ -140,6 +140,8 @@ common:
     url: https://trust.lancedb.com/
   - type: Support
     url: mailto:support@lancedb.com
+  - type: LLMsTxt
+    url: https://docs.lancedb.com/llms.txt
 integrations:
   - name: Apache Arrow
   - name: Apache Spark
