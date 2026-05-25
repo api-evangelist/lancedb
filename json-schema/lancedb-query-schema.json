@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/lancedb/main/json-schema/lancedb-query-schema.json",
+  "title": "LanceDB Query Request",
+  "description": "Request body for a hybrid vector / full-text / SQL query against a Lance table.",
+  "type": "object",
+  "properties": {
+    "vector": {
+      "description": "Query vector for nearest-neighbor search.",
+      "type": "array",
+      "items": { "type": "number" }
+    },
+    "vectorColumn": {
+      "type": "string",
+      "description": "Name of the embedding column to search."
+    },
+    "k": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 10,
+      "description": "Number of nearest neighbors to return."
+    },
+    "metric": {
+      "type": "string",
+      "enum": ["l2", "cosine", "dot"],
+      "description": "Distance metric override."
+    },
+    "fullTextQuery": {
+      "type": "string",
+      "description": "BM25 full-text query string."
+    },
+    "ftsColumns": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Columns to apply the FTS query against."
+    },
+    "filter": {
+      "type": "string",
+      "description": "SQL WHERE-style predicate (Arrow SQL flavor)."
+    },
+    "select": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Columns to project."
+    },
+    "withRowId": {
+      "type": "boolean",
+      "default": false,
+      "description": "Include the internal Lance row id in the result."
+    },
+    "rerank": {
+      "type": "object",
+      "description": "Optional reranker for hybrid search.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["rrf", "linear", "cohere", "cross-encoder"]
+        },
+        "weights": {
+          "type": "object",
+          "properties": {
+            "vector": { "type": "number" },
+            "fts": { "type": "number" }
+          }
+        }
+      }
+    },
+    "nprobes": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of IVF partitions to probe."
+    },
+    "refineFactor": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Over-fetch factor before exact-distance refinement."
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Time-travel: query at a specific table version."
+    }
+  }
+}

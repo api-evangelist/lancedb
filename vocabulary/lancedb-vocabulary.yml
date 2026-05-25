@@ -1,0 +1,109 @@
+vocabulary: LanceDB
+version: '0.1'
+description: >-
+  Operational and capability vocabulary for the LanceDB multimodal lakehouse,
+  covering Lance Namespace REST operations, table primitives, index types,
+  search modes, embedding sources, and lakehouse lifecycle concepts.
+maintainer: API Evangelist
+references:
+  - https://lance.org/format/
+  - https://lance.org/format/namespace/
+  - https://docs.lancedb.com/
+
+concepts:
+  - id: Namespace
+    label: Namespace
+    definition: Hierarchical container for Lance tables, materialized views, and child namespaces.
+  - id: Table
+    label: Table
+    definition: A Lance-formatted columnar dataset addressed within a namespace.
+  - id: Fragment
+    label: Fragment
+    definition: An immutable subset of a Lance table's data, the unit of compaction and read.
+  - id: Field
+    label: Field
+    definition: A named, typed column in a Lance table, possibly an embedding vector or list of embeddings.
+  - id: Version
+    label: Version
+    definition: A monotonically increasing snapshot identifier for time-travel and reproducibility.
+  - id: Tag
+    label: Tag
+    definition: A named alias pointing at a specific table version.
+  - id: Index
+    label: Index
+    definition: A persisted secondary structure accelerating filter or nearest-neighbor queries.
+  - id: MaterializedView
+    label: Materialized View
+    definition: A precomputed projection or aggregation refreshed via an explicit refresh operation.
+  - id: Transaction
+    label: Transaction
+    definition: A multi-operation unit that can be committed atomically across tables.
+  - id: EmbeddingFunction
+    label: Embedding Function
+    definition: A pluggable model that converts text or media into vectors at insert and query time.
+  - id: Reranker
+    label: Reranker
+    definition: A second-stage scorer that combines vector and full-text candidate sets.
+
+indexTypes:
+  - id: BTREE
+    description: Ordered scalar index for range and equality predicates.
+  - id: BITMAP
+    description: Low-cardinality scalar index for set membership.
+  - id: LABEL_LIST
+    description: Index for array-of-label columns supporting `contains` and `any-of` filters.
+  - id: FTS
+    description: BM25 full-text search index backed by Tantivy.
+  - id: IVF_FLAT
+    description: Inverted-file vector index with exact distance scoring.
+  - id: IVF_PQ
+    description: Inverted-file vector index with product quantization.
+  - id: IVF_HNSW_SQ
+    description: HNSW-on-IVF vector index with scalar quantization.
+  - id: IVF_HNSW_PQ
+    description: HNSW-on-IVF vector index with product quantization.
+
+searchModes:
+  - id: vector
+    description: Approximate nearest-neighbor search over an embedding column.
+  - id: fullText
+    description: BM25 full-text search using an FTS index.
+  - id: hybrid
+    description: Combined vector + FTS search with optional reranking.
+  - id: sql
+    description: Filter / project / aggregate via Arrow SQL.
+  - id: multivector
+    description: Late-interaction search over multivector columns (e.g. ColBERT-style).
+
+distanceMetrics: [l2, cosine, dot]
+
+storageBackends:
+  - aws-s3
+  - google-cloud-storage
+  - azure-blob-storage
+  - local-disk
+  - http-object-store
+
+operations:
+  namespace: [Create, Describe, Drop, Exists, List]
+  table: [Create, Describe, Exists, Drop, Register, Deregister, Rename, Restore, Stats, CountRows]
+  data: [Insert, MergeInsert, Update, Delete, Query]
+  schema: [AddColumns, AlterColumns, DropColumns, BackfillColumns, UpdateSchemaMetadata]
+  version: [List, Create, Describe, BatchCreate, BatchDelete, BatchCommit]
+  index: [Create, CreateScalar, List, DescribeStats, Drop]
+  tag: [List, GetVersion, Create, Update, Delete]
+  transaction: [Describe, Alter]
+  materializedView: [Create, Refresh]
+
+embeddingProviders:
+  - OpenAI
+  - Cohere
+  - Anthropic
+  - Jina
+  - Hugging Face
+  - Sentence Transformers
+  - Ollama
+  - Amazon Bedrock
+  - Voyage AI
+
+lifecycle: [draft, published, deprecated, sunset]

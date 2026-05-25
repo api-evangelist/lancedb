@@ -1,0 +1,60 @@
+apiVersion: naftiko.io/v1
+kind: Workflow
+metadata:
+  name: multimodal-retrieval
+  provider: lancedb
+  description: >-
+    End-to-end workflow for production multimodal retrieval on LanceDB:
+    provision a namespace, declare a table with an embedding column, bulk
+    load source records, build vector + FTS indexes, and execute a hybrid
+    query with reranking. Pin a tag for reproducible recall evaluation.
+spec:
+  shared:
+    - ../shared/lancedb-rest.yaml
+  steps:
+    - id: ensure-namespace
+      use: namespace-admin
+      operation: CreateNamespace
+      idempotent: true
+      input:
+        id: ["warehouse", "retrieval"]
+        properties:
+          owner: search-platform
+    - id: declare-table
+      use: create-table
+      operation: CreateTable
+      input:
+        id: warehouse.retrieval.documents
+        schema:
+          fields:
+            - { name: id, type: utf8, nullable: false }
+            - { name: text, type: utf8, nullable: false }
+            - { name: category, type: utf8, nullable: true }
+            - { name: created_at, type: "timestamp[us]", nullable: false }
+            - { name: embedding, type: "fixed_size_list<float, 1536>", nullable: false }
+    - id: upsert-documents
+      use: write-records
+      operation: MergeInsertIntoTable
+      input:
+        on: [id]
+        whenMatchedUpdateAll: true
+        whenNotMatchedInsertAll: true
+        records: { $ref: "../../examples/lancedb-merge-insert-example.json#/records" }
+    - id: build-vector-index
+      use: manage-indexes
+      operation: CreateTableIndex
+      input: { $ref: "../../examples/lancedb-create-vector-index-example.json" }
+    - id: build-fts-index
+      use: manage-indexes
+      operation: CreateTableScalarIndex
+      input:
+        column: text
+        indexType: FTS
+    - id: hybrid-query
+      use: query-table
+      operation: QueryTable
+      input: { $ref: "../../examples/lancedb-hybrid-query-example.json" }
+    - id: pin-eval-tag
+      use: time-travel
+      operation: CreateTableTag
+      input: { $ref: "../../examples/lancedb-create-tag-example.json" }

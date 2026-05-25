@@ -1,0 +1,41 @@
+apiVersion: naftiko.io/v1
+kind: Workflow
+metadata:
+  name: training-curation
+  provider: lancedb
+  description: >-
+    Foundation-model training data curation: deduplicate, score, and version
+    a multimodal Lance table, then snapshot a tag the training cluster reads
+    via the Lance PyTorch / Ray loaders.
+spec:
+  shared:
+    - ../shared/lancedb-rest.yaml
+  steps:
+    - id: describe-corpus
+      use: describe-table
+      operation: DescribeTable
+      input: { id: training.corpora.web_crawl }
+    - id: dedupe-pass
+      use: write-records
+      operation: DeleteFromTable
+      input:
+        id: training.corpora.web_crawl
+        predicate: "duplicate_score > 0.95"
+    - id: backfill-quality-score
+      use: evolve-schema
+      operation: AlterTableBackfillColumns
+      input:
+        id: training.corpora.web_crawl
+        columns:
+          - { name: quality_score, expression: "udf:score_quality(text)" }
+    - id: snapshot-training-set
+      use: time-travel
+      operation: CreateTableVersion
+      input: { id: training.corpora.web_crawl }
+    - id: tag-training-set
+      use: time-travel
+      operation: CreateTableTag
+      input:
+        id: training.corpora.web_crawl
+        name: training-run-2026-q2
+        version: latest

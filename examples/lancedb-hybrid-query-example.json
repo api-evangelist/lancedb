@@ -1,0 +1,18 @@
+{
+  "$comment": "POST /v1/table/{id}/query — hybrid (vector + FTS) search with reranking and SQL filter",
+  "vector": [0.0123, -0.0871, 0.4421, "..."],
+  "vectorColumn": "embedding",
+  "k": 20,
+  "metric": "cosine",
+  "fullTextQuery": "vector index compaction",
+  "ftsColumns": ["text"],
+  "filter": "category = 'engineering' AND created_at > timestamp '2026-01-01'",
+  "select": ["id", "text", "category", "created_at"],
+  "withRowId": false,
+  "rerank": {
+    "type": "rrf",
+    "weights": { "vector": 0.7, "fts": 0.3 }
+  },
+  "nprobes": 32,
+  "refineFactor": 4
+}

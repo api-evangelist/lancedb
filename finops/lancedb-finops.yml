@@ -1,78 +1,66 @@
-specification: FinOps Framework
-specificationVersion: '1.0'
-alignedWith:
-  framework: FinOps Foundation Framework
-  frameworkUrl: https://www.finops.org/framework/
-  dataSpec: FOCUS
-  dataSpecVersion: '1.3'
-  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+specification: API Commons FinOps
+specificationVersion: '0.1'
+focusVersion: '1.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/FinOps
 provider: LanceDB
 providerId: lancedb
-publisherName: LanceDB
-serviceCategory: API
-created: '2026-05-22'
-modified: '2026-05-22'
-tags:
-- Vector Database
-- Multimodal
-- Lance Format
-- RAG
-- Open Source
-- Lakehouse
-- FinOps
-- Cost Management
-- FOCUS
-description: FinOps framework alignment for the LanceDB API surface. Provides a FOCUS-shaped mapping for cost allocation,
-  usage measurement, and unit-economics reporting.
-principles:
-- name: Visibility
-  description: Make API consumption costs visible to engineering, product, and finance teams in near real-time.
-- name: Allocation
-  description: Tag every chargeable API call with the consuming team, environment, application, and feature so cost can be
-    allocated.
-- name: Optimization
-  description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce cost per useful unit
-    of work.
-- name: Accountability
-  description: Establish budget owners and chargeback / showback flows for each consuming team.
-domains:
-- name: API Consumption
-  description: Per-call and per-quota usage charges across the LanceDB API surface.
-  costDrivers:
-  - request_volume
-  - tier_selection
-  - feature_use
-  focusMapping:
-    ChargeCategory: Usage
-    ChargeClass: Consumption
-    ServiceCategory: API
-    ServiceSubcategory: Provider API
-focusFields:
-  required:
-  - BillingPeriodStart
-  - BillingPeriodEnd
-  - ChargeCategory
-  - ChargePeriodStart
-  - ChargePeriodEnd
-  - ProviderName
-  - PublisherName
-  - InvoiceIssuerName
-  - ServiceName
-  - ServiceCategory
-  - BilledCost
-  - EffectiveCost
-  - ListCost
-  - ContractedCost
-  - PricingCategory
-  - PricingUnit
-  - PricingQuantity
-  recommended:
-  - SubAccountId
-  - SubAccountName
-  - ResourceId
-  - ResourceName
-  - ResourceType
-  - Region
-  - Tags
-notes:
-- Reconcile the scaffolded mapping above against LanceDB's actual invoice / billing model.
+created: '2026-05-25'
+modified: '2026-05-25'
+description: >-
+  FinOps framing for the LanceDB billing surface. Only LanceDB Cloud and
+  LanceDB Enterprise generate provider charges; LanceDB OSS shifts cost to
+  the customer's own compute and object storage. Cost dimensions below are
+  aligned with the FinOps Framework / FOCUS 1.1 data spec.
+billableEntities:
+  - id: hosted-storage
+    name: Hosted Lance Storage
+    description: Gigabyte-month of customer data persisted in LanceDB Cloud (Lance format on backing object store).
+    focusServiceCategory: Storage
+    focusChargeCategory: Usage
+    pricingUnit: gigabyte-month
+    sku: lancedb-cloud-storage
+    visibility: contact-sales
+  - id: query-requests
+    name: Query and Index Requests
+    description: Lance Namespace REST requests (vector / FTS / hybrid / SQL / management).
+    focusServiceCategory: AI and Machine Learning
+    focusChargeCategory: Usage
+    pricingUnit: million-requests
+    sku: lancedb-cloud-queries
+    visibility: contact-sales
+  - id: index-build
+    name: Vector Index Build
+    description: CPU/GPU-hours spent building IVF / HNSW / PQ indexes; GPU build uses NVIDIA cuVS in Enterprise.
+    focusServiceCategory: AI and Machine Learning
+    focusChargeCategory: Usage
+    pricingUnit: cpu-hour | gpu-hour
+    sku: lancedb-cloud-index-build
+    visibility: contact-sales
+  - id: enterprise-contract
+    name: LanceDB Enterprise Contract
+    description: Annual contract for VPC-deployed LanceDB Enterprise (control plane + license).
+    focusServiceCategory: AI and Machine Learning
+    focusChargeCategory: Commitment
+    pricingUnit: annual-contract
+    sku: lancedb-enterprise
+    visibility: contact-sales
+costAllocationDimensions:
+  - namespace
+  - table
+  - region
+  - environment-tag
+  - tenant
+chargebackSupport:
+  enabled: partial
+  notes: >-
+    Cloud invoices roll up to the tenant; finer namespace / table allocation
+    is available via usage reports on Business tier. Enterprise deployments
+    pass through underlying object-store and compute charges directly to the
+    customer's cloud account.
+references:
+  - name: LanceDB Pricing & Sales
+    url: https://lancedb.com/contact
+  - name: Trust Center
+    url: https://trust.lancedb.com/
+  - name: FOCUS Data Spec
+    url: https://focus.finops.org/

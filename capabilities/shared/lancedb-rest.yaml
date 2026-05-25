@@ -1,0 +1,54 @@
+apiVersion: naftiko.io/v1
+kind: Capability
+metadata:
+  name: lancedb-rest
+  provider: lancedb
+  description: >-
+    Shared per-API capability definitions for the Lance Namespace REST surface
+    exposed by LanceDB OSS, LanceDB Cloud, and LanceDB Enterprise. Each
+    capability wraps one or more Lance Namespace operations.
+spec:
+  openapi: ../../openapi/lance-namespace-openapi.yaml
+  authentication:
+    schemes: [ApiKeyAuth, BearerAuth, OAuth2]
+    notes: >-
+      LanceDB Cloud authenticates with `x-api-key`. OSS deployments commonly
+      use BearerAuth. Catalog-backed deployments (Polaris, Unity, Glue) may
+      proxy OAuth2 / SigV4 from the underlying catalog.
+  capabilities:
+    - id: list-tables
+      description: Enumerate tables inside a namespace.
+      operations: [ListTables, ListAllTables]
+    - id: describe-table
+      description: Retrieve schema, version, location, and stats for a table.
+      operations: [DescribeTable, GetTableStats, TableExists]
+    - id: create-table
+      description: Create a new Lance table with a defined schema.
+      operations: [CreateTable, RegisterTable, DeclareTable]
+    - id: drop-table
+      description: Remove a table or deregister it from a catalog.
+      operations: [DropTable, DeregisterTable]
+    - id: write-records
+      description: Insert, upsert, update, or delete rows.
+      operations: [InsertIntoTable, MergeInsertIntoTable, UpdateTable, DeleteFromTable]
+    - id: query-table
+      description: Run vector, full-text, hybrid, or SQL queries.
+      operations: [QueryTable, CountTableRows, ExplainTableQueryPlan, AnalyzeTableQueryPlan]
+    - id: evolve-schema
+      description: Add, alter, drop, or backfill columns.
+      operations: [AlterTableAddColumns, AlterTableAlterColumns, AlterTableDropColumns, AlterTableBackfillColumns, UpdateTableSchemaMetadata]
+    - id: manage-indexes
+      description: Build and maintain vector and scalar indexes.
+      operations: [CreateTableIndex, CreateTableScalarIndex, ListTableIndices, DescribeTableIndexStats, DropTableIndex]
+    - id: time-travel
+      description: List, create, restore, and delete table versions and tags.
+      operations: [ListTableVersions, CreateTableVersion, DescribeTableVersion, BatchDeleteTableVersions, BatchCreateTableVersions, RestoreTable, ListTableTags, GetTableTagVersion, CreateTableTag, UpdateTableTag, DeleteTableTag]
+    - id: namespace-admin
+      description: Manage hierarchical namespaces in the catalog.
+      operations: [CreateNamespace, ListNamespaces, DescribeNamespace, DropNamespace, NamespaceExists]
+    - id: materialized-views
+      description: Create and refresh materialized views.
+      operations: [CreateMaterializedView, RefreshMaterializedView]
+    - id: transactions
+      description: Inspect and alter long-running transactions / batch commits.
+      operations: [DescribeTransaction, AlterTransaction, BatchCommitTables]

@@ -1,0 +1,17 @@
+{
+  "$comment": "POST /v1/table/{id}/create — create a new Lance table with an embedding column",
+  "id": "warehouse.docs.knowledge_base",
+  "schema": {
+    "fields": [
+      { "name": "id", "type": "utf8", "nullable": false },
+      { "name": "text", "type": "utf8", "nullable": false },
+      { "name": "category", "type": "utf8", "nullable": true },
+      { "name": "created_at", "type": "timestamp[us]", "nullable": false },
+      { "name": "embedding", "type": "fixed_size_list<float, 1536>", "nullable": false }
+    ]
+  },
+  "properties": {
+    "embedding_model": "openai/text-embedding-3-small",
+    "owner": "search-platform"
+  }
+}

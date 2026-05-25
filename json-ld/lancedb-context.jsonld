@@ -1,0 +1,59 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "lancedb": "https://raw.githubusercontent.com/api-evangelist/lancedb/main/vocabulary/lancedb-vocabulary.yml#",
+    "lance": "https://lance.org/format/",
+    "arrow": "https://arrow.apache.org/docs/format/Columnar.html#",
+
+    "Namespace": "lancedb:Namespace",
+    "Table": "lancedb:Table",
+    "Field": "lancedb:Field",
+    "Index": "lancedb:Index",
+    "Tag": "lancedb:Tag",
+    "Version": "lancedb:Version",
+    "Transaction": "lancedb:Transaction",
+    "MaterializedView": "lancedb:MaterializedView",
+    "EmbeddingFunction": "lancedb:EmbeddingFunction",
+    "Reranker": "lancedb:Reranker",
+
+    "name": "schema:name",
+    "description": "schema:description",
+    "identifier": "schema:identifier",
+    "dateCreated": "schema:dateCreated",
+    "dateModified": "schema:dateModified",
+    "url": "schema:url",
+    "version": "schema:version",
+
+    "namespace": {
+      "@id": "lancedb:namespace",
+      "@container": "@list"
+    },
+    "location": {
+      "@id": "lancedb:location",
+      "@type": "@id"
+    },
+    "schemaFields": {
+      "@id": "lancedb:hasField",
+      "@container": "@set"
+    },
+    "indexes": {
+      "@id": "lancedb:hasIndex",
+      "@container": "@set"
+    },
+    "tags": {
+      "@id": "lancedb:hasTag",
+      "@container": "@set"
+    },
+    "vectorDimension": "lancedb:vectorDimension",
+    "metric": "lancedb:distanceMetric",
+    "indexType": "lancedb:indexType",
+    "arrowType": "lancedb:arrowType",
+    "embeddingModel": "lancedb:embeddingModel",
+    "embeddingProvider": "lancedb:embeddingProvider",
+
+    "numRows": "lancedb:numRows",
+    "numFragments": "lancedb:numFragments",
+    "sizeBytes": "lancedb:sizeBytes"
+  }
+}

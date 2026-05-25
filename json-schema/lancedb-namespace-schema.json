@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/lancedb/main/json-schema/lancedb-namespace-schema.json",
+  "title": "Lance Namespace",
+  "description": "A namespace is a hierarchical container for Lance tables, materialized views, and child namespaces. Backed by an external catalog (Hive, Polaris, Gravitino, Unity Catalog, AWS Glue) or by the Lance REST namespace server.",
+  "type": "object",
+  "required": ["id"],
+  "properties": {
+    "id": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Fully-qualified namespace identifier as path segments."
+    },
+    "properties": {
+      "type": "object",
+      "description": "Implementation-defined key/value properties (owner, region, retention, etc.).",
+      "additionalProperties": { "type": "string" }
+    },
+    "parent": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Parent namespace identifier, if any."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

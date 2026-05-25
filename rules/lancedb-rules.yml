@@ -1,0 +1,77 @@
+extends: [[spectral:oas, all]]
+documentationUrl: https://github.com/api-evangelist/lancedb/blob/main/rules/lancedb-rules.yml
+rules:
+  lancedb-info-title-mentions-lance:
+    description: The OpenAPI title must mention "Lance" so consumers know this is a Lance Namespace-conformant API.
+    severity: warn
+    given: $.info.title
+    then:
+      function: pattern
+      functionOptions:
+        match: "(?i)lance"
+
+  lancedb-paths-must-be-v1-prefixed:
+    description: All Lance Namespace REST paths must be prefixed with /v1/ for forward-compatible versioning.
+    severity: error
+    given: $.paths[*]~
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/v1/"
+
+  lancedb-operation-must-have-tag:
+    description: Each operation must be tagged with one of the canonical Lance Namespace tags.
+    severity: error
+    given: $.paths[*][get,post,put,delete,patch]
+    then:
+      field: tags
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            enum: [Namespace, Table, Index, Tag, Transaction, Metadata, Data]
+
+  lancedb-operation-id-pascal-case:
+    description: operationId must be PascalCase (e.g. CreateTable, ListTableIndices).
+    severity: error
+    given: $.paths[*][get,post,put,delete,patch].operationId
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][A-Za-z0-9]+$"
+
+  lancedb-security-required:
+    description: The API must declare at least one of OAuth2, BearerAuth, or ApiKeyAuth security schemes.
+    severity: error
+    given: $.components.securitySchemes
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: [OAuth2]
+            - required: [BearerAuth]
+            - required: [ApiKeyAuth]
+
+  lancedb-response-error-shape:
+    description: Operations must declare 400, 401, 403, 404 and 5XX responses for uniform error handling.
+    severity: warn
+    given: $.paths[*][get,post,put,delete,patch].responses
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: ["400", "401", "403", "404"]
+
+  lancedb-no-empty-summary:
+    description: Each operation should have a non-empty summary.
+    severity: warn
+    given: $.paths[*][get,post,put,delete,patch]
+    then:
+      field: summary
+      function: truthy

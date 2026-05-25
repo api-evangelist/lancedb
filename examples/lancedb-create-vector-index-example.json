@@ -1,0 +1,10 @@
+{
+  "$comment": "POST /v1/table/{id}/create_index — build an IVF_PQ vector index on the embedding column",
+  "column": "embedding",
+  "indexType": "IVF_PQ",
+  "metric": "cosine",
+  "numPartitions": 256,
+  "numSubVectors": 96,
+  "replace": true,
+  "name": "embedding_ivfpq_256_96"
+}

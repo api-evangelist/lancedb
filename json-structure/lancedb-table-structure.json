@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-structure.org/draft/2025-09/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/lancedb/main/json-structure/lancedb-table-structure.json",
+  "name": "LancedbTable",
+  "type": "object",
+  "description": "JSON Structure for a LanceDB table with strict typed fields covering identity, schema, versioning, and indexing surface.",
+  "properties": {
+    "name": { "type": "string" },
+    "namespace": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "location": { "type": "uri" },
+    "version": { "type": "int64" },
+    "createdAt": { "type": "date-time" },
+    "updatedAt": { "type": "date-time" },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "array",
+          "items": { "type": { "$ref": "#/definitions/Field" } }
+        }
+      }
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "numRows": { "type": "int64" },
+        "numFragments": { "type": "int64" },
+        "sizeBytes": { "type": "int64" }
+      }
+    },
+    "indexes": {
+      "type": "array",
+      "items": { "type": { "$ref": "#/definitions/Index" } }
+    },
+    "tags": {
+      "type": "map",
+      "values": { "type": "int64" }
+    }
+  },
+  "required": ["name", "namespace", "schema"],
+  "definitions": {
+    "Field": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "arrowType": { "type": "string" },
+        "nullable": { "type": "boolean" },
+        "vectorDimension": { "type": "int32" }
+      },
+      "required": ["name", "arrowType"]
+    },
+    "Index": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "column": { "type": "string" },
+        "indexType": {
+          "type": "string",
+          "enum": ["BTREE", "BITMAP", "LABEL_LIST", "FTS", "IVF_FLAT", "IVF_PQ", "IVF_HNSW_SQ", "IVF_HNSW_PQ"]
+        },
+        "metric": {
+          "type": "string",
+          "enum": ["l2", "cosine", "dot"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PENDING", "BUILDING", "READY", "FAILED"]
+        }
+      },
+      "required": ["name", "column", "indexType"]
+    }
+  }
+}

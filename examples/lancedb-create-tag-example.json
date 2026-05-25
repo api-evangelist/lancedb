@@ -1,0 +1,5 @@
+{
+  "$comment": "POST /v1/table/{id}/tags/create — pin a named tag to a specific table version for reproducible retrieval",
+  "name": "production-2026-05-25",
+  "version": 4821
+}

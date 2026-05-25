@@ -1,0 +1,10 @@
+{
+  "$comment": "POST /v1/table/{id}/merge_insert — upsert (insert-or-update) records keyed on id",
+  "on": ["id"],
+  "whenMatchedUpdateAll": true,
+  "whenNotMatchedInsertAll": true,
+  "records": [
+    { "id": "doc-1001", "text": "LanceDB ships native vector + FTS", "category": "marketing", "embedding": [0.11, -0.42, "..."] },
+    { "id": "doc-1002", "text": "Lance v2 format adds zone maps", "category": "engineering", "embedding": [0.07, 0.31, "..."] }
+  ]
+}

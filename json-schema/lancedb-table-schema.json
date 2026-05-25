@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/lancedb/main/json-schema/lancedb-table-schema.json",
+  "title": "LanceDB Table",
+  "description": "A Lance table inside a LanceDB namespace. Tables are columnar (Lance format), versioned, and may carry vector, full-text, and scalar indexes.",
+  "type": "object",
+  "required": ["name", "namespace", "schema"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Table identifier within its namespace.",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+    },
+    "namespace": {
+      "type": "array",
+      "description": "Hierarchical namespace path (e.g. ['warehouse', 'project']).",
+      "items": { "type": "string" }
+    },
+    "location": {
+      "type": "string",
+      "format": "uri",
+      "description": "Object-store URI where the table is materialized (s3://, gs://, az://, file://)."
+    },
+    "schema": {
+      "type": "object",
+      "description": "Arrow schema for the table.",
+      "required": ["fields"],
+      "properties": {
+        "fields": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Field" }
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Monotonic version number of the table state."
+    },
+    "properties": {
+      "type": "object",
+      "description": "Free-form key/value table properties (e.g. retention, owner, description).",
+      "additionalProperties": { "type": "string" }
+    },
+    "indexes": {
+      "type": "array",
+      "description": "Indexes attached to this table.",
+      "items": { "$ref": "#/$defs/Index" }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Named tags pointing at specific versions of the table.",
+      "items": { "$ref": "#/$defs/Tag" }
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "numRows": { "type": "integer", "minimum": 0 },
+        "numFragments": { "type": "integer", "minimum": 0 },
+        "sizeBytes": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "$defs": {
+    "Field": {
+      "type": "object",
+      "required": ["name", "type"],
+      "properties": {
+        "name": { "type": "string" },
+        "type": {
+          "description": "Arrow logical type identifier (e.g. utf8, int64, float32, fixed_size_list).",
+          "type": "string"
+        },
+        "nullable": { "type": "boolean", "default": true },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "vectorDimension": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "When the field is a fixed-size embedding vector, its dimensionality."
+        }
+      }
+    },
+    "Index": {
+      "type": "object",
+      "required": ["name", "column", "indexType"],
+      "properties": {
+        "name": { "type": "string" },
+        "column": { "type": "string" },
+        "indexType": {
+          "type": "string",
+          "enum": [
+            "BTREE", "BITMAP", "LABEL_LIST", "FTS",
+            "IVF_FLAT", "IVF_PQ", "IVF_HNSW_SQ", "IVF_HNSW_PQ"
+          ]
+        },
+        "metric": {
+          "type": "string",
+          "enum": ["l2", "cosine", "dot"],
+          "description": "Distance metric for vector indexes."
+        },
+        "numPartitions": { "type": "integer", "minimum": 1 },
+        "numSubVectors": { "type": "integer", "minimum": 1 },
+        "status": {
+          "type": "string",
+          "enum": ["PENDING", "BUILDING", "READY", "FAILED"]
+        }
+      }
+    },
+    "Tag": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

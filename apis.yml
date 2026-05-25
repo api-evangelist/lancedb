@@ -1,41 +1,55 @@
 aid: lancedb
 url: https://raw.githubusercontent.com/api-evangelist/lancedb/refs/heads/main/apis.yml
 name: LanceDB
-kind: company
+kind: opensource
 description: >-
-  LanceDB is an open-source, developer-friendly, embedded multimodal vector
-  database built on the Lance columnar storage format. It supports vector,
-  full-text, hybrid, and SQL search across billions of vectors and multimodal
-  data (text, images, video, point clouds). LanceDB ships as an embedded OSS
-  library with Python, TypeScript / JavaScript, and Rust SDKs, and is also
-  offered as LanceDB Enterprise - a distributed and managed multimodal lakehouse
-  - with integrations into Apache Arrow, Pandas, Polars, DuckDB, Ray, Apache
-  Spark, LangChain, LlamaIndex, and Hugging Face.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  LanceDB is the AI-Native multimodal lakehouse built on the open-source Lance
+  columnar storage format. It pairs an Apache 2.0 licensed embedded retrieval
+  library (Python, TypeScript, Rust, Go, C, Java SDKs) with a managed cloud
+  service (LanceDB Cloud) and an enterprise lakehouse (LanceDB Enterprise) that
+  unify vector, full-text, hybrid, and SQL search across billions of multimodal
+  records. The REST surface is governed by the open Lance Namespace
+  specification (OpenAPI 3.1) covering namespace, table, index, tag, and
+  transaction operations with first-class support for materialized views,
+  schema evolution, and time-travel versioning. LanceDB is used in production
+  by Midjourney, Runway, World Labs, Netflix, Character.AI, Uber, NVIDIA,
+  ByteDance, Databricks, and others for RAG, agent memory, training data
+  curation, feature engineering, and large-scale retrieval.
+image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-network/lancedb/lancedb-logo.png
 tags:
   - Vector Database
   - Multimodal
   - Lance Format
-  - RAG
-  - Open Source
   - Lakehouse
+  - RAG
+  - Agent Memory
+  - Open Source
+  - Embeddings
+  - Full-Text Search
+  - Hybrid Search
+  - Columnar Storage
+  - Arrow
+  - AI Infrastructure
 created: '2026-05-23'
-modified: '2026-05-23'
-specificationVersion: '0.19'
+modified: '2026-05-25'
+specificationVersion: '0.20'
 apis:
   - aid: lancedb:oss
-    name: LanceDB OSS Library
+    name: LanceDB OSS
     description: >-
-      Open-source, embedded, serverless multimodal vector database. Provides
-      table create / drop / list, insert / upsert / delete, vector / full-text /
-      hybrid / SQL search, automatic versioning, and pluggable embedding
-      functions. Apache-2.0 licensed.
+      Apache 2.0 licensed, developer-friendly, embedded multimodal retrieval
+      library. Provides namespace + table CRUD, insert / upsert / delete,
+      vector / full-text / hybrid / SQL search, scalar (BTree, Bitmap,
+      LabelList, FTS) and vector (IVF_FLAT, IVF_PQ, IVF_HNSW_SQ) indexes,
+      automatic versioning, time-travel, and pluggable embedding functions.
+      Backed by S3, GCS, Azure Blob, or local disk via object_store.
     humanURL: https://docs.lancedb.com/
     baseURL: https://github.com/lancedb/lancedb
     tags:
       - Open Source
       - Embedded
       - Vector Database
+      - Apache 2.0
     properties:
       - type: Documentation
         url: https://docs.lancedb.com/
@@ -43,65 +57,139 @@ apis:
         url: https://github.com/lancedb/lancedb
       - type: Quickstart
         url: https://docs.lancedb.com/quickstart
+      - type: License
+        url: https://github.com/lancedb/lancedb/blob/main/LICENSE
+      - type: Releases
+        url: https://github.com/lancedb/lancedb/releases
+      - type: Issues
+        url: https://github.com/lancedb/lancedb/issues
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/lancedb/main/openapi/lance-namespace-openapi.yaml
+  - aid: lancedb:cloud
+    name: LanceDB Cloud
+    description: >-
+      Fully managed serverless LanceDB service. Hosts customer namespaces and
+      tables, exposes the Lance Namespace REST API, and handles compaction,
+      index maintenance, replication, and elasticity. Authenticated via
+      `x-api-key` header. SOC 2, GDPR, and HIPAA compliant.
+    humanURL: https://lancedb.com/
+    baseURL: https://your-tenant.lancedb.cloud/v1/
+    tags:
+      - Managed Service
+      - Serverless
+      - REST
+      - Multi-Tenant
+    properties:
+      - type: Documentation
+        url: https://docs.lancedb.com/
+      - type: API
+        url: https://docs.lancedb.com/api-reference/rest/
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/lancedb/main/openapi/lance-namespace-openapi.yaml
+      - type: Trust
+        url: https://trust.lancedb.com/
+      - type: Sales
+        url: https://lancedb.com/contact
   - aid: lancedb:enterprise
     name: LanceDB Enterprise
     description: >-
-      Distributed, managed multimodal lakehouse built on the Lance format,
-      offering curation, deduplication, feature engineering with Python UDFs,
-      unified vector / full-text / hybrid search, and direct training from
-      curated tables. Sold to enterprise customers via contact@lancedb.com.
+      Distributed, multi-tenant multimodal lakehouse. Adds curation and
+      deduplication, Python UDF feature engineering, materialized views,
+      GPU-accelerated index build via cuVS, distributed query, and direct
+      training integration with PyTorch / Ray. Deployable in customer VPC on
+      AWS, GCP, or Azure.
     humanURL: https://lancedb.com/
     baseURL: https://lancedb.com/
     tags:
       - Enterprise
       - Managed
       - Lakehouse
+      - VPC
+      - GPU
     properties:
       - type: Documentation
-        url: https://docs.lancedb.com/
+        url: https://docs.lancedb.com/enterprise/
+      - type: Architecture
+        url: https://docs.lancedb.com/enterprise/architecture
       - type: Sales
         url: https://lancedb.com/contact
+      - type: Trust
+        url: https://trust.lancedb.com/
   - aid: lancedb:lance-format
     name: Lance Format
     description: >-
-      Open-source columnar storage format optimized for multimodal AI data -
-      zero-copy reads, automatic versioning, fast random access, and Arrow
-      interop. Powers the LanceDB OSS and Enterprise products and integrates
-      with DuckDB, Pandas, Polars, Ray, Apache Spark, and Hugging Face.
-    humanURL: https://lance.org
-    baseURL: https://github.com/lancedb/lance
+      Apache 2.0 open lakehouse format for multimodal AI. Columnar Parquet
+      replacement offering 100x faster random access, zero-copy reads, vector
+      indexes, and automatic data versioning. Convertible from Parquet in two
+      lines of code. Maintained by the lance-format community.
+    humanURL: https://lance.org/
+    baseURL: https://github.com/lance-format/lance
     tags:
       - File Format
       - Columnar
       - Arrow
       - Open Source
+      - Apache 2.0
     properties:
       - type: Documentation
-        url: https://lance.org
+        url: https://lance.org/
       - type: Repository
-        url: https://github.com/lancedb/lance
+        url: https://github.com/lance-format/lance
+      - type: Specification
+        url: https://lance.org/format/
+      - type: Releases
+        url: https://github.com/lance-format/lance/releases
+  - aid: lancedb:lance-namespace
+    name: Lance Namespace Specification
+    description: >-
+      Open OpenAPI 3.1 specification describing access and operations against
+      a collection of Lance tables in a multimodal lakehouse. Defines a
+      complete REST server contract (50+ operations) covering namespaces,
+      tables, indices, tags, transactions, materialized views, schema
+      evolution, and time-travel. Reference implementations exist for Apache
+      Hive, Apache Polaris, Apache Gravitino, Unity Catalog, and AWS Glue.
+    humanURL: https://lance.org/format/namespace/
+    baseURL: https://github.com/lance-format/lance-namespace
+    tags:
+      - Specification
+      - OpenAPI
+      - REST
+      - Catalog
+      - Open Source
+    properties:
+      - type: Specification
+        url: https://lance.org/format/namespace/
+      - type: Repository
+        url: https://github.com/lance-format/lance-namespace
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/lance-format/lance-namespace/main/docs/src/spec.yaml
+      - type: Implementations
+        url: https://github.com/lance-format/lance-namespace-impls
   - aid: lancedb:python-sdk
     name: LanceDB Python SDK
     description: >-
-      Primary client library for LanceDB OSS and Enterprise, with first-class
-      support for Arrow, Pandas, and Polars data frames and pluggable embedding
-      functions.
-    humanURL: https://docs.lancedb.com/
-    baseURL: https://github.com/lancedb/lancedb
+      Primary client library. First-class Arrow, Pandas, Polars, and Pydantic
+      integration; pluggable embedding functions covering OpenAI, Cohere,
+      Jina, Hugging Face, Ollama, Bedrock, Sentence Transformers and 20+ more.
+    humanURL: https://lancedb.github.io/lancedb/python/python/
+    baseURL: https://pypi.org/project/lancedb/
     tags:
       - SDK
       - Python
     properties:
       - type: Documentation
-        url: https://docs.lancedb.com/
+        url: https://lancedb.github.io/lancedb/python/python/
+      - type: Package
+        url: https://pypi.org/project/lancedb/
       - type: Repository
         url: https://github.com/lancedb/lancedb
   - aid: lancedb:typescript-sdk
     name: LanceDB TypeScript SDK
     description: >-
-      Node.js / TypeScript client library for LanceDB OSS and Enterprise.
-    humanURL: https://docs.lancedb.com/
-    baseURL: https://github.com/lancedb/lancedb
+      Node.js / TypeScript / JavaScript client library for LanceDB OSS, Cloud,
+      and Enterprise. Bundles native bindings via napi-rs.
+    humanURL: https://lancedb.github.io/lancedb/js/globals/
+    baseURL: https://www.npmjs.com/package/@lancedb/lancedb
     tags:
       - SDK
       - TypeScript
@@ -109,52 +197,148 @@ apis:
       - Node.js
     properties:
       - type: Documentation
-        url: https://docs.lancedb.com/
+        url: https://lancedb.github.io/lancedb/js/globals/
+      - type: Package
+        url: https://www.npmjs.com/package/@lancedb/lancedb
       - type: Repository
         url: https://github.com/lancedb/lancedb
   - aid: lancedb:rust-sdk
     name: LanceDB Rust SDK
     description: >-
-      Native Rust client library; the LanceDB core and storage layer are written
-      in Rust.
-    humanURL: https://docs.lancedb.com/
-    baseURL: https://github.com/lancedb/lancedb
+      Native Rust client library; the LanceDB core and storage layer are
+      written in Rust.
+    humanURL: https://docs.rs/lancedb/latest/lancedb/
+    baseURL: https://crates.io/crates/lancedb
     tags:
       - SDK
       - Rust
     properties:
       - type: Documentation
-        url: https://docs.lancedb.com/
+        url: https://docs.rs/lancedb/latest/lancedb/
+      - type: Package
+        url: https://crates.io/crates/lancedb
       - type: Repository
         url: https://github.com/lancedb/lancedb
+  - aid: lancedb:go-sdk
+    name: LanceDB Go SDK
+    description: >-
+      Official Go client library for LanceDB OSS, Cloud, and Enterprise.
+    humanURL: https://github.com/lancedb/lancedb-go
+    baseURL: https://github.com/lancedb/lancedb-go
+    tags:
+      - SDK
+      - Go
+    properties:
+      - type: Repository
+        url: https://github.com/lancedb/lancedb-go
+  - aid: lancedb:c-sdk
+    name: LanceDB C Bindings
+    description: >-
+      C ABI bindings for LanceDB enabling embedding into C, C++, and other
+      FFI-capable hosts.
+    humanURL: https://github.com/lancedb/lancedb-c
+    baseURL: https://github.com/lancedb/lancedb-c
+    tags:
+      - SDK
+      - C
+      - FFI
+    properties:
+      - type: Repository
+        url: https://github.com/lancedb/lancedb-c
+  - aid: lancedb:mcp-server
+    name: LanceDB MCP Server
+    description: >-
+      Model Context Protocol (MCP) server exposing LanceDB tables as
+      retrieval tools for MCP-aware agents and IDEs.
+    humanURL: https://github.com/lancedb/lancedb-mcp-server
+    baseURL: https://github.com/lancedb/lancedb-mcp-server
+    tags:
+      - MCP
+      - Agent
+      - Tools
+    properties:
+      - type: Repository
+        url: https://github.com/lancedb/lancedb-mcp-server
 common:
   - type: Website
     url: https://lancedb.com/
   - type: Documentation
     url: https://docs.lancedb.com/
+  - type: Blog
+    url: https://lancedb.com/blog
   - type: GitHub
     url: https://github.com/lancedb
+  - type: GitHubFormat
+    url: https://github.com/lance-format
   - type: Discord
     url: https://discord.com/invite/G5DcmnZWKB
   - type: Trust
     url: https://trust.lancedb.com/
   - type: Support
     url: mailto:support@lancedb.com
+  - type: Contact
+    url: https://lancedb.com/contact
   - type: LLMsTxt
     url: https://docs.lancedb.com/llms.txt
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/api-evangelist/lancedb/main/openapi/lance-namespace-openapi.yaml
+  - type: Capabilities
+    url: https://raw.githubusercontent.com/api-evangelist/lancedb/main/capabilities/multimodal-retrieval.yaml
+  - type: Vocabulary
+    url: https://raw.githubusercontent.com/api-evangelist/lancedb/main/vocabulary/lancedb-vocabulary.yml
 integrations:
   - name: Apache Arrow
+  - name: Apache Iceberg
   - name: Apache Spark
+  - name: Apache Flink
+  - name: Apache Hive
+  - name: Apache Polaris
+  - name: Apache Gravitino
   - name: DuckDB
   - name: Pandas
   - name: Polars
+  - name: Pydantic
   - name: Ray
+  - name: Trino
+  - name: PostgreSQL
+  - name: Unity Catalog
+  - name: AWS Glue
   - name: Hugging Face
   - name: LangChain
   - name: LlamaIndex
+  - name: GenKit
+  - name: PyTorch
   - name: Databricks
   - name: Amazon Web Services
+  - name: Google Cloud
+  - name: Microsoft Azure
   - name: NVIDIA
+  - name: OpenAI
+  - name: Cohere
+  - name: Anthropic
+  - name: Jina
+  - name: Ollama
+  - name: Sentence Transformers
+  - name: CrewAI
+  - name: cuVS
+solutions:
+  - name: Retrieval-Augmented Generation (RAG)
+  - name: Long-Term Agent Memory
+  - name: Training Data Curation
+  - name: Feature Engineering for ML
+  - name: Multimodal Search (Text, Image, Video, Audio)
+  - name: Semantic Code Search
+  - name: Recommendation Systems
+  - name: Anomaly Detection
+  - name: Vector Lakehouse
+useCases:
+  - name: Production RAG over multimodal corpora
+  - name: Agent and assistant long-term memory store
+  - name: Foundation-model training data curation and deduplication
+  - name: Semantic search across billions of documents and embeddings
+  - name: Hybrid (vector + BM25 + SQL) search with reranking
+  - name: Time-travel and reproducible ML datasets via Lance versioning
+  - name: GPU-accelerated vector index construction
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
