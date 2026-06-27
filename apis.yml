@@ -55,11 +55,11 @@ apis:
         url: https://docs.lancedb.com/
       - type: Repository
         url: https://github.com/lancedb/lancedb
-      - type: Quickstart
+      - type: GettingStarted
         url: https://docs.lancedb.com/quickstart
       - type: License
         url: https://github.com/lancedb/lancedb/blob/main/LICENSE
-      - type: Releases
+      - type: ReleaseNotes
         url: https://github.com/lancedb/lancedb/releases
       - type: Issues
         url: https://github.com/lancedb/lancedb/issues
@@ -137,7 +137,7 @@ apis:
         url: https://github.com/lance-format/lance
       - type: Specification
         url: https://lance.org/format/
-      - type: Releases
+      - type: ReleaseNotes
         url: https://github.com/lance-format/lance/releases
   - aid: lancedb:lance-namespace
     name: Lance Namespace Specification
@@ -278,7 +278,7 @@ common:
     url: mailto:support@lancedb.com
   - type: Contact
     url: https://lancedb.com/contact
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.lancedb.com/llms.txt
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/lancedb/main/openapi/lance-namespace-openapi.yaml
