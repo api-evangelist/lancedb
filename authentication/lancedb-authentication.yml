@@ -1,0 +1,32 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/lance-namespace-openapi.yaml
+summary:
+  types:
+  - apiKey
+  - http
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+    scopes: 0
+  sources:
+  - openapi/lance-namespace-openapi.yaml
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/lance-namespace-openapi.yaml
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: x-api-key
+  sources:
+  - openapi/lance-namespace-openapi.yaml

@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://trust.lancedb.com/
+url: https://trust.lancedb.com/
+certifications:
+- SOC 2
+- HIPAA
+- GDPR
+evidence:
+- source: https://trust.lancedb.com/
+  keywords:
+  - soc 2
+  - hipaa
+  - trust center
+  - compliance certification
+  - gdpr
