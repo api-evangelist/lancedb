@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/lance-namespace-openapi.yaml
+docs: https://docs.lancedb.com/api-reference/rest
+note: LanceDB does not publish OAuth scopes; all requests to LanceDB Cloud/Enterprise
+  APIs authenticate with an x-api-key header and no scope-based permissions are
+  documented (https://docs.lancedb.com/api-reference/rest).
+schemes:
+- name: OAuth2
+  source: openapi/lance-namespace-openapi.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+scopes: []
