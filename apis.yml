@@ -260,6 +260,8 @@ apis:
       - type: Repository
         url: https://github.com/lancedb/lancedb-mcp-server
 common:
+  - type: AgenticAccess
+    url: agentic-access/lancedb-agentic-access.yml
   - type: TrustCenter
     url: security/lancedb-trust-center.yml
   - type: DomainSecurity
