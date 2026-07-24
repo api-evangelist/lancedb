@@ -1,0 +1,590 @@
+openapi: 3.1.1
+info:
+  title: Lance Namespace Specification Data MaterializedView API
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+  description: 'This OpenAPI specification is a part of the Lance namespace specification. It contains 2 parts:
+
+
+    The `components/schemas`, `components/responses`, `components/examples`, `tags` sections define
+
+    the request and response shape for each operation in a Lance Namespace across all implementations.
+
+    See https://lance.org/format/namespace/operations for more details.
+
+
+    The `servers`, `security`, `paths`, `components/parameters` sections are for the
+
+    Lance REST Namespace implementation, which defines a complete REST server that can work with Lance datasets.
+
+    See https://lance.org/format/namespace/rest for more details.
+
+    '
+servers:
+- url: '{scheme}://{host}:{port}/{basePath}'
+  description: Generic server URL with all parts configurable
+  variables:
+    scheme:
+      default: http
+    host:
+      default: localhost
+    port:
+      default: '2333'
+    basePath:
+      default: ''
+- url: '{scheme}://{host}/{basePath}'
+  description: Server URL when the port can be inferred from the scheme
+  variables:
+    scheme:
+      default: http
+    host:
+      default: localhost
+    basePath:
+      default: ''
+security:
+- OAuth2: []
+- BearerAuth: []
+- ApiKeyAuth: []
+tags:
+- name: MaterializedView
+paths:
+  /v1/materialized_view/{id}/refresh:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - MaterializedView
+      summary: Trigger an async materialized view refresh
+      operationId: RefreshMaterializedView
+      description: 'Trigger an asynchronous refresh job for materialized view `id`.
+
+        Returns a job ID for tracking.
+
+        '
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshMaterializedViewRequest'
+      responses:
+        202:
+          $ref: '#/components/responses/RefreshMaterializedViewResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/materialized_view/{id}/create:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - MaterializedView
+      summary: Create a materialized view
+      operationId: CreateMaterializedView
+      description: 'Create a materialized view at identifier `id`. The view may be
+
+        query-backed, UDTF-backed, or chunker-backed, controlled by the
+
+        `kind` discriminator.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMaterializedViewRequest'
+      responses:
+        201:
+          $ref: '#/components/responses/CreateMaterializedViewResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+components:
+  schemas:
+    RefreshMaterializedViewResponse:
+      type: object
+      required:
+      - job_id
+      properties:
+        job_id:
+          type: string
+          description: The job ID for tracking the refresh job
+    MaterializedViewUdtfEntry:
+      type: object
+      required:
+      - kind
+      - udtf
+      - udtf_sha
+      - udtf_name
+      - udtf_version
+      properties:
+        kind:
+          type: string
+          enum:
+          - udtf
+          - chunker
+          description: 'Discriminates a batch UDTF (`udtf`, full-overwrite refresh)
+
+            from a chunker (`chunker`, incremental 1:N refresh). Must match
+
+            the enclosing request''s `kind`.
+
+            '
+        udtf:
+          type: string
+          description: 'Base64-encoded UDTFSpec / ChunkerSpec JSON envelope (per kind).
+
+            '
+        udtf_sha:
+          type: string
+          description: SHA-256 checksum of the envelope; server validates.
+        udtf_name:
+          type: string
+          description: Name of the UDTF
+        udtf_version:
+          type: string
+          description: Version of the UDTF
+        input_columns:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: 'Source columns the UDTF reads. Null means all columns (batch
+
+            UDTF only).
+
+            '
+        partition_by:
+          type:
+          - string
+          - 'null'
+          description: 'Batch UDTF only. Column-value partition key for
+
+            partition-parallel execution. Mutually exclusive with
+
+            `partition_by_indexed_column`.
+
+            '
+        partition_by_indexed_column:
+          type:
+          - string
+          - 'null'
+          description: 'Batch UDTF only. Source column with an IVF-family index used
+
+            for index-based partitioning. The server validates the index
+
+            exists at create time.
+
+            '
+        num_cpus:
+          type:
+          - number
+          - 'null'
+          description: Ray actor CPU request.
+        num_gpus:
+          type:
+          - number
+          - 'null'
+          description: Ray actor GPU request.
+        memory:
+          type:
+          - integer
+          - 'null'
+          description: Ray actor memory request, in bytes.
+        error_handling:
+          type:
+          - object
+          - 'null'
+          description: 'Batch UDTF only. Serialized ErrorHandlingConfig controlling
+
+            partition-grain fail/retry/skip behavior.
+
+            '
+        batch:
+          type:
+          - boolean
+          - 'null'
+          description: 'Chunker only. True for a batched chunker; affects how the
+
+            worker dispatches input rows.
+
+            '
+        manifest:
+          type:
+          - string
+          - 'null'
+          description: JSON-serialized GenevaManifest for the UDTF environment.
+        manifest_checksum:
+          type:
+          - string
+          - 'null'
+          description: SHA-256 checksum of the manifest content.
+    CreateMaterializedViewResponse:
+      type: object
+      required:
+      - version
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: The commit version that created the materialized view
+          minimum: 0
+        job_id:
+          type:
+          - string
+          - 'null'
+          description: 'Refresh job ID, populated only when `with_no_data` was false.
+
+            '
+    RefreshMaterializedViewRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        id:
+          type: array
+          items:
+            type: string
+          description: Table identifier path (namespace + table name)
+        src_version:
+          type:
+          - integer
+          - 'null'
+          description: Optional source version to refresh from
+        max_rows_per_fragment:
+          type:
+          - integer
+          - 'null'
+          description: Optional maximum rows per fragment
+        concurrency:
+          type:
+          - integer
+          - 'null'
+          description: Optional concurrency override
+        intra_applier_concurrency:
+          type:
+          - integer
+          - 'null'
+          description: Optional intra-applier concurrency override
+        cluster:
+          type:
+          - string
+          - 'null'
+          description: Optional cluster name (operational override)
+        output_limit:
+          type:
+          - integer
+          - 'null'
+          description: 'Post-trim cap on view row count after expansion. Valid only for
+
+            chunker materialized views; returns 400 if set on other kinds.
+
+            '
+        manifest:
+          type:
+          - string
+          - 'null'
+          description: 'Optional inline JSON-serialized GenevaManifest. Operational
+
+            override for this refresh only; does not mutate the view''s
+
+            snapshotted manifest. When omitted, the manifest stored in the
+
+            view''s metadata is used.
+
+            '
+    Identity:
+      type: object
+      description: 'Identity information of a request.
+
+        '
+      properties:
+        api_key:
+          type: string
+          description: 'API key for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `x-api-key` header.
+
+            '
+        auth_token:
+          type: string
+          description: 'Bearer token for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `Authorization` header
+
+            with the Bearer scheme (e.g., `Bearer <token>`).
+
+            '
+    ErrorResponse:
+      type: object
+      description: Common JSON error response model
+      required:
+      - code
+      properties:
+        error:
+          type: string
+          description: A brief, human-readable message about the error.
+          example: Table 'users' not found in namespace 'production'
+        code:
+          type: integer
+          minimum: 0
+          description: "Lance Namespace error code identifying the error type.\n\nError codes:\n  0 - Unsupported: Operation not supported by this backend\n  1 - NamespaceNotFound: The specified namespace does not exist\n  2 - NamespaceAlreadyExists: A namespace with this name already exists\n  3 - NamespaceNotEmpty: Namespace contains tables or child namespaces\n  4 - TableNotFound: The specified table does not exist\n  5 - TableAlreadyExists: A table with this name already exists\n  6 - TableIndexNotFound: The specified table index does not exist\n  7 - TableIndexAlreadyExists: A table index with this name already exists\n  8 - TableTagNotFound: The specified table tag does not exist\n  9 - TableTagAlreadyExists: A table tag with this name already exists\n  10 - TransactionNotFound: The specified transaction does not exist\n  11 - TableVersionNotFound: The specified table version does not exist\n  12 - TableColumnNotFound: The specified table column does not exist\n  13 - InvalidInput: Malformed request or invalid parameters\n  14 - ConcurrentModification: Optimistic concurrency conflict\n  15 - PermissionDenied: User lacks permission for this operation\n  16 - Unauthenticated: Authentication credentials are missing or invalid\n  17 - ServiceUnavailable: Service is temporarily unavailable\n  18 - Internal: Unexpected server/implementation error\n  19 - InvalidTableState: Table is in an invalid state for the operation\n  20 - TableSchemaValidationError: Table schema validation failed\n"
+          example: 4
+        detail:
+          type: string
+          description: 'An optional human-readable explanation of the error.
+
+            This can be used to record additional information such as stack trace.
+
+            '
+          example: The table may have been dropped or renamed
+        instance:
+          type: string
+          description: 'A string that identifies the specific occurrence of the error.
+
+            This can be a URI, a request or response ID,
+
+            or anything that the implementation can recognize to trace specific occurrence of the error.
+
+            '
+          example: /v1/table/production$users/describe
+    CreateMaterializedViewRequest:
+      type: object
+      required:
+      - kind
+      - source_query
+      - output_schema
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        id:
+          type: array
+          items:
+            type: string
+          description: View identifier path (namespace + view name)
+        kind:
+          type: string
+          enum:
+          - query
+          - udtf
+          - chunker
+          description: 'The materialized view kind.
+
+            - `query` — plain query-backed view (no UDTF), 1:1 rows.
+
+            - `udtf` — batch UDTF-backed view (N:M rows, full refresh).
+
+            - `chunker`, aka ''scalar_udtf'' — chunker view (1:N row expansion, incremental refresh).
+
+            '
+        source_query:
+          type: string
+          description: 'Opaque serialized representation of the source query that
+
+            defines the view''s input. The format is defined by the client;
+
+            the namespace server stores it without interpreting it.
+
+            '
+        output_schema:
+          type: string
+          description: Base64-encoded Arrow schema of the view output
+        udtf_spec:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/MaterializedViewUdtfEntry'
+          description: 'UDTF descriptor. Required when kind is `udtf` or `chunker`;
+
+            must be null when kind is `query`.
+
+            '
+        with_no_data:
+          type: boolean
+          default: true
+          description: 'If false, the server kicks off an initial refresh immediately
+
+            after creating the view and the response includes a job ID.
+
+            '
+        auto_refresh:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          description: 'If true, the view is automatically refreshed when source-table
+
+            data changes past the deployment-level threshold. Boolean
+
+            opt-in only; the threshold and cooldown are configured on the
+
+            deployment, not per-view.
+
+            '
+  responses:
+    BadRequestErrorResponse:
+      description: Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/bad-request
+            title: Malformed request
+            status: 400
+            detail: ''
+            instance: /v1/namespaces
+    ForbiddenErrorResponse:
+      description: Forbidden. Authenticated user does not have the necessary permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/forbidden-request
+            title: Not authorized to make this request
+            status: 403
+            detail: ''
+            instance: /v1/namespaces
+    ServiceUnavailableErrorResponse:
+      description: The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/service-unavailable
+            title: Slow down
+            status: 503
+            detail: ''
+            instance: /v1/namespaces
+    UnauthorizedErrorResponse:
+      description: Unauthorized. The request lacks valid authentication credentials for the operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/unauthorized-request
+            title: No valid authentication credentials for the operation
+            status: 401
+            detail: ''
+            instance: /v1/namespaces
+    NotFoundErrorResponse:
+      description: A server-side problem that means can not find the specified resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/not-found-error
+            title: Not found Error
+            status: 404
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    ServerErrorResponse:
+      description: A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/server-error
+            title: Internal Server Error
+            status: 500
+            detail: ''
+            instance: /v1/namespaces
+    CreateMaterializedViewResponse:
+      description: Materialized view created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateMaterializedViewResponse'
+    ConflictErrorResponse:
+      description: The request conflicts with the current state of the target resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/conflict
+            title: The namespace has been concurrently modified
+            status: 409
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    RefreshMaterializedViewResponse:
+      description: Refresh job accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RefreshMaterializedViewResponse'
+  parameters:
+    delimiter:
+      name: delimiter
+      description: 'An optional delimiter of the `string identifier`, following the Lance Namespace spec.
+
+        When not specified, the `$` delimiter must be used.
+
+        '
+      in: query
+      required: false
+      schema:
+        type: string
+    id:
+      name: id
+      description: '`string identifier` of an object in a namespace, following the Lance Namespace spec.
+
+        When the value is equal to the delimiter, it represents the root namespace.
+
+        For example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.
+
+        '
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

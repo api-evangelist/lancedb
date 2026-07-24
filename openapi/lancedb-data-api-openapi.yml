@@ -1,0 +1,2026 @@
+openapi: 3.1.1
+info:
+  title: Lance Namespace Specification Data API
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+  description: 'This OpenAPI specification is a part of the Lance namespace specification. It contains 2 parts:
+
+
+    The `components/schemas`, `components/responses`, `components/examples`, `tags` sections define
+
+    the request and response shape for each operation in a Lance Namespace across all implementations.
+
+    See https://lance.org/format/namespace/operations for more details.
+
+
+    The `servers`, `security`, `paths`, `components/parameters` sections are for the
+
+    Lance REST Namespace implementation, which defines a complete REST server that can work with Lance datasets.
+
+    See https://lance.org/format/namespace/rest for more details.
+
+    '
+servers:
+- url: '{scheme}://{host}:{port}/{basePath}'
+  description: Generic server URL with all parts configurable
+  variables:
+    scheme:
+      default: http
+    host:
+      default: localhost
+    port:
+      default: '2333'
+    basePath:
+      default: ''
+- url: '{scheme}://{host}/{basePath}'
+  description: Server URL when the port can be inferred from the scheme
+  variables:
+    scheme:
+      default: http
+    host:
+      default: localhost
+    basePath:
+      default: ''
+security:
+- OAuth2: []
+- BearerAuth: []
+- ApiKeyAuth: []
+tags:
+- name: Data
+  description: 'Operations that interact with object data and might be computationally intensive
+
+    '
+paths:
+  /v1/table/{id}/insert:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    - name: mode
+      in: query
+      description: 'How the insert should behave. Case insensitive, supports both PascalCase and snake_case. Valid values are:
+
+        - Append (default): insert data to the existing table
+
+        - Overwrite: remove all data in the table and then insert data to it
+
+        '
+      required: false
+      schema:
+        type: string
+        default: append
+    post:
+      tags:
+      - Data
+      summary: Insert records into a table
+      operationId: InsertIntoTable
+      description: 'Insert new records into table `id`.
+
+
+        For tables that have been declared but not yet created on storage
+
+        (is_only_declared=true), this operation will create the table with
+
+        the provided data.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace uses Arrow IPC stream as the request body.
+
+        It passes in the `InsertIntoTableRequest` information in the following way:
+
+        - `id`: pass through path parameter of the same name
+
+        - `mode`: pass through query parameter of the same name
+
+        '
+      requestBody:
+        description: Arrow IPC stream containing the records to insert
+        content:
+          application/vnd.apache.arrow.stream:
+            schema:
+              type: string
+              format: binary
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/InsertIntoTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/merge_insert:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    - name: 'on'
+      in: query
+      description: Column name to use for matching rows (required)
+      required: true
+      schema:
+        type: string
+    - name: when_matched_update_all
+      in: query
+      description: Update all columns when rows match
+      required: false
+      schema:
+        type: boolean
+        default: false
+    - name: when_matched_update_all_filt
+      in: query
+      description: The row is updated (similar to UpdateAll) only for rows where the SQL expression evaluates to true
+      required: false
+      schema:
+        type: string
+    - name: when_not_matched_insert_all
+      in: query
+      description: Insert all columns when rows don't match
+      required: false
+      schema:
+        type: boolean
+        default: false
+    - name: when_not_matched_by_source_delete
+      in: query
+      description: Delete all rows from target table that don't match a row in the source table
+      required: false
+      schema:
+        type: boolean
+        default: false
+    - name: when_not_matched_by_source_delete_filt
+      in: query
+      description: Delete rows from the target table if there is no match AND the SQL expression evaluates to true
+      schema:
+        type: string
+    - name: timeout
+      in: query
+      description: Timeout for the operation (e.g., "30s", "5m")
+      required: false
+      schema:
+        type: string
+    - name: use_index
+      in: query
+      description: Whether to use index for matching rows
+      required: false
+      schema:
+        type: boolean
+        default: false
+    post:
+      tags:
+      - Data
+      summary: Merge insert (upsert) records into a table
+      operationId: MergeInsertIntoTable
+      description: 'Performs a merge insert (upsert) operation on table `id`.
+
+        This operation updates existing rows
+
+        based on a matching column and inserts new rows that don''t match.
+
+        It returns the number of rows inserted and updated.
+
+
+        For tables that have been declared but not yet created on storage
+
+        (is_only_declared=true), this operation will create the table with
+
+        the provided data (since there are no existing rows to merge with).
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace uses Arrow IPC stream as the request body.
+
+        It passes in the `MergeInsertIntoTableRequest` information in the following way:
+
+        - `id`: pass through path parameter of the same name
+
+        - `on`: pass through query parameter of the same name
+
+        - `when_matched_update_all`: pass through query parameter of the same name
+
+        - `when_matched_update_all_filt`: pass through query parameter of the same name
+
+        - `when_not_matched_insert_all`: pass through query parameter of the same name
+
+        - `when_not_matched_by_source_delete`: pass through query parameter of the same name
+
+        - `when_not_matched_by_source_delete_filt`: pass through query parameter of the same name
+
+        '
+      requestBody:
+        description: Arrow IPC stream containing the records to merge
+        content:
+          application/vnd.apache.arrow.stream:
+            schema:
+              type: string
+              format: binary
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/MergeInsertIntoTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/update:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Data
+      summary: Update rows in a table
+      operationId: UpdateTable
+      description: 'Update existing rows in table `id`.
+
+        '
+      requestBody:
+        description: Update request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTableRequest'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UpdateTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/delete:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Data
+      summary: Delete rows from a table
+      operationId: DeleteFromTable
+      description: 'Delete rows from table `id`.
+
+        '
+      requestBody:
+        description: Delete request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteFromTableRequest'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/DeleteFromTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/query:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Data
+      summary: Query a table
+      operationId: QueryTable
+      description: 'Query table `id` with vector search, full text search and optional SQL filtering.
+
+        Returns results in Arrow IPC file or stream format.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace returns the response as Arrow IPC file binary data
+
+        instead of the `QueryTableResponse` JSON object.
+
+        '
+      requestBody:
+        description: Query request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryTableRequest'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/QueryTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/count_rows:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Data
+      summary: Count rows in a table
+      operationId: CountTableRows
+      description: 'Count the number of rows in table `id`
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace returns the response as a plain integer
+
+        instead of the `CountTableRowsResponse` JSON object.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CountTableRowsRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/CountTableRowsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/create:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    - name: mode
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: properties
+      in: query
+      required: false
+      schema:
+        type: string
+      description: 'Business logic properties managed by the namespace implementation outside Lance context.
+
+        The map is translated to a single JSON-encoded query parameter such as
+
+        `properties={"user":"alice","team":"eng"}`.
+
+        '
+    - name: storage_options
+      in: query
+      required: false
+      schema:
+        type: string
+      description: 'Storage options that configure overrides for writing table data and metadata during
+
+        table creation. These are passed to Lance for the write path.
+
+        The map is translated to a single JSON-encoded query parameter such as
+
+        `storage_options={"aws_region":"us-east-1","timeout":"30s"}`.
+
+        '
+    post:
+      tags:
+      - Data
+      summary: Create a table with the given name
+      operationId: CreateTable
+      description: "Create table `id` in the namespace with the given data in Arrow IPC stream.\n\nThe schema of the Arrow IPC stream is used as the table schema.\nIf the stream is empty, the API creates a new empty table.\n\nREST NAMESPACE ONLY\nREST namespace uses Arrow IPC stream as the request body.\nIt passes in the `CreateTableRequest` information in the following way:\n- `id`: pass through path parameter of the same name\n- `mode`: pass through query parameter of the same name\n- `properties`: serialize as a single JSON-encoded query parameter such as\n  `properties={\"user\":\"alice\",\"team\":\"eng\"}`; these are business logic properties\n  managed by the namespace implementation outside Lance context\n- `storage_options`: serialize as a single JSON-encoded query parameter such as\n  `storage_options={\"aws_region\":\"us-east-1\",\"timeout\":\"30s\"}`; these configure\n  write-time overrides for data and metadata written during table creation\n"
+      requestBody:
+        description: Arrow IPC data
+        content:
+          application/vnd.apache.arrow.stream:
+            schema:
+              type: string
+              format: binary
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/CreateTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/explain_plan:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Data
+      summary: Get query execution plan explanation
+      operationId: ExplainTableQueryPlan
+      description: 'Get the query execution plan for a query against table `id`.
+
+        Returns a human-readable explanation of how the query will be executed.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace returns the response as a plain string
+
+        instead of the `ExplainTableQueryPlanResponse` JSON object.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExplainTableQueryPlanRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/ExplainTableQueryPlanResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/analyze_plan:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Data
+      summary: Analyze query execution plan
+      operationId: AnalyzeTableQueryPlan
+      description: 'Analyze the query execution plan for a query against table `id`.
+
+        Returns detailed statistics and analysis of the query execution plan.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace returns the response as a plain string
+
+        instead of the `AnalyzeTableQueryPlanResponse` JSON object.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalyzeTableQueryPlanRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/AnalyzeTableQueryPlanResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/add_columns:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Data
+      summary: Add new columns to table schema
+      operationId: AlterTableAddColumns
+      description: 'Add new columns to table `id` using SQL expressions or default values.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlterTableAddColumnsRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/AlterTableAddColumnsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/backfill_column:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Data
+      summary: Trigger an async column backfill job
+      operationId: AlterTableBackfillColumns
+      description: 'Trigger an asynchronous backfill job for a computed column on table `id`.
+
+        The column must be a virtual (UDF-backed) column. Returns a job ID for tracking.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlterTableBackfillColumnsRequest'
+      responses:
+        202:
+          $ref: '#/components/responses/AlterTableBackfillColumnsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/materialized_view/{id}/refresh:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Data
+      summary: Trigger an async materialized view refresh
+      operationId: RefreshMaterializedView
+      description: 'Trigger an asynchronous refresh job for materialized view `id`.
+
+        Returns a job ID for tracking.
+
+        '
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshMaterializedViewRequest'
+      responses:
+        202:
+          $ref: '#/components/responses/RefreshMaterializedViewResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/materialized_view/{id}/create:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Data
+      summary: Create a materialized view
+      operationId: CreateMaterializedView
+      description: 'Create a materialized view at identifier `id`. The view may be
+
+        query-backed, UDTF-backed, or chunker-backed, controlled by the
+
+        `kind` discriminator.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMaterializedViewRequest'
+      responses:
+        201:
+          $ref: '#/components/responses/CreateMaterializedViewResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+components:
+  schemas:
+    PhraseQuery:
+      type: object
+      required:
+      - terms
+      properties:
+        column:
+          type: string
+        slop:
+          type: integer
+          format: int32
+          minimum: 0
+        terms:
+          type: string
+    CreateTableResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        location:
+          type: string
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+        storage_options:
+          type: object
+          description: 'Configuration options to be used to access storage. The available
+
+            options depend on the type of storage in use. These will be
+
+            passed directly to Lance to initialize storage access.
+
+            '
+          additionalProperties:
+            type: string
+        properties:
+          type: object
+          description: 'Business logic properties stored and managed by the namespace implementation outside
+
+            Lance context. If the implementation does not support table properties, it should
+
+            return null for this field.
+
+            '
+          additionalProperties:
+            type: string
+          example:
+            owner: Ralph
+            created_at: '1452120468'
+          default: {}
+          nullable: true
+    CountTableRowsResponse:
+      type: integer
+      format: int64
+      description: 'Response containing the count of rows.
+
+        Serializes transparently as just the number for backward compatibility.
+
+        '
+      minimum: 0
+    ExplainTableQueryPlanRequest:
+      type: object
+      required:
+      - query
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        query:
+          $ref: '#/components/schemas/QueryTableRequest'
+        verbose:
+          type: boolean
+          default: false
+          description: Whether to return verbose explanation
+    MaterializedViewUdtfEntry:
+      type: object
+      required:
+      - kind
+      - udtf
+      - udtf_sha
+      - udtf_name
+      - udtf_version
+      properties:
+        kind:
+          type: string
+          enum:
+          - udtf
+          - chunker
+          description: 'Discriminates a batch UDTF (`udtf`, full-overwrite refresh)
+
+            from a chunker (`chunker`, incremental 1:N refresh). Must match
+
+            the enclosing request''s `kind`.
+
+            '
+        udtf:
+          type: string
+          description: 'Base64-encoded UDTFSpec / ChunkerSpec JSON envelope (per kind).
+
+            '
+        udtf_sha:
+          type: string
+          description: SHA-256 checksum of the envelope; server validates.
+        udtf_name:
+          type: string
+          description: Name of the UDTF
+        udtf_version:
+          type: string
+          description: Version of the UDTF
+        input_columns:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: 'Source columns the UDTF reads. Null means all columns (batch
+
+            UDTF only).
+
+            '
+        partition_by:
+          type:
+          - string
+          - 'null'
+          description: 'Batch UDTF only. Column-value partition key for
+
+            partition-parallel execution. Mutually exclusive with
+
+            `partition_by_indexed_column`.
+
+            '
+        partition_by_indexed_column:
+          type:
+          - string
+          - 'null'
+          description: 'Batch UDTF only. Source column with an IVF-family index used
+
+            for index-based partitioning. The server validates the index
+
+            exists at create time.
+
+            '
+        num_cpus:
+          type:
+          - number
+          - 'null'
+          description: Ray actor CPU request.
+        num_gpus:
+          type:
+          - number
+          - 'null'
+          description: Ray actor GPU request.
+        memory:
+          type:
+          - integer
+          - 'null'
+          description: Ray actor memory request, in bytes.
+        error_handling:
+          type:
+          - object
+          - 'null'
+          description: 'Batch UDTF only. Serialized ErrorHandlingConfig controlling
+
+            partition-grain fail/retry/skip behavior.
+
+            '
+        batch:
+          type:
+          - boolean
+          - 'null'
+          description: 'Chunker only. True for a batched chunker; affects how the
+
+            worker dispatches input rows.
+
+            '
+        manifest:
+          type:
+          - string
+          - 'null'
+          description: JSON-serialized GenevaManifest for the UDTF environment.
+        manifest_checksum:
+          type:
+          - string
+          - 'null'
+          description: SHA-256 checksum of the manifest content.
+    AlterTableAddColumnsRequest:
+      type: object
+      required:
+      - new_columns
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        id:
+          type: array
+          items:
+            type: string
+          description: Table identifier path (namespace + table name)
+        new_columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddColumnsEntry'
+          description: List of new columns to add to the table
+    BoostQuery:
+      type: object
+      description: Boost query that scores documents matching positive query higher and negative query lower
+      required:
+      - positive
+      - negative
+      properties:
+        positive:
+          $ref: '#/components/schemas/FtsQuery'
+        negative:
+          $ref: '#/components/schemas/FtsQuery'
+        negative_boost:
+          type: number
+          format: float
+          description: 'Boost factor for negative query (default: 0.5)'
+          default: 0.5
+    DeleteFromTableResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        version:
+          type: integer
+          format: int64
+          description: The commit version associated with the operation
+          minimum: 0
+    AddColumnsEntry:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the new column
+        expression:
+          type:
+          - string
+          - 'null'
+          description: SQL expression for the column (optional if virtual_column is specified)
+        virtual_column:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/AddVirtualColumnEntry'
+          description: Virtual column definition (optional if expression is specified)
+    FtsQuery:
+      type: object
+      description: 'Full-text search query. Exactly one query type field must be provided.
+
+        This structure follows the same pattern as AlterTransactionAction to minimize
+
+        differences and compatibility issues across codegen in different languages.
+
+        '
+      properties:
+        match:
+          $ref: '#/components/schemas/MatchQuery'
+        phrase:
+          $ref: '#/components/schemas/PhraseQuery'
+        boost:
+          $ref: '#/components/schemas/BoostQuery'
+        multi_match:
+          $ref: '#/components/schemas/MultiMatchQuery'
+        boolean:
+          $ref: '#/components/schemas/BooleanQuery'
+    AddVirtualColumnEntry:
+      type: object
+      required:
+      - input_columns
+      - data_type
+      - image
+      - udf_version
+      - udf_name
+      - udf
+      properties:
+        input_columns:
+          type: array
+          items:
+            type: string
+          description: List of input column names for the virtual column
+        data_type:
+          type: object
+          description: Data type of the virtual column using JSON representation
+        image:
+          type: string
+          description: Docker image to use for the UDF
+        udf:
+          type: string
+          description: Base64 encoded pickled UDF
+        udf_name:
+          type: string
+          description: Name of the UDF
+        udf_version:
+          type: string
+          description: Version of the UDF
+        udf_backend:
+          type:
+          - string
+          - 'null'
+          description: UDF backend type (e.g. DockerUDFSpecV1)
+        auto_backfill:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to automatically backfill the column after creation
+        manifest:
+          type:
+          - string
+          - 'null'
+          description: JSON-serialized manifest for the UDF environment
+        manifest_checksum:
+          type:
+          - string
+          - 'null'
+          description: SHA-256 checksum of the manifest content
+        field_metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: User-supplied field metadata (string key-value pairs)
+    QueryTableRequest:
+      type: object
+      required:
+      - vector
+      - k
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        bypass_vector_index:
+          type: boolean
+          description: Whether to bypass vector index
+        columns:
+          type: object
+          nullable: true
+          description: 'Optional columns to return. Provide either column_names or column_aliases, not both.
+
+            '
+          properties:
+            column_names:
+              type: array
+              items:
+                type: string
+              description: List of column names to return
+            column_aliases:
+              type: object
+              additionalProperties:
+                type: string
+              description: Object mapping output aliases to source column names
+        distance_type:
+          type: string
+          description: Distance metric to use
+        ef:
+          type: integer
+          minimum: 0
+          description: Search effort parameter for HNSW index
+        fast_search:
+          type: boolean
+          description: Whether to use fast search
+        filter:
+          type: string
+          description: Optional SQL filter expression
+        full_text_query:
+          type: object
+          nullable: true
+          description: Optional full-text search query. Provide either string_query or structured_query, not both.
+          properties:
+            string_query:
+              $ref: '#/components/schemas/StringFtsQuery'
+            structured_query:
+              $ref: '#/components/schemas/StructuredFtsQuery'
+        k:
+          type: integer
+          minimum: 0
+          description: Number of results to return
+        lower_bound:
+          type: number
+          format: float
+          description: Lower bound for search
+        nprobes:
+          type: integer
+          minimum: 0
+          description: Number of probes for IVF index
+        offset:
+          type: integer
+          minimum: 0
+          description: Number of results to skip
+        prefilter:
+          type: boolean
+          description: Whether to apply filtering before vector search
+        refine_factor:
+          type: integer
+          format: int32
+          minimum: 0
+          description: Refine factor for search
+        upper_bound:
+          type: number
+          format: float
+          description: Upper bound for search
+        vector:
+          type: object
+          nullable: true
+          description: Query vector(s) for similarity search. Provide either single_vector or multi_vector, not both.
+          properties:
+            single_vector:
+              type: array
+              items:
+                type: number
+                format: float
+              description: Single query vector
+            multi_vector:
+              type: array
+              items:
+                type: array
+                items:
+                  type: number
+                  format: float
+              description: Multiple query vectors for batch search
+        vector_column:
+          type: string
+          description: Name of the vector column to search
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Table version to query
+        with_row_id:
+          type: boolean
+          description: If true, return the row id as a column called `_rowid`
+    AlterTableBackfillColumnsRequest:
+      type: object
+      required:
+      - column
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        id:
+          type: array
+          items:
+            type: string
+          description: Table identifier path (namespace + table name)
+        column:
+          type: string
+          description: Column name to backfill
+        where:
+          type:
+          - string
+          - 'null'
+          description: Optional WHERE clause filter
+        concurrency:
+          type:
+          - integer
+          - 'null'
+          description: Optional concurrency override
+        intra_applier_concurrency:
+          type:
+          - integer
+          - 'null'
+          description: Optional intra-applier concurrency override
+        min_checkpoint_size:
+          type:
+          - integer
+          - 'null'
+          description: Optional minimum checkpoint size
+        max_checkpoint_size:
+          type:
+          - integer
+          - 'null'
+          description: Optional maximum checkpoint size
+        batch_checkpoint_flush_interval_seconds:
+          type:
+          - number
+          - 'null'
+          description: Optional batch checkpoint flush interval in seconds
+        read_version:
+          type:
+          - integer
+          - 'null'
+          description: Optional table version to read from
+        task_size:
+          type:
+          - integer
+          - 'null'
+          description: Optional task size
+        num_frags:
+          type:
+          - integer
+          - 'null'
+          description: Optional number of fragments
+        checkpoint_size:
+          type:
+          - integer
+          - 'null'
+          description: Optional checkpoint size
+        commit_granularity:
+          type:
+          - integer
+          - 'null'
+          description: Optional commit granularity
+        cluster:
+          type:
+          - string
+          - 'null'
+          description: Optional cluster name
+        manifest:
+          type:
+          - string
+          - 'null'
+          description: Optional manifest name
+    UpdateTableResponse:
+      type: object
+      required:
+      - updated_rows
+      - version
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        updated_rows:
+          type: integer
+          format: int64
+          description: Number of rows updated
+          minimum: 0
+        version:
+          type: integer
+          format: int64
+          description: The commit version associated with the operation
+          minimum: 0
+        properties:
+          type: object
+          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise, it should return the properties.
+
+            '
+          additionalProperties:
+            type: string
+    RefreshMaterializedViewRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        id:
+          type: array
+          items:
+            type: string
+          description: Table identifier path (namespace + table name)
+        src_version:
+          type:
+          - integer
+          - 'null'
+          description: Optional source version to refresh from
+        max_rows_per_fragment:
+          type:
+          - integer
+          - 'null'
+          description: Optional maximum rows per fragment
+        concurrency:
+          type:
+          - integer
+          - 'null'
+          description: Optional concurrency override
+        intra_applier_concurrency:
+          type:
+          - integer
+          - 'null'
+          description: Optional intra-applier concurrency override
+        cluster:
+          type:
+          - string
+          - 'null'
+          description: Optional cluster name (operational override)
+        output_limit:
+          type:
+          - integer
+          - 'null'
+          description: 'Post-trim cap on view row count after expansion. Valid only for
+
+            chunker materialized views; returns 400 if set on other kinds.
+
+            '
+        manifest:
+          type:
+          - string
+          - 'null'
+          description: 'Optional inline JSON-serialized GenevaManifest. Operational
+
+            override for this refresh only; does not mutate the view''s
+
+            snapshotted manifest. When omitted, the manifest stored in the
+
+            view''s metadata is used.
+
+            '
+    Identity:
+      type: object
+      description: 'Identity information of a request.
+
+        '
+      properties:
+        api_key:
+          type: string
+          description: 'API key for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `x-api-key` header.
+
+            '
+        auth_token:
+          type: string
+          description: 'Bearer token for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `Authorization` header
+
+            with the Bearer scheme (e.g., `Bearer <token>`).
+
+            '
+    CreateMaterializedViewRequest:
+      type: object
+      required:
+      - kind
+      - source_query
+      - output_schema
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        id:
+          type: array
+          items:
+            type: string
+          description: View identifier path (namespace + view name)
+        kind:
+          type: string
+          enum:
+          - query
+          - udtf
+          - chunker
+          description: 'The materialized view kind.
+
+            - `query` — plain query-backed view (no UDTF), 1:1 rows.
+
+            - `udtf` — batch UDTF-backed view (N:M rows, full refresh).
+
+            - `chunker`, aka ''scalar_udtf'' — chunker view (1:N row expansion, incremental refresh).
+
+            '
+        source_query:
+          type: string
+          description: 'Opaque serialized representation of the source query that
+
+            defines the view''s input. The format is defined by the client;
+
+            the namespace server stores it without interpreting it.
+
+            '
+        output_schema:
+          type: string
+          description: Base64-encoded Arrow schema of the view output
+        udtf_spec:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/MaterializedViewUdtfEntry'
+          description: 'UDTF descriptor. Required when kind is `udtf` or `chunker`;
+
+            must be null when kind is `query`.
+
+            '
+        with_no_data:
+          type: boolean
+          default: true
+          description: 'If false, the server kicks off an initial refresh immediately
+
+            after creating the view and the response includes a job ID.
+
+            '
+        auto_refresh:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          description: 'If true, the view is automatically refreshed when source-table
+
+            data changes past the deployment-level threshold. Boolean
+
+            opt-in only; the threshold and cooldown are configured on the
+
+            deployment, not per-view.
+
+            '
+    DeleteFromTableRequest:
+      type: object
+      description: 'Delete data from table based on a SQL predicate.
+
+        Returns the number of rows that were deleted.
+
+        '
+      required:
+      - predicate
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+          description: The namespace identifier
+        predicate:
+          type: string
+          description: SQL predicate to filter rows for deletion
+    RefreshMaterializedViewResponse:
+      type: object
+      required:
+      - job_id
+      properties:
+        job_id:
+          type: string
+          description: The job ID for tracking the refresh job
+    AlterTableBackfillColumnsResponse:
+      type: object
+      required:
+      - job_id
+      properties:
+        job_id:
+          type: string
+          description: The job ID for tracking the backfill job
+    CountTableRowsRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        version:
+          description: 'Version of the table to describe.
+
+            If not specified, server should resolve it to the latest version.
+
+            '
+          type: integer
+          format: int64
+          minimum: 0
+        predicate:
+          description: 'Optional SQL predicate to filter rows for counting
+
+            '
+          type: string
+    CreateMaterializedViewResponse:
+      type: object
+      required:
+      - version
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: The commit version that created the materialized view
+          minimum: 0
+        job_id:
+          type:
+          - string
+          - 'null'
+          description: 'Refresh job ID, populated only when `with_no_data` was false.
+
+            '
+    ErrorResponse:
+      type: object
+      description: Common JSON error response model
+      required:
+      - code
+      properties:
+        error:
+          type: string
+          description: A brief, human-readable message about the error.
+          example: Table 'users' not found in namespace 'production'
+        code:
+          type: integer
+          minimum: 0
+          description: "Lance Namespace error code identifying the error type.\n\nError codes:\n  0 - Unsupported: Operation not supported by this backend\n  1 - NamespaceNotFound: The specified namespace does not exist\n  2 - NamespaceAlreadyExists: A namespace with this name already exists\n  3 - NamespaceNotEmpty: Namespace contains tables or child namespaces\n  4 - TableNotFound: The specified table does not exist\n  5 - TableAlreadyExists: A table with this name already exists\n  6 - TableIndexNotFound: The specified table index does not exist\n  7 - TableIndexAlreadyExists: A table index with this name already exists\n  8 - TableTagNotFound: The specified table tag does not exist\n  9 - TableTagAlreadyExists: A table tag with this name already exists\n  10 - TransactionNotFound: The specified transaction does not exist\n  11 - TableVersionNotFound: The specified table version does not exist\n  12 - TableColumnNotFound: The specified table column does not exist\n  13 - InvalidInput: Malformed request or invalid parameters\n  14 - ConcurrentModification: Optimistic concurrency conflict\n  15 - PermissionDenied: User lacks permission for this operation\n  16 - Unauthenticated: Authentication credentials are missing or invalid\n  17 - ServiceUnavailable: Service is temporarily unavailable\n  18 - Internal: Unexpected server/implementation error\n  19 - InvalidTableState: Table is in an invalid state for the operation\n  20 - TableSchemaValidationError: Table schema validation failed\n"
+          example: 4
+        detail:
+          type: string
+          description: 'An optional human-readable explanation of the error.
+
+            This can be used to record additional information such as stack trace.
+
+            '
+          example: The table may have been dropped or renamed
+        instance:
+          type: string
+          description: 'A string that identifies the specific occurrence of the error.
+
+            This can be a URI, a request or response ID,
+
+            or anything that the implementation can recognize to trace specific occurrence of the error.
+
+            '
+          example: /v1/table/production$users/describe
+    UpdateTableRequest:
+      type: object
+      description: 'Each update consists of a column name and an SQL expression that will be
+
+        evaluated against the current row''s value. Optionally, a predicate can be
+
+        provided to filter which rows to update.
+
+        '
+      required:
+      - updates
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        predicate:
+          type: string
+          nullable: true
+          description: Optional SQL predicate to filter rows for update
+        updates:
+          type: array
+          items:
+            type: array
+            minItems: 2
+            maxItems: 2
+            items:
+              type: string
+          description: List of column updates as [column_name, expression] pairs
+        properties:
+          type: object
+          description: 'Properties stored on the table, if supported by the implementation.
+
+            '
+          additionalProperties:
+            type: string
+    Operator:
+      type: string
+      description: 'The operator to use for combining terms.
+
+        Case insensitive, supports both PascalCase and snake_case. Valid values are:
+
+        - And: All terms must match.
+
+        - Or: At least one term must match.
+
+        '
+    AnalyzeTableQueryPlanRequest:
+      type: object
+      required:
+      - vector
+      - k
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        bypass_vector_index:
+          type: boolean
+          description: Whether to bypass vector index
+        columns:
+          type: object
+          nullable: true
+          description: 'Optional columns to return. Provide either column_names or column_aliases, not both.
+
+            '
+          properties:
+            column_names:
+              type: array
+              items:
+                type: string
+              description: List of column names to return
+            column_aliases:
+              type: object
+              additionalProperties:
+                type: string
+              description: Object mapping output aliases to source column names
+        distance_type:
+          type: string
+          description: Distance metric to use
+        ef:
+          type: integer
+          minimum: 0
+          description: Search effort parameter for HNSW index
+        fast_search:
+          type: boolean
+          description: Whether to use fast search
+        filter:
+          type: string
+          description: Optional SQL filter expression
+        full_text_query:
+          type: object
+          nullable: true
+          description: Optional full-text search query. Provide either string_query or structured_query, not both.
+          properties:
+            string_query:
+              $ref: '#/components/schemas/StringFtsQuery'
+            structured_query:
+              $ref: '#/components/schemas/StructuredFtsQuery'
+        k:
+          type: integer
+          minimum: 0
+          description: Number of results to return
+        lower_bound:
+          type: number
+          format: float
+          description: Lower bound for search
+        nprobes:
+          type: integer
+          minimum: 0
+          description: Number of probes for IVF index
+        offset:
+          type: integer
+          minimum: 0
+          description: Number of results to skip
+        prefilter:
+          type: boolean
+          description: Whether to apply filtering before vector search
+        refine_factor:
+          type: integer
+          format: int32
+          minimum: 0
+          description: Refine factor for search
+        upper_bound:
+          type: number
+          format: float
+          description: Upper bound for search
+        vector:
+          type: object
+          nullable: true
+          description: Query vector(s) for similarity search. Provide either single_vector or multi_vector, not both.
+          properties:
+            single_vector:
+              type: array
+              items:
+                type: number
+                format: float
+              description: Single query vector
+            multi_vector:
+              type: array
+              items:
+                type: array
+                items:
+                  type: number
+                  format: float
+              description: Multiple query vectors for batch search
+        vector_column:
+          type: string
+          description: Name of the vector column to search
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Table version to query
+        with_row_id:
+          type: boolean
+          description: If true, return the row id as a column called `_rowid`
+    MultiMatchQuery:
+      type: object
+      required:
+      - match_queries
+      properties:
+        match_queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/MatchQuery'
+    StringFtsQuery:
+      type: object
+      required:
+      - query
+      properties:
+        columns:
+          type: array
+          items:
+            type: string
+        query:
+          type: string
+    InsertIntoTableResponse:
+      type: object
+      description: Response from inserting records into a table
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    Context:
+      type: object
+      description: 'Arbitrary context for a request as key-value pairs.
+
+        How to use the context is custom to the specific implementation.
+
+
+        REST NAMESPACE ONLY
+
+        Context entries are passed via HTTP headers using the naming convention
+
+        `x-lance-ctx-<key>: <value>`. For example, a context entry
+
+        `{"trace_id": "abc123"}` would be sent as the header `x-lance-ctx-trace_id: abc123`.
+
+        '
+      additionalProperties:
+        type: string
+    AlterTableAddColumnsResponse:
+      type: object
+      required:
+      - version
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: The commit version associated with the operation
+          minimum: 0
+    StructuredFtsQuery:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          $ref: '#/components/schemas/FtsQuery'
+    BooleanQuery:
+      type: object
+      description: Boolean query with must, should, and must_not clauses
+      required:
+      - should
+      - must
+      - must_not
+      properties:
+        must:
+          type: array
+          items:
+            $ref: '#/components/schemas/FtsQuery'
+          description: Queries that must match (AND)
+        must_not:
+          type: array
+          items:
+            $ref: '#/components/schemas/FtsQuery'
+          description: Queries that must not match (NOT)
+        should:
+          type: array
+          items:
+            $ref: '#/components/schemas/FtsQuery'
+          description: Queries that should match (OR)
+    MergeInsertIntoTableResponse:
+      type: object
+      description: Response from merge insert operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        num_updated_rows:
+          type: integer
+          format: int64
+          description: Number of rows updated
+          minimum: 0
+        num_inserted_rows:
+          type: integer
+          format: int64
+          description: Number of rows inserted
+          minimum: 0
+        num_deleted_rows:
+          type: integer
+          format: int64
+          description: Number of rows deleted (typically 0 for merge insert)
+          minimum: 0
+        version:
+          type: integer
+          format: int64
+          description: The commit version associated with the operation
+          minimum: 0
+    MatchQuery:
+      type: object
+      required:
+      - terms
+      properties:
+        boost:
+          type: number
+          format: float
+        column:
+          type: string
+        fuzziness:
+          type: integer
+          format: int32
+          minimum: 0
+        max_expansions:
+          type: integer
+          description: 'The maximum number of terms to expand for fuzzy matching.
+
+            Default to 50.'
+          minimum: 0
+        operator:
+          $ref: '#/components/schemas/Operator'
+          description: 'The operator to use for combining terms.
+
+            This can be either `And` or `Or`, it''s ''Or'' by default.
+
+            - `And`: All terms must match.
+
+            - `Or`: At least one term must match.'
+        prefix_length:
+          type: integer
+          format: int32
+          description: 'The number of beginning characters being unchanged for fuzzy matching.
+
+            Default to 0.'
+          minimum: 0
+        terms:
+          type: string
+  responses:
+    UpdateTableResponse:
+      description: Update successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateTableResponse'
+    ServerErrorResponse:
+      description: A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/server-error
+            title: Internal Server Error
+            status: 500
+            detail: ''
+            instance: /v1/namespaces
+    QueryTableResponse:
+      description: Query results in Arrow IPC file format
+      content:
+        application/vnd.apache.arrow.file:
+          schema:
+            type: string
+            format: binary
+    CreateMaterializedViewResponse:
+      description: Materialized view created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateMaterializedViewResponse'
+    BadRequestErrorResponse:
+      description: Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/bad-request
+            title: Malformed request
+            status: 400
+            detail: ''
+            instance: /v1/namespaces
+    ExplainTableQueryPlanResponse:
+      description: Query execution plan explanation
+      content:
+        application/json:
+          schema:
+            type: string
+            description: Human-readable query execution plan
+    DeleteFromTableResponse:
+      description: Delete successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeleteFromTableResponse'
+    CountTableRowsResponse:
+      description: Result of counting rows in a table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CountTableRowsResponse'
+    InsertIntoTableResponse:
+      description: Result of inserting records into a table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InsertIntoTableResponse'
+    CreateTableResponse:
+      description: Table properties result when creating a table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTableResponse'
+    MergeInsertIntoTableResponse:
+      description: Result of merge insert operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MergeInsertIntoTableResponse'
+    ConflictErrorResponse:
+      description: The request conflicts with the current state of the target resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/conflict
+            title: The namespace has been concurrently modified
+            status: 409
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    RefreshMaterializedViewResponse:
+      description: Refresh job accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RefreshMaterializedViewResponse'
+    ServiceUnavailableErrorResponse:
+      description: The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/service-unavailable
+            title: Slow down
+            status: 503
+            detail: ''
+            instance: /v1/namespaces
+    AnalyzeTableQueryPlanResponse:
+      description: Query execution plan analysis
+      content:
+        application/json:
+          schema:
+            type: string
+            description: Human-readable query execution plan analysis
+    ForbiddenErrorResponse:
+      description: Forbidden. Authenticated user does not have the necessary permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/forbidden-request
+            title: Not authorized to make this request
+            status: 403
+            detail: ''
+            instance: /v1/namespaces
+    AlterTableAddColumnsResponse:
+      description: Add columns operation result
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AlterTableAddColumnsResponse'
+    UnauthorizedErrorResponse:
+      description: Unauthorized. The request lacks valid authentication credentials for the operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/unauthorized-request
+            title: No valid authentication credentials for the operation
+            status: 401
+            detail: ''
+            instance: /v1/namespaces
+    NotFoundErrorResponse:
+      description: A server-side problem that means can not find the specified resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/not-found-error
+            title: Not found Error
+            status: 404
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    AlterTableBackfillColumnsResponse:
+      description: Backfill job accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AlterTableBackfillColumnsResponse'
+  parameters:
+    id:
+      name: id
+      description: '`string identifier` of an object in a namespace, following the Lance Namespace spec.
+
+        When the value is equal to the delimiter, it represents the root namespace.
+
+        For example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.
+
+        '
+      in: path
+      required: true
+      schema:
+        type: string
+    delimiter:
+      name: delimiter
+      description: 'An optional delimiter of the `string identifier`, following the Lance Namespace spec.
+
+        When not specified, the `$` delimiter must be used.
+
+        '
+      in: query
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

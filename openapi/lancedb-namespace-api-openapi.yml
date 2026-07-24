@@ -1,0 +1,778 @@
+openapi: 3.1.1
+info:
+  title: Lance Specification Data Namespace API
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+  description: 'This OpenAPI specification is a part of the Lance namespace specification. It contains 2 parts:
+
+
+    The `components/schemas`, `components/responses`, `components/examples`, `tags` sections define
+
+    the request and response shape for each operation in a Lance Namespace across all implementations.
+
+    See https://lance.org/format/namespace/operations for more details.
+
+
+    The `servers`, `security`, `paths`, `components/parameters` sections are for the
+
+    Lance REST Namespace implementation, which defines a complete REST server that can work with Lance datasets.
+
+    See https://lance.org/format/namespace/rest for more details.
+
+    '
+servers:
+- url: '{scheme}://{host}:{port}/{basePath}'
+  description: Generic server URL with all parts configurable
+  variables:
+    scheme:
+      default: http
+    host:
+      default: localhost
+    port:
+      default: '2333'
+    basePath:
+      default: ''
+- url: '{scheme}://{host}/{basePath}'
+  description: Server URL when the port can be inferred from the scheme
+  variables:
+    scheme:
+      default: http
+    host:
+      default: localhost
+    basePath:
+      default: ''
+security:
+- OAuth2: []
+- BearerAuth: []
+- ApiKeyAuth: []
+tags:
+- name: Namespace
+  description: 'Operations that are related to a namespace
+
+    '
+paths:
+  /v1/namespace/{id}/create:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Namespace
+      summary: Create a new namespace
+      operationId: CreateNamespace
+      description: 'Create new namespace `id`.
+
+
+        During the creation process, the implementation may modify user-provided `properties`,
+
+        such as adding additional properties like `created_at` to user-provided properties,
+
+        omitting any specific property, or performing actions based on any property value.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNamespaceRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/CreateNamespaceResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        406:
+          $ref: '#/components/responses/UnsupportedOperationErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/namespace/{id}/list:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    - $ref: '#/components/parameters/page_token'
+    - $ref: '#/components/parameters/limit'
+    get:
+      tags:
+      - Namespace
+      summary: List namespaces
+      operationId: ListNamespaces
+      description: 'List all child namespace names of the parent namespace `id`.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace uses GET to perform this operation without a request body.
+
+        It passes in the `ListNamespacesRequest` information in the following way:
+
+        - `id`: pass through path parameter of the same name
+
+        - `page_token`: pass through query parameter of the same name
+
+        - `limit`: pass through query parameter of the same name
+
+        '
+      responses:
+        200:
+          $ref: '#/components/responses/ListNamespacesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        406:
+          $ref: '#/components/responses/UnsupportedOperationErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/namespace/{id}/describe:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Namespace
+      summary: Describe a namespace
+      operationId: DescribeNamespace
+      description: 'Describe the detailed information for namespace `id`.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeNamespaceRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/DescribeNamespaceResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/namespace/{id}/drop:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Namespace
+      summary: Drop a namespace
+      operationId: DropNamespace
+      description: 'Drop namespace `id` from its parent namespace.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DropNamespaceRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/DropNamespaceResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/namespace/{id}/exists:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Namespace
+      summary: Check if a namespace exists
+      operationId: NamespaceExists
+      description: 'Check if namespace `id` exists.
+
+
+        This operation must behave exactly like the DescribeNamespace API,
+
+        except it does not contain a response body.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NamespaceExistsRequest'
+      responses:
+        200:
+          description: Success, no content
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/namespace/{id}/table/list:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    - $ref: '#/components/parameters/page_token'
+    - $ref: '#/components/parameters/limit'
+    - $ref: '#/components/parameters/include_declared'
+    get:
+      tags:
+      - Namespace
+      summary: List tables in a namespace
+      operationId: ListTables
+      description: 'List all child table names of the parent namespace `id`.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace uses GET to perform this operation without a request body.
+
+        It passes in the `ListTablesRequest` information in the following way:
+
+        - `id`: pass through path parameter of the same name
+
+        - `page_token`: pass through query parameter of the same name
+
+        - `limit`: pass through query parameter of the same name
+
+        - `include_declared`: pass through query parameter of the same name
+
+        '
+      responses:
+        200:
+          $ref: '#/components/responses/ListTablesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        406:
+          $ref: '#/components/responses/UnsupportedOperationErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+components:
+  responses:
+    UnsupportedOperationErrorResponse:
+      description: Not Acceptable / Unsupported Operation. The server does not support this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/unsupported-operation
+            title: The server does not support this operation
+            status: 406
+            detail: ''
+            instance: /v1/namespaces
+    ServerErrorResponse:
+      description: A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/server-error
+            title: Internal Server Error
+            status: 500
+            detail: ''
+            instance: /v1/namespaces
+    DropNamespaceResponse:
+      description: Result of dropping a namespace
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DropNamespaceResponse'
+    BadRequestErrorResponse:
+      description: Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/bad-request
+            title: Malformed request
+            status: 400
+            detail: ''
+            instance: /v1/namespaces
+    CreateNamespaceResponse:
+      description: Result of creating a namespace
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateNamespaceResponse'
+    ListTablesResponse:
+      description: A list of tables
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListTablesResponse'
+    ConflictErrorResponse:
+      description: The request conflicts with the current state of the target resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/conflict
+            title: The namespace has been concurrently modified
+            status: 409
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    DescribeNamespaceResponse:
+      description: Returns a namespace, as well as any properties stored on the namespace if namespace properties are supported by the server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DescribeNamespaceResponse'
+    ServiceUnavailableErrorResponse:
+      description: The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/service-unavailable
+            title: Slow down
+            status: 503
+            detail: ''
+            instance: /v1/namespaces
+    ForbiddenErrorResponse:
+      description: Forbidden. Authenticated user does not have the necessary permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/forbidden-request
+            title: Not authorized to make this request
+            status: 403
+            detail: ''
+            instance: /v1/namespaces
+    UnauthorizedErrorResponse:
+      description: Unauthorized. The request lacks valid authentication credentials for the operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/unauthorized-request
+            title: No valid authentication credentials for the operation
+            status: 401
+            detail: ''
+            instance: /v1/namespaces
+    NotFoundErrorResponse:
+      description: A server-side problem that means can not find the specified resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/not-found-error
+            title: Not found Error
+            status: 404
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    ListNamespacesResponse:
+      description: A list of namespaces
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListNamespacesResponse'
+          examples:
+            NonEmptyResponse:
+              $ref: '#/components/examples/ListNamespacesNonEmptyExample'
+            EmptyResponse:
+              $ref: '#/components/examples/ListNamespacesEmptyExample'
+  schemas:
+    DescribeNamespaceRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+    Identity:
+      type: object
+      description: 'Identity information of a request.
+
+        '
+      properties:
+        api_key:
+          type: string
+          description: 'API key for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `x-api-key` header.
+
+            '
+        auth_token:
+          type: string
+          description: 'Bearer token for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `Authorization` header
+
+            with the Bearer scheme (e.g., `Bearer <token>`).
+
+            '
+    CreateNamespaceResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        properties:
+          description: 'Properties after the namespace is created.
+
+
+            If the server does not support namespace properties, it should return null for this field.
+
+            If namespace properties are supported, but none are set, it should return an empty object.
+
+            '
+          type: object
+          additionalProperties:
+            type: string
+    DropNamespaceResponse:
+      type: object
+      properties:
+        properties:
+          type: object
+          description: 'If the implementation does not support namespace properties, it should return null for this field. Otherwise it should return the properties.
+
+            '
+          additionalProperties:
+            type: string
+        transaction_id:
+          description: 'If present, indicating the operation is long running and should be tracked using DescribeTransaction
+
+            '
+          type: array
+          items:
+            type: string
+    CreateNamespaceRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        mode:
+          type: string
+          description: "There are three modes when trying to create a namespace,\nto differentiate the behavior when a namespace of the same name already exists.\nCase insensitive, supports both PascalCase and snake_case. Valid values are:\n  * Create: the operation fails with 409.\n  * ExistOk: the operation succeeds and the existing namespace is kept.\n  * Overwrite: the existing namespace is dropped and a new empty namespace with this name is created.\n"
+        properties:
+          type: object
+          description: 'Properties stored on the namespace, if supported by the implementation.
+
+            '
+          additionalProperties:
+            type: string
+    DropNamespaceRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        mode:
+          type: string
+          description: 'The mode for dropping a namespace, deciding the server behavior when the namespace to drop is not found.
+
+            Case insensitive, supports both PascalCase and snake_case. Valid values are:
+
+            - Fail (default): the server must return 400 indicating the namespace to drop does not exist.
+
+            - Skip: the server must return 204 indicating the drop operation has succeeded.
+
+            '
+        behavior:
+          type: string
+          description: "The behavior for dropping a namespace.\nCase insensitive, supports both PascalCase and snake_case. Valid values are:\n- Restrict (default): the namespace should not contain any table or child namespace when drop is initiated.\n    If tables are found, the server should return error and not drop the namespace.\n- Cascade: all tables and child namespaces in the namespace are dropped before the namespace is dropped.\n"
+    PageLimit:
+      description: 'An inclusive upper bound of the
+
+        number of results that a caller will receive.
+
+        '
+      type: integer
+      nullable: true
+    ListTablesResponse:
+      type: object
+      required:
+      - tables
+      properties:
+        tables:
+          type: array
+          uniqueItems: true
+          description: 'The list of names of all the tables under the connected namespace implementation.
+
+            This should recursively list all the tables in all child namespaces.
+
+            Each string in the list is the full identifier in string form.
+
+            '
+          items:
+            type: string
+        page_token:
+          $ref: '#/components/schemas/PageToken'
+    ErrorResponse:
+      type: object
+      description: Common JSON error response model
+      required:
+      - code
+      properties:
+        error:
+          type: string
+          description: A brief, human-readable message about the error.
+          example: Table 'users' not found in namespace 'production'
+        code:
+          type: integer
+          minimum: 0
+          description: "Lance Namespace error code identifying the error type.\n\nError codes:\n  0 - Unsupported: Operation not supported by this backend\n  1 - NamespaceNotFound: The specified namespace does not exist\n  2 - NamespaceAlreadyExists: A namespace with this name already exists\n  3 - NamespaceNotEmpty: Namespace contains tables or child namespaces\n  4 - TableNotFound: The specified table does not exist\n  5 - TableAlreadyExists: A table with this name already exists\n  6 - TableIndexNotFound: The specified table index does not exist\n  7 - TableIndexAlreadyExists: A table index with this name already exists\n  8 - TableTagNotFound: The specified table tag does not exist\n  9 - TableTagAlreadyExists: A table tag with this name already exists\n  10 - TransactionNotFound: The specified transaction does not exist\n  11 - TableVersionNotFound: The specified table version does not exist\n  12 - TableColumnNotFound: The specified table column does not exist\n  13 - InvalidInput: Malformed request or invalid parameters\n  14 - ConcurrentModification: Optimistic concurrency conflict\n  15 - PermissionDenied: User lacks permission for this operation\n  16 - Unauthenticated: Authentication credentials are missing or invalid\n  17 - ServiceUnavailable: Service is temporarily unavailable\n  18 - Internal: Unexpected server/implementation error\n  19 - InvalidTableState: Table is in an invalid state for the operation\n  20 - TableSchemaValidationError: Table schema validation failed\n"
+          example: 4
+        detail:
+          type: string
+          description: 'An optional human-readable explanation of the error.
+
+            This can be used to record additional information such as stack trace.
+
+            '
+          example: The table may have been dropped or renamed
+        instance:
+          type: string
+          description: 'A string that identifies the specific occurrence of the error.
+
+            This can be a URI, a request or response ID,
+
+            or anything that the implementation can recognize to trace specific occurrence of the error.
+
+            '
+          example: /v1/table/production$users/describe
+    ListNamespacesResponse:
+      type: object
+      required:
+      - namespaces
+      properties:
+        namespaces:
+          type: array
+          uniqueItems: true
+          description: 'The list of names of the child namespaces relative to the parent namespace `id` in the request.
+
+            '
+          items:
+            type: string
+        page_token:
+          $ref: '#/components/schemas/PageToken'
+    Context:
+      type: object
+      description: 'Arbitrary context for a request as key-value pairs.
+
+        How to use the context is custom to the specific implementation.
+
+
+        REST NAMESPACE ONLY
+
+        Context entries are passed via HTTP headers using the naming convention
+
+        `x-lance-ctx-<key>: <value>`. For example, a context entry
+
+        `{"trace_id": "abc123"}` would be sent as the header `x-lance-ctx-trace_id: abc123`.
+
+        '
+      additionalProperties:
+        type: string
+    DescribeNamespaceResponse:
+      type: object
+      properties:
+        properties:
+          type: object
+          description: Properties stored on the namespace, if supported by the server. If the server does not support namespace properties, it should return null for this field. If namespace properties are supported, but none are set, it should return an empty object.
+          additionalProperties:
+            type: string
+          example:
+            owner: Ralph
+            created_at: '1452120468'
+          default: {}
+          nullable: true
+    PageToken:
+      description: 'An opaque token that allows pagination for list operations (e.g. ListNamespaces).
+
+
+        For an initial request of a list operation,
+
+        if the implementation cannot return all items in one response,
+
+        or if there are more items than the page limit specified in the request,
+
+        the implementation must return a page token in the response,
+
+        indicating there are more results available.
+
+
+        After the initial request,
+
+        the value of the page token from each response must be used
+
+        as the page token value for the next request.
+
+
+        Caller must interpret either `null`,
+
+        missing value or empty string value of the page token from
+
+        the implementation''s response as the end of the listing results.
+
+        '
+      type: string
+      nullable: true
+    NamespaceExistsRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+  parameters:
+    include_declared:
+      name: include_declared
+      description: 'When true (default), includes tables that have been declared in the namespace
+
+        but not yet created on storage, in addition to tables that have
+
+        been created. When false, only tables with storage
+
+        components are returned.
+
+        '
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: true
+    page_token:
+      name: page_token
+      description: Pagination token from a previous request
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/PageToken'
+    id:
+      name: id
+      description: '`string identifier` of an object in a namespace, following the Lance Namespace spec.
+
+        When the value is equal to the delimiter, it represents the root namespace.
+
+        For example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.
+
+        '
+      in: path
+      required: true
+      schema:
+        type: string
+    delimiter:
+      name: delimiter
+      description: 'An optional delimiter of the `string identifier`, following the Lance Namespace spec.
+
+        When not specified, the `$` delimiter must be used.
+
+        '
+      in: query
+      required: false
+      schema:
+        type: string
+    limit:
+      name: limit
+      description: Maximum number of items to return
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/PageLimit'
+  examples:
+    ListNamespacesEmptyExample:
+      summary: An empty list of namespaces
+      value:
+        namespaces: []
+    ListNamespacesNonEmptyExample:
+      summary: A non-empty list of namespaces
+      value:
+        namespaces:
+        - accounting
+        - credits
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

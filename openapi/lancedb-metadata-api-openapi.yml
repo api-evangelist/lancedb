@@ -1,0 +1,3767 @@
+openapi: 3.1.1
+info:
+  title: Lance Namespace Specification Data Metadata API
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+  description: 'This OpenAPI specification is a part of the Lance namespace specification. It contains 2 parts:
+
+
+    The `components/schemas`, `components/responses`, `components/examples`, `tags` sections define
+
+    the request and response shape for each operation in a Lance Namespace across all implementations.
+
+    See https://lance.org/format/namespace/operations for more details.
+
+
+    The `servers`, `security`, `paths`, `components/parameters` sections are for the
+
+    Lance REST Namespace implementation, which defines a complete REST server that can work with Lance datasets.
+
+    See https://lance.org/format/namespace/rest for more details.
+
+    '
+servers:
+- url: '{scheme}://{host}:{port}/{basePath}'
+  description: Generic server URL with all parts configurable
+  variables:
+    scheme:
+      default: http
+    host:
+      default: localhost
+    port:
+      default: '2333'
+    basePath:
+      default: ''
+- url: '{scheme}://{host}/{basePath}'
+  description: Server URL when the port can be inferred from the scheme
+  variables:
+    scheme:
+      default: http
+    host:
+      default: localhost
+    basePath:
+      default: ''
+security:
+- OAuth2: []
+- BearerAuth: []
+- ApiKeyAuth: []
+tags:
+- name: Metadata
+  description: 'Operations that only interact with object metadata and should be computationally lightweight
+
+    '
+paths:
+  /v1/namespace/{id}/create:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Create a new namespace
+      operationId: CreateNamespace
+      description: 'Create new namespace `id`.
+
+
+        During the creation process, the implementation may modify user-provided `properties`,
+
+        such as adding additional properties like `created_at` to user-provided properties,
+
+        omitting any specific property, or performing actions based on any property value.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNamespaceRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/CreateNamespaceResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        406:
+          $ref: '#/components/responses/UnsupportedOperationErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/namespace/{id}/list:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    - $ref: '#/components/parameters/page_token'
+    - $ref: '#/components/parameters/limit'
+    get:
+      tags:
+      - Metadata
+      summary: List namespaces
+      operationId: ListNamespaces
+      description: 'List all child namespace names of the parent namespace `id`.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace uses GET to perform this operation without a request body.
+
+        It passes in the `ListNamespacesRequest` information in the following way:
+
+        - `id`: pass through path parameter of the same name
+
+        - `page_token`: pass through query parameter of the same name
+
+        - `limit`: pass through query parameter of the same name
+
+        '
+      responses:
+        200:
+          $ref: '#/components/responses/ListNamespacesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        406:
+          $ref: '#/components/responses/UnsupportedOperationErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/namespace/{id}/describe:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Describe a namespace
+      operationId: DescribeNamespace
+      description: 'Describe the detailed information for namespace `id`.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeNamespaceRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/DescribeNamespaceResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/namespace/{id}/drop:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Drop a namespace
+      operationId: DropNamespace
+      description: 'Drop namespace `id` from its parent namespace.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DropNamespaceRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/DropNamespaceResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/namespace/{id}/exists:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Check if a namespace exists
+      operationId: NamespaceExists
+      description: 'Check if namespace `id` exists.
+
+
+        This operation must behave exactly like the DescribeNamespace API,
+
+        except it does not contain a response body.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NamespaceExistsRequest'
+      responses:
+        200:
+          description: Success, no content
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/namespace/{id}/table/list:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    - $ref: '#/components/parameters/page_token'
+    - $ref: '#/components/parameters/limit'
+    - $ref: '#/components/parameters/include_declared'
+    get:
+      tags:
+      - Metadata
+      summary: List tables in a namespace
+      operationId: ListTables
+      description: 'List all child table names of the parent namespace `id`.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace uses GET to perform this operation without a request body.
+
+        It passes in the `ListTablesRequest` information in the following way:
+
+        - `id`: pass through path parameter of the same name
+
+        - `page_token`: pass through query parameter of the same name
+
+        - `limit`: pass through query parameter of the same name
+
+        - `include_declared`: pass through query parameter of the same name
+
+        '
+      responses:
+        200:
+          $ref: '#/components/responses/ListTablesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        406:
+          $ref: '#/components/responses/UnsupportedOperationErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/register:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Register a table to a namespace
+      operationId: RegisterTable
+      description: 'Register an existing table at a given storage location as `id`.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterTableRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/RegisterTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        406:
+          $ref: '#/components/responses/UnsupportedOperationErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/describe:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    - $ref: '#/components/parameters/with_table_uri'
+    - $ref: '#/components/parameters/load_detailed_metadata'
+    - $ref: '#/components/parameters/check_declared'
+    post:
+      tags:
+      - Metadata
+      summary: Describe information of a table
+      operationId: DescribeTable
+      description: 'Describe the detailed information for table `id`.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace passes `with_table_uri`, `load_detailed_metadata`, and `check_declared` as query parameters instead of in the request body.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeTableRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/DescribeTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/exists:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Check if a table exists
+      operationId: TableExists
+      description: 'Check if table `id` exists.
+
+
+        This operation should behave exactly like DescribeTable,
+
+        except it does not contain a response body.
+
+
+        For DirectoryNamespace implementation, a table exists if either:
+
+        - The table has Lance data versions (regular table created with CreateTable)
+
+        - A `.lance-reserved` file exists in the table directory (declared table created with DeclareTable)
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TableExistsRequest'
+      responses:
+        200:
+          description: Success, no content
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/drop:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Drop a table
+      operationId: DropTable
+      description: 'Drop table `id` and delete its data.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace does not use a request body for this operation.
+
+        The `DropTableRequest` information is passed in the following way:
+
+        - `id`: pass through path parameter of the same name
+
+        '
+      responses:
+        200:
+          $ref: '#/components/responses/DropTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/deregister:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Deregister a table
+      operationId: DeregisterTable
+      description: 'Deregister table `id` from its namespace.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeregisterTableRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/DeregisterTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/restore:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Restore table to a specific version
+      operationId: RestoreTable
+      description: 'Restore table `id` to a specific version.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestoreTableRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/RestoreTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/rename:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Rename a table
+      operationId: RenameTable
+      description: 'Rename table `id` to a new name.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenameTableRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/RenameTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/schema_metadata/update:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Update table schema metadata
+      operationId: UpdateTableSchemaMetadata
+      description: 'Replace the schema metadata for table `id` with the provided key-value pairs.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace uses a direct object (map of string to string) as both request and response body
+
+        instead of the wrapped `UpdateTableSchemaMetadataRequest` and `UpdateTableSchemaMetadataResponse`.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+              description: Schema metadata key-value pairs
+      responses:
+        200:
+          description: Schema metadata update result
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+                description: The updated schema metadata
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/version/list:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    - $ref: '#/components/parameters/page_token'
+    - $ref: '#/components/parameters/limit'
+    - name: descending
+      in: query
+      description: 'When true, versions are guaranteed to be returned in descending order (latest to oldest).
+
+        When false or not specified, the ordering is implementation-defined.
+
+        '
+      required: false
+      schema:
+        type: boolean
+    post:
+      tags:
+      - Metadata
+      summary: List all versions of a table
+      operationId: ListTableVersions
+      description: 'List all versions (commits) of table `id` with their metadata.
+
+
+        Use `descending=true` to guarantee versions are returned in descending order (latest to oldest).
+
+        Otherwise, the ordering is implementation-defined.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace does not use a request body for this operation.
+
+        The `ListTableVersionsRequest` information is passed in the following way:
+
+        - `id`: pass through path parameter of the same name
+
+        - `page_token`: pass through query parameter of the same name
+
+        - `limit`: pass through query parameter of the same name
+
+        - `descending`: pass through query parameter of the same name
+
+        '
+      responses:
+        200:
+          $ref: '#/components/responses/ListTableVersionsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/version/create:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Create a new table version
+      operationId: CreateTableVersion
+      description: 'Create a new version entry for table `id`.
+
+
+        This operation supports `put_if_not_exists` semantics.
+
+        The operation will fail with 409 Conflict if the version already exists.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTableVersionRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/CreateTableVersionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/version/describe:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Describe a specific table version
+      operationId: DescribeTableVersion
+      description: 'Describe the detailed information for a specific version of table `id`.
+
+
+        Returns the manifest path and metadata for the specified version.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeTableVersionRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/DescribeTableVersionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/version/delete:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Delete table version records
+      operationId: BatchDeleteTableVersions
+      description: 'Delete version metadata records for table `id`.
+
+
+        This operation deletes version tracking records, NOT the actual table data.
+
+        It supports deleting ranges of versions for efficient bulk cleanup.
+
+
+        Special range values:
+
+        - `start_version: 0` with `end_version: -1` means delete ALL version records
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchDeleteTableVersionsRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/BatchDeleteTableVersionsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/version/batch-create:
+    parameters:
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Atomically create versions for multiple tables
+      operationId: BatchCreateTableVersions
+      description: 'Atomically create new version entries for multiple tables.
+
+
+        This operation is atomic: either all table versions are created successfully,
+
+        or none are created. If any version creation fails (e.g., due to conflict),
+
+        the entire batch operation fails.
+
+
+        Each entry in the request specifies the table identifier and version details.
+
+        This supports `put_if_not_exists` semantics for each version entry.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchCreateTableVersionsRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/BatchCreateTableVersionsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/batch-commit:
+    parameters:
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Atomically commit a batch of mixed table operations
+      operationId: BatchCommitTables
+      description: 'Atomically commit a batch of table operations. This is a generalized version
+
+        of `BatchCreateTableVersions` that supports mixed operation types within a
+
+        single atomic transaction at the metadata layer.
+
+
+        Supported operation types:
+
+        - `DeclareTable`: Declare (reserve) a new table
+
+        - `CreateTableVersion`: Create a new version entry for a table
+
+        - `DeleteTableVersions`: Delete version ranges from a table
+
+        - `DeregisterTable`: Deregister (soft-delete) a table
+
+
+        All operations are committed atomically: either all succeed or none are applied.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchCommitTablesRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/BatchCommitTablesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/alter_columns:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Modify existing columns
+      operationId: AlterTableAlterColumns
+      description: 'Modify existing columns in table `id`, such as renaming or changing data types.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlterTableAlterColumnsRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/AlterTableAlterColumnsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/drop_columns:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Remove columns from table
+      operationId: AlterTableDropColumns
+      description: 'Remove specified columns from table `id`.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlterTableDropColumnsRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/AlterTableDropColumnsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/stats:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Get table statistics
+      operationId: GetTableStats
+      description: 'Get statistics for table `id`, including row counts, data sizes, and column statistics.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetTableStatsRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/GetTableStatsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/create_index:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Create an index on a table
+      operationId: CreateTableIndex
+      description: 'Create an index on a table column for faster search operations.
+
+        Supports vector indexes (IVF_FLAT, IVF_HNSW_SQ, IVF_PQ, etc.) and scalar indexes (BTREE, BITMAP, FTS, etc.).
+
+        Index creation is handled asynchronously.
+
+        Use the `ListTableIndices` and `DescribeTableIndexStats` operations to monitor index creation progress.
+
+        '
+      requestBody:
+        description: Index creation request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTableIndexRequest'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/CreateTableIndexResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/create_scalar_index:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Create a scalar index on a table
+      operationId: CreateTableScalarIndex
+      description: 'Create a scalar index on a table column for faster filtering operations.
+
+        Supports scalar indexes (BTREE, BITMAP, LABEL_LIST, FTS, etc.).
+
+        This is an alias for CreateTableIndex specifically for scalar indexes.
+
+        Index creation is handled asynchronously.
+
+        Use the `ListTableIndices` and `DescribeTableIndexStats` operations to monitor index creation progress.
+
+        '
+      requestBody:
+        description: Scalar index creation request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTableIndexRequest'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/CreateTableScalarIndexResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/index/list:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: List indexes on a table
+      operationId: ListTableIndices
+      description: 'List all indices created on a table. Returns information about each index
+
+        including name, columns, status, and UUID.
+
+        '
+      requestBody:
+        description: Index list request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListTableIndicesRequest'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/ListTableIndicesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/index/{index_name}/stats:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    - name: index_name
+      in: path
+      description: Name of the index to get stats for
+      required: true
+      schema:
+        type: string
+    post:
+      tags:
+      - Metadata
+      summary: Get table index statistics
+      operationId: DescribeTableIndexStats
+      description: 'Get statistics for a specific index on a table. Returns information about
+
+        the index type, distance type (for vector indices), and row counts.
+
+        '
+      requestBody:
+        description: Index stats request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeTableIndexStatsRequest'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/DescribeTableIndexStatsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/index/{index_name}/drop:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    - name: index_name
+      in: path
+      description: Name of the index to drop
+      required: true
+      schema:
+        type: string
+    post:
+      tags:
+      - Metadata
+      summary: Drop a specific index
+      operationId: DropTableIndex
+      description: 'Drop the specified index from table `id`.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace does not use a request body for this operation.
+
+        The `DropTableIndexRequest` information is passed in the following way:
+
+        - `id`: pass through path parameter of the same name
+
+        - `index_name`: pass through path parameter of the same name
+
+        '
+      responses:
+        200:
+          $ref: '#/components/responses/DropTableIndexResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/tags/list:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    - $ref: '#/components/parameters/page_token'
+    - $ref: '#/components/parameters/limit'
+    post:
+      tags:
+      - Metadata
+      summary: List all tags for a table
+      operationId: ListTableTags
+      description: 'List all tags that have been created for table `id`.
+
+        Returns a map of tag names to their corresponding version numbers and metadata.
+
+
+        REST NAMESPACE ONLY
+
+        REST namespace does not use a request body for this operation.
+
+        The `ListTableTagsRequest` information is passed in the following way:
+
+        - `id`: pass through path parameter of the same name
+
+        - `page_token`: pass through query parameter of the same name
+
+        - `limit`: pass through query parameter of the same name
+
+        '
+      responses:
+        200:
+          $ref: '#/components/responses/ListTableTagsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/tags/version:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Get version for a specific tag
+      operationId: GetTableTagVersion
+      description: 'Get the version number that a specific tag points to for table `id`.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetTableTagVersionRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/GetTableTagVersionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/declare:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Declare a table
+      operationId: DeclareTable
+      description: 'Declare a table with the given name without touching storage.
+
+        This is a metadata-only operation that records the table existence and sets up aspects like access control.
+
+
+        For DirectoryNamespace implementation, this creates a `.lance-reserved` file in the table directory
+
+        to mark the table''s existence without creating actual Lance data files.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeclareTableRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/DeclareTableResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/tags/create:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Create a new tag
+      operationId: CreateTableTag
+      description: 'Create a new tag for table `id` that points to a specific version.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTableTagRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/CreateTableTagResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/tags/delete:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Delete a tag
+      operationId: DeleteTableTag
+      description: 'Delete an existing tag from table `id`.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteTableTagRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/DeleteTableTagResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/table/{id}/tags/update:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Update a tag to point to a different version
+      operationId: UpdateTableTag
+      description: 'Update an existing tag for table `id` to point to a different version.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTableTagRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/UpdateTableTagResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/transaction/{id}/describe:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Describe information about a transaction
+      operationId: DescribeTransaction
+      description: 'Return a detailed information for a given transaction
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeTransactionRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/DescribeTransactionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/transaction/{id}/alter:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Metadata
+      summary: Alter information of a transaction.
+      operationId: AlterTransaction
+      description: 'Alter a transaction with a list of actions such as setting status or properties.
+
+        The server should either succeed and apply all actions, or fail and apply no action.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlterTransactionRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/AlterTransactionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+components:
+  schemas:
+    AlterTransactionAction:
+      type: object
+      description: 'A single action that could be performed to alter a transaction.
+
+        This action holds the model definition for all types of specific actions models,
+
+        this is to minimize difference and compatibility issue across codegen in different languages.
+
+        When used, only one of the actions should be non-null for each action.
+
+        If you would like to perform multiple actions, set a list of actions in the AlterTransactionRequest.
+
+        '
+      properties:
+        setStatusAction:
+          $ref: '#/components/schemas/AlterTransactionSetStatus'
+        setPropertyAction:
+          $ref: '#/components/schemas/AlterTransactionSetProperty'
+        unsetPropertyAction:
+          $ref: '#/components/schemas/AlterTransactionUnsetProperty'
+    AlterTableDropColumnsResponse:
+      type: object
+      required:
+      - version
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version of the table after dropping columns
+    UpdateTableTagResponse:
+      type: object
+      description: Response for update tag operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    TagContents:
+      type: object
+      required:
+      - version
+      - manifestSize
+      properties:
+        branch:
+          type: string
+          description: Branch name that the tag was created on (if any)
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version number that the tag points to
+        manifestSize:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Size of the manifest file in bytes
+    GetTableTagVersionRequest:
+      type: object
+      required:
+      - tag
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        tag:
+          type: string
+          description: Name of the tag to get version for
+    ManifestNamingScheme:
+      type: string
+      description: "The naming scheme used for manifest files in the `_versions/` directory.\n\nKnown values:\n- `V1`: `_versions/{version}.manifest` - Simple version-based naming\n- `V2`: `_versions/{inverted_version}.manifest` - Zero-padded, reversed version number\n  (uses `u64::MAX - version`) for O(1) lookup of latest version on object stores\n\nV2 is preferred for new tables as it enables efficient latest-version discovery\nwithout needing to list all versions.\n"
+      example: V2
+    ListTableIndicesRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+          description: The namespace identifier
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          nullable: true
+          description: Optional table version to list indexes from
+        page_token:
+          $ref: '#/components/schemas/PageToken'
+        limit:
+          $ref: '#/components/schemas/PageLimit'
+    IndexContent:
+      type: object
+      required:
+      - index_name
+      - index_uuid
+      - columns
+      - status
+      properties:
+        index_name:
+          type: string
+          description: Name of the index
+        index_uuid:
+          type: string
+          description: Unique identifier for the index
+        columns:
+          type: array
+          items:
+            type: string
+          description: Columns covered by this index
+        status:
+          type: string
+          description: Current status of the index
+    DescribeTableVersionResponse:
+      type: object
+      description: Response containing the table version information
+      required:
+      - version
+      properties:
+        version:
+          $ref: '#/components/schemas/TableVersion'
+          description: The table version information
+    DescribeTableIndexStatsResponse:
+      type: object
+      properties:
+        distance_type:
+          type: string
+          nullable: true
+          description: Distance type for vector indexes
+        index_type:
+          type: string
+          nullable: true
+          description: Type of the index
+        num_indexed_rows:
+          type: integer
+          format: int64
+          minimum: 0
+          nullable: true
+          description: Number of indexed rows
+        num_unindexed_rows:
+          type: integer
+          format: int64
+          minimum: 0
+          nullable: true
+          description: Number of unindexed rows
+        num_indices:
+          type: integer
+          format: int32
+          minimum: 0
+          nullable: true
+          description: Number of indices
+    DeregisterTableRequest:
+      type: object
+      description: 'The table content remains available in the storage.
+
+        '
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+    SetPropertyMode:
+      type: string
+      description: 'The behavior if the property key already exists.
+
+        Case insensitive, supports both PascalCase and snake_case. Valid values are:
+
+        - Overwrite (default): overwrite the existing value with the provided value
+
+        - Fail: fail the entire operation
+
+        - Skip: keep the existing value and skip setting the provided value
+
+        '
+    RenameTableRequest:
+      type: object
+      required:
+      - new_table_name
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+          description: The table identifier
+        new_table_name:
+          type: string
+          description: New name for the table
+        new_namespace_id:
+          type: array
+          items:
+            type: string
+          description: New namespace identifier to move the table to (optional, if not specified the table stays in the same namespace)
+    CommitTableResult:
+      type: object
+      description: 'Result of a single operation within a batch commit.
+
+        Each result corresponds to one operation in the request, in the same order.
+
+        Exactly one of the result fields will be set.
+
+        '
+      properties:
+        declare_table:
+          $ref: '#/components/schemas/DeclareTableResponse'
+          description: Result of a DeclareTable operation
+        create_table_version:
+          $ref: '#/components/schemas/CreateTableVersionResponse'
+          description: Result of a CreateTableVersion operation
+        delete_table_versions:
+          $ref: '#/components/schemas/BatchDeleteTableVersionsResponse'
+          description: Result of a DeleteTableVersions operation
+        deregister_table:
+          $ref: '#/components/schemas/DeregisterTableResponse'
+          description: Result of a DeregisterTable operation
+    VersionRange:
+      type: object
+      description: 'A range of versions to delete (start inclusive, end exclusive).
+
+        Special values:
+
+        - `start_version: 0` with `end_version: -1` means ALL versions
+
+        '
+      required:
+      - start_version
+      - end_version
+      properties:
+        start_version:
+          type: integer
+          format: int64
+          description: 'Start version of the range (inclusive).
+
+            Use 0 to start from the first version.
+
+            '
+        end_version:
+          type: integer
+          format: int64
+          description: 'End version of the range (exclusive).
+
+            Use -1 to indicate all versions up to and including the latest.
+
+            '
+    JsonArrowDataType:
+      type: object
+      description: JSON representation of an Apache Arrow DataType
+      required:
+      - type
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/JsonArrowField'
+          description: Fields for complex types like Struct, Union, etc.
+        length:
+          type: integer
+          format: int64
+          description: Length for fixed-size types
+          minimum: 0
+        type:
+          type: string
+          description: The data type name
+    ErrorResponse:
+      type: object
+      description: Common JSON error response model
+      required:
+      - code
+      properties:
+        error:
+          type: string
+          description: A brief, human-readable message about the error.
+          example: Table 'users' not found in namespace 'production'
+        code:
+          type: integer
+          minimum: 0
+          description: "Lance Namespace error code identifying the error type.\n\nError codes:\n  0 - Unsupported: Operation not supported by this backend\n  1 - NamespaceNotFound: The specified namespace does not exist\n  2 - NamespaceAlreadyExists: A namespace with this name already exists\n  3 - NamespaceNotEmpty: Namespace contains tables or child namespaces\n  4 - TableNotFound: The specified table does not exist\n  5 - TableAlreadyExists: A table with this name already exists\n  6 - TableIndexNotFound: The specified table index does not exist\n  7 - TableIndexAlreadyExists: A table index with this name already exists\n  8 - TableTagNotFound: The specified table tag does not exist\n  9 - TableTagAlreadyExists: A table tag with this name already exists\n  10 - TransactionNotFound: The specified transaction does not exist\n  11 - TableVersionNotFound: The specified table version does not exist\n  12 - TableColumnNotFound: The specified table column does not exist\n  13 - InvalidInput: Malformed request or invalid parameters\n  14 - ConcurrentModification: Optimistic concurrency conflict\n  15 - PermissionDenied: User lacks permission for this operation\n  16 - Unauthenticated: Authentication credentials are missing or invalid\n  17 - ServiceUnavailable: Service is temporarily unavailable\n  18 - Internal: Unexpected server/implementation error\n  19 - InvalidTableState: Table is in an invalid state for the operation\n  20 - TableSchemaValidationError: Table schema validation failed\n"
+          example: 4
+        detail:
+          type: string
+          description: 'An optional human-readable explanation of the error.
+
+            This can be used to record additional information such as stack trace.
+
+            '
+          example: The table may have been dropped or renamed
+        instance:
+          type: string
+          description: 'A string that identifies the specific occurrence of the error.
+
+            This can be a URI, a request or response ID,
+
+            or anything that the implementation can recognize to trace specific occurrence of the error.
+
+            '
+          example: /v1/table/production$users/describe
+    AlterColumnsEntry:
+      type: object
+      required:
+      - path
+      properties:
+        path:
+          type: string
+          description: Column path to alter
+        data_type:
+          type: object
+          description: New data type for the column using JSON representation (optional)
+        rename:
+          type:
+          - string
+          - 'null'
+          description: New name for the column (optional)
+        nullable:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the column should be nullable (optional)
+        virtual_column:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/AlterVirtualColumnEntry'
+          description: Virtual column alterations (optional)
+    AlterTransactionSetProperty:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        mode:
+          $ref: '#/components/schemas/SetPropertyMode'
+    DescribeNamespaceResponse:
+      type: object
+      properties:
+        properties:
+          type: object
+          description: Properties stored on the namespace, if supported by the server. If the server does not support namespace properties, it should return null for this field. If namespace properties are supported, but none are set, it should return an empty object.
+          additionalProperties:
+            type: string
+          example:
+            owner: Ralph
+            created_at: '1452120468'
+          default: {}
+          nullable: true
+    AlterTransactionResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+    DeleteTableTagResponse:
+      type: object
+      description: Response for delete tag operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    AlterTransactionSetStatus:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+    JsonArrowSchema:
+      type: object
+      description: 'JSON representation of a Apache Arrow schema.
+
+        '
+      required:
+      - fields
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/JsonArrowField'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          propertyNames:
+            type: string
+    DropTableIndexResponse:
+      type: object
+      description: Response for drop index operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    RestoreTableResponse:
+      type: object
+      description: Response for restore table operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    DeclareTableResponse:
+      type: object
+      description: 'Response for declaring a table.
+
+        '
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        location:
+          type: string
+        storage_options:
+          type: object
+          description: 'Configuration options to be used to access storage. The available
+
+            options depend on the type of storage in use. These will be
+
+            passed directly to Lance to initialize storage access.
+
+            '
+          additionalProperties:
+            type: string
+        properties:
+          type: object
+          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise it should return the properties.
+
+            '
+          additionalProperties:
+            type: string
+          example:
+            owner: Ralph
+            created_at: '1452120468'
+          default: {}
+          nullable: true
+        managed_versioning:
+          type: boolean
+          description: 'When true, the caller should use namespace table version operations
+
+            (CreateTableVersion, BatchCreateTableVersions, DescribeTableVersion, ListTableVersions, BatchDeleteTableVersions)
+
+            to manage table versions instead of relying on Lance''s native version management.
+
+            '
+    TableExistsRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        version:
+          description: 'Version of the table to check existence.
+
+            If not specified, server should resolve it to the latest version.
+
+            '
+          type: integer
+          format: int64
+          minimum: 0
+    BatchDeleteTableVersionsResponse:
+      type: object
+      description: Response for deleting table version records
+      properties:
+        deleted_count:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Number of version records deleted
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    AlterTransactionRequest:
+      type: object
+      description: 'Alter a transaction with a list of actions.
+
+        The server should either succeed and apply all actions, or fail and apply no action.
+
+        '
+      required:
+      - actions
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        actions:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/AlterTransactionAction'
+    DescribeTransactionRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+    CommitTableOperation:
+      type: object
+      description: 'A single operation within a batch commit.
+
+        Provide exactly one of the operation fields to specify the operation kind.
+
+        '
+      properties:
+        declare_table:
+          $ref: '#/components/schemas/DeclareTableRequest'
+          description: Declare (reserve) a new table in the namespace
+        create_table_version:
+          $ref: '#/components/schemas/CreateTableVersionRequest'
+          description: Create a new version entry for a table
+        delete_table_versions:
+          $ref: '#/components/schemas/BatchDeleteTableVersionsRequest'
+          description: Delete version ranges from a table
+        deregister_table:
+          $ref: '#/components/schemas/DeregisterTableRequest'
+          description: Deregister (soft-delete) a table
+    BatchCommitTablesRequest:
+      type: object
+      description: 'Request to atomically commit a batch of table operations.
+
+        This replaces `BatchCreateTableVersionsRequest` with a more general interface
+
+        that supports mixed operations (DeclareTable, CreateTableVersion,
+
+        DeleteTableVersions, DeregisterTable)
+
+        within a single atomic transaction at the metadata layer.
+
+
+        All operations are committed atomically: either all succeed or none are applied.
+
+        '
+      required:
+      - operations
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitTableOperation'
+          description: 'List of operations to commit atomically.
+
+            Supported operation types: DeclareTable, CreateTableVersion,
+
+            DeleteTableVersions, DeregisterTable.
+
+            '
+    BatchDeleteTableVersionsRequest:
+      type: object
+      description: 'Request to delete table version records.
+
+        Supports deleting ranges of versions for efficient bulk cleanup.
+
+        '
+      required:
+      - ranges
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+          description: The table identifier
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionRange'
+          description: 'List of version ranges to delete.
+
+            Each range specifies start (inclusive) and end (exclusive) versions.
+
+            '
+    DropNamespaceResponse:
+      type: object
+      properties:
+        properties:
+          type: object
+          description: 'If the implementation does not support namespace properties, it should return null for this field. Otherwise it should return the properties.
+
+            '
+          additionalProperties:
+            type: string
+        transaction_id:
+          description: 'If present, indicating the operation is long running and should be tracked using DescribeTransaction
+
+            '
+          type: array
+          items:
+            type: string
+    DeleteTableTagRequest:
+      type: object
+      required:
+      - tag
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        tag:
+          type: string
+          description: Name of the tag to delete
+    CreateTableVersionResponse:
+      type: object
+      description: Response for creating a table version
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        version:
+          $ref: '#/components/schemas/TableVersion'
+    UnsetPropertyMode:
+      type: string
+      description: 'The behavior if the property key to unset does not exist.
+
+        Case insensitive, supports both PascalCase and snake_case. Valid values are:
+
+        - Skip (default): skip the property to unset
+
+        - Fail: fail the entire operation
+
+        '
+    FragmentStats:
+      type: object
+      required:
+      - num_fragments
+      - num_small_fragments
+      - lengths
+      properties:
+        num_fragments:
+          type: integer
+          format: int64
+          minimum: 0
+          description: The number of fragments in the table
+        num_small_fragments:
+          type: integer
+          format: int64
+          minimum: 0
+          description: The number of uncompacted fragments in the table
+        lengths:
+          $ref: '#/components/schemas/FragmentSummary'
+          description: Statistics on the number of rows in the table fragments
+    ListTablesResponse:
+      type: object
+      required:
+      - tables
+      properties:
+        tables:
+          type: array
+          uniqueItems: true
+          description: 'The list of names of all the tables under the connected namespace implementation.
+
+            This should recursively list all the tables in all child namespaces.
+
+            Each string in the list is the full identifier in string form.
+
+            '
+          items:
+            type: string
+        page_token:
+          $ref: '#/components/schemas/PageToken'
+    ListNamespacesResponse:
+      type: object
+      required:
+      - namespaces
+      properties:
+        namespaces:
+          type: array
+          uniqueItems: true
+          description: 'The list of names of the child namespaces relative to the parent namespace `id` in the request.
+
+            '
+          items:
+            type: string
+        page_token:
+          $ref: '#/components/schemas/PageToken'
+    CreateTableIndexResponse:
+      type: object
+      description: Response for create index operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    RestoreTableRequest:
+      type: object
+      required:
+      - version
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version to restore to
+    RegisterTableRequest:
+      type: object
+      required:
+      - location
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+        mode:
+          type: string
+          description: "There are two modes when trying to register a table,\nto differentiate the behavior when a table of the same name already exists.\nCase insensitive, supports both PascalCase and snake_case. Valid values are:\n  * Create (default): the operation fails with 409.\n  * Overwrite: the existing table registration is replaced with the new registration.\n"
+        properties:
+          type: object
+          description: 'Properties stored on the table, if supported by the implementation.
+
+            '
+          additionalProperties:
+            type: string
+    NamespaceExistsRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+    ListTableIndicesResponse:
+      type: object
+      required:
+      - indexes
+      properties:
+        indexes:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndexContent'
+          description: List of indexes on the table
+        page_token:
+          $ref: '#/components/schemas/PageToken'
+    DeclareTableRequest:
+      type: object
+      description: 'Request for declaring a table.
+
+        '
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+          description: 'Optional storage location for the table.
+
+            If not provided, the namespace implementation should determine the table location.
+
+            '
+        vend_credentials:
+          description: 'Whether to include vended credentials in the response `storage_options`.
+
+            When true, the implementation should provide vended credentials for accessing storage.
+
+            When not set, the implementation can decide whether to return vended credentials.
+
+            '
+          type: boolean
+        properties:
+          type: object
+          description: 'Business logic properties stored and managed by the namespace implementation outside
+
+            Lance context, if supported by the implementation.
+
+            '
+          additionalProperties:
+            type: string
+    AlterVirtualColumnEntry:
+      type: object
+      properties:
+        input_columns:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: List of input column names for the virtual column (optional)
+        image:
+          type:
+          - string
+          - 'null'
+          description: Docker image to use for the UDF (optional)
+        udf:
+          type:
+          - string
+          - 'null'
+          description: Base64 encoded pickled UDF (optional)
+        udf_name:
+          type:
+          - string
+          - 'null'
+          description: Name of the UDF (optional)
+        udf_version:
+          type:
+          - string
+          - 'null'
+          description: Version of the UDF (optional)
+        udf_backend:
+          type:
+          - string
+          - 'null'
+          description: UDF backend type (e.g. DockerUDFSpecV1) (optional)
+        auto_backfill:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to automatically backfill the column (optional)
+        manifest:
+          type:
+          - string
+          - 'null'
+          description: JSON-serialized manifest for the UDF environment (optional)
+        manifest_checksum:
+          type:
+          - string
+          - 'null'
+          description: SHA-256 checksum of the manifest content (optional)
+        field_metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: User-supplied field metadata (optional)
+    DescribeTableRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        version:
+          description: 'Version of the table to describe.
+
+            If not specified, server should resolve it to the latest version.
+
+            '
+          type: integer
+          format: int64
+          minimum: 0
+        with_table_uri:
+          description: 'Whether to include the table URI in the response.
+
+            Default is false.
+
+            '
+          type: boolean
+          default: false
+        load_detailed_metadata:
+          description: 'Whether to load detailed metadata that requires opening the dataset.
+
+            When true, the response must include all detailed metadata such as `version`, `schema`, and `stats`
+
+            which require reading the dataset.
+
+            When not set, the implementation can decide whether to return detailed metadata
+
+            and which parts of detailed metadata to return.
+
+            '
+          type: boolean
+        check_declared:
+          description: 'Whether to check if the table exists only as a namespace declaration
+
+            without storage data. Default is false.
+
+            When true, the response should populate `is_only_declared`.
+
+            When false, the implementation should return null for `is_only_declared`
+
+            unless another option such as `load_detailed_metadata` requires
+
+            checking declared-only table state.
+
+            '
+          type: boolean
+          default: false
+        vend_credentials:
+          description: 'Whether to include vended credentials in the response `storage_options`.
+
+            When true, the implementation should provide vended credentials for accessing storage.
+
+            When not set, the implementation can decide whether to return vended credentials.
+
+            '
+          type: boolean
+    DescribeTableResponse:
+      type: object
+      properties:
+        table:
+          type: string
+          description: 'Table name.
+
+            Only populated when `load_detailed_metadata` is true.
+
+            '
+        namespace:
+          type: array
+          items:
+            type: string
+          description: 'The namespace identifier as a list of parts.
+
+            Only populated when `load_detailed_metadata` is true.
+
+            '
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: 'Table version number.
+
+            Only populated when `load_detailed_metadata` is true.
+
+            '
+        location:
+          type: string
+          description: 'Table storage location (e.g., S3/GCS path).
+
+            '
+        table_uri:
+          type: string
+          description: 'Table URI. Unlike location, this field must be a complete and valid URI.
+
+            Only returned when `with_table_uri` is true.
+
+            '
+        schema:
+          $ref: '#/components/schemas/JsonArrowSchema'
+          description: 'Table schema in JSON Arrow format.
+
+            Only populated when `load_detailed_metadata` is true.
+
+            '
+        storage_options:
+          type: object
+          description: 'Configuration options to be used to access storage. The available
+
+            options depend on the type of storage in use. These will be
+
+            passed directly to Lance to initialize storage access.
+
+            When `vend_credentials` is true, this field may include vended credentials.
+
+            If the vended credentials are temporary, the `expires_at_millis` key should be
+
+            included to indicate the millisecond timestamp when the credentials expire.
+
+            '
+          additionalProperties:
+            type: string
+        stats:
+          $ref: '#/components/schemas/TableBasicStats'
+          nullable: true
+          description: 'Table statistics.
+
+            Only populated when `load_detailed_metadata` is true.
+
+            '
+        metadata:
+          type: object
+          description: 'Optional table metadata as key-value pairs. This records the information of the table
+
+            and requires loading the table.
+
+            It is only populated when `load_detailed_metadata` is true.
+
+            '
+          additionalProperties:
+            type: string
+        properties:
+          type: object
+          description: Properties stored on the table, if supported by the server. This records the information managed by the namespace. If the server does not support table properties, it should return null for this field. If table properties are supported, but none are set, it should return an empty object.
+          additionalProperties:
+            type: string
+          example:
+            owner: Ralph
+            created_at: '1452120468'
+          default: {}
+          nullable: true
+        managed_versioning:
+          type: boolean
+          description: 'When true, the caller should use namespace table version operations
+
+            (CreateTableVersion, BatchCreateTableVersions, DescribeTableVersion, ListTableVersions, BatchDeleteTableVersions)
+
+            to manage table versions instead of relying on Lance''s native version management.
+
+            '
+        is_only_declared:
+          type: boolean
+          nullable: true
+          description: 'When true, indicates that the table has been declared in the namespace
+
+            but not yet created on storage. This means the table exists in the
+
+            namespace but has no data files on the underlying storage.
+
+            When false, the table has storage components (data and metadata files).
+
+            When null, the implementation did not check whether the table is only
+
+            declared. Clients should treat an omitted value as null. Implementations
+
+            should populate this field when `check_declared` is true or another
+
+            option such as `load_detailed_metadata` requires checking declared-only
+
+            table state. Operations like describe_table with load_detailed_metadata=true
+
+            may fail for declared-only tables.
+
+            '
+    BatchCreateTableVersionsResponse:
+      type: object
+      description: 'Response for batch creating table versions.
+
+        Contains the created versions for each table in the same order as the request.
+
+        '
+      required:
+      - versions
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TableVersion'
+          description: List of created table versions in the same order as the request entries
+    CreateTableIndexRequest:
+      type: object
+      required:
+      - column
+      - index_type
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        column:
+          type: string
+          description: Name of the column to create index on
+        index_type:
+          type: string
+          description: Type of index to create (e.g., BTREE, BITMAP, LABEL_LIST, IVF_FLAT, IVF_PQ, IVF_HNSW_SQ, FTS)
+        name:
+          type: string
+          nullable: true
+          description: Optional name for the index. If not provided, a name will be auto-generated.
+        distance_type:
+          type: string
+          description: Distance metric type for vector indexes (e.g., l2, cosine, dot)
+        with_position:
+          type: boolean
+          nullable: true
+          description: Optional FTS parameter for position tracking
+        base_tokenizer:
+          type: string
+          nullable: true
+          description: Optional FTS parameter for base tokenizer
+        language:
+          type: string
+          nullable: true
+          description: Optional FTS parameter for language
+        max_token_length:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Optional FTS parameter for maximum token length
+        lower_case:
+          type: boolean
+          nullable: true
+          description: Optional FTS parameter for lowercase conversion
+        stem:
+          type: boolean
+          nullable: true
+          description: Optional FTS parameter for stemming
+        remove_stop_words:
+          type: boolean
+          nullable: true
+          description: Optional FTS parameter for stop word removal
+        ascii_folding:
+          type: boolean
+          nullable: true
+          description: Optional FTS parameter for ASCII folding
+    AlterTableAlterColumnsRequest:
+      type: object
+      required:
+      - alterations
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        id:
+          type: array
+          items:
+            type: string
+          description: Table identifier path (namespace + table name)
+        alterations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlterColumnsEntry'
+          description: List of column alterations to apply to the table
+    Identity:
+      type: object
+      description: 'Identity information of a request.
+
+        '
+      properties:
+        api_key:
+          type: string
+          description: 'API key for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `x-api-key` header.
+
+            '
+        auth_token:
+          type: string
+          description: 'Bearer token for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `Authorization` header
+
+            with the Bearer scheme (e.g., `Bearer <token>`).
+
+            '
+    CreateNamespaceResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        properties:
+          description: 'Properties after the namespace is created.
+
+
+            If the server does not support namespace properties, it should return null for this field.
+
+            If namespace properties are supported, but none are set, it should return an empty object.
+
+            '
+          type: object
+          additionalProperties:
+            type: string
+    CreateTableTagResponse:
+      type: object
+      description: Response for create tag operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    RegisterTableResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        location:
+          type: string
+        properties:
+          type: object
+          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise, it should return the properties.
+
+            '
+          additionalProperties:
+            type: string
+    DropTableResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        id:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+        properties:
+          type: object
+          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise it should return the properties.
+
+            '
+          additionalProperties:
+            type: string
+          example:
+            owner: Ralph
+            created_at: '1452120468'
+          default: {}
+          nullable: true
+    AlterTransactionUnsetProperty:
+      type: object
+      properties:
+        key:
+          type: string
+        mode:
+          $ref: '#/components/schemas/UnsetPropertyMode'
+    DropNamespaceRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        mode:
+          type: string
+          description: 'The mode for dropping a namespace, deciding the server behavior when the namespace to drop is not found.
+
+            Case insensitive, supports both PascalCase and snake_case. Valid values are:
+
+            - Fail (default): the server must return 400 indicating the namespace to drop does not exist.
+
+            - Skip: the server must return 204 indicating the drop operation has succeeded.
+
+            '
+        behavior:
+          type: string
+          description: "The behavior for dropping a namespace.\nCase insensitive, supports both PascalCase and snake_case. Valid values are:\n- Restrict (default): the namespace should not contain any table or child namespace when drop is initiated.\n    If tables are found, the server should return error and not drop the namespace.\n- Cascade: all tables and child namespaces in the namespace are dropped before the namespace is dropped.\n"
+    DescribeTableIndexStatsRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          nullable: true
+          description: Optional table version to get stats for
+        index_name:
+          type: string
+          description: Name of the index
+    TransactionStatus:
+      type: string
+      description: 'The status of a transaction.
+
+        Case insensitive, supports both PascalCase and snake_case. Valid values are:
+
+        - Queued: the transaction is queued and not yet started
+
+        - Running: the transaction is currently running
+
+        - Succeeded: the transaction has completed successfully
+
+        - Failed: the transaction has failed
+
+        - Canceled: the transaction was canceled
+
+        '
+    GetTableStatsResponse:
+      type: object
+      required:
+      - total_bytes
+      - num_rows
+      - num_indices
+      - fragment_stats
+      properties:
+        total_bytes:
+          type: integer
+          format: int64
+          minimum: 0
+          description: The total number of bytes in the table
+        num_rows:
+          type: integer
+          format: int64
+          minimum: 0
+          description: The number of rows in the table
+        num_indices:
+          type: integer
+          format: int64
+          minimum: 0
+          description: The number of indices in the table
+        fragment_stats:
+          $ref: '#/components/schemas/FragmentStats'
+          description: Statistics on table fragments
+    CreateTableTagRequest:
+      type: object
+      required:
+      - tag
+      - version
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        tag:
+          type: string
+          description: Name of the tag to create
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version number for the tag to point to
+    CreateTableScalarIndexResponse:
+      type: object
+      description: Response for create scalar index operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    PageToken:
+      description: 'An opaque token that allows pagination for list operations (e.g. ListNamespaces).
+
+
+        For an initial request of a list operation,
+
+        if the implementation cannot return all items in one response,
+
+        or if there are more items than the page limit specified in the request,
+
+        the implementation must return a page token in the response,
+
+        indicating there are more results available.
+
+
+        After the initial request,
+
+        the value of the page token from each response must be used
+
+        as the page token value for the next request.
+
+
+        Caller must interpret either `null`,
+
+        missing value or empty string value of the page token from
+
+        the implementation''s response as the end of the listing results.
+
+        '
+      type: string
+      nullable: true
+    DeregisterTableResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        id:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+        properties:
+          type: object
+          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise it should return the properties.
+
+            '
+          additionalProperties:
+            type: string
+          example:
+            owner: Ralph
+            created_at: '1452120468'
+          default: {}
+          nullable: true
+    FragmentSummary:
+      type: object
+      required:
+      - min
+      - max
+      - mean
+      - p25
+      - p50
+      - p75
+      - p99
+      properties:
+        min:
+          type: integer
+          format: int64
+          minimum: 0
+        max:
+          type: integer
+          format: int64
+          minimum: 0
+        mean:
+          type: integer
+          format: int64
+          minimum: 0
+        p25:
+          type: integer
+          format: int64
+          minimum: 0
+        p50:
+          type: integer
+          format: int64
+          minimum: 0
+        p75:
+          type: integer
+          format: int64
+          minimum: 0
+        p99:
+          type: integer
+          format: int64
+          minimum: 0
+    RenameTableResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    AlterTableAlterColumnsResponse:
+      type: object
+      required:
+      - version
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: The commit version associated with the operation
+          minimum: 0
+    DescribeNamespaceRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+    DescribeTableVersionRequest:
+      type: object
+      description: Request to describe a specific table version
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+          description: The table identifier
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version number to describe
+    ListTableTagsResponse:
+      type: object
+      description: Response containing table tags
+      required:
+      - tags
+      properties:
+        tags:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TagContents'
+          description: Map of tag names to their contents
+        page_token:
+          $ref: '#/components/schemas/PageToken'
+    JsonArrowField:
+      type: object
+      description: 'JSON representation of an Apache Arrow field.
+
+        '
+      required:
+      - name
+      - type
+      - nullable
+      properties:
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          propertyNames:
+            type: string
+        name:
+          type: string
+        nullable:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/JsonArrowDataType'
+    DescribeTransactionResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+    AlterTableDropColumnsRequest:
+      type: object
+      required:
+      - columns
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        columns:
+          type: array
+          items:
+            type: string
+          description: Names of columns to drop
+    TableVersion:
+      type: object
+      required:
+      - version
+      - manifest_path
+      properties:
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version number
+        manifest_path:
+          type: string
+          description: Path to the manifest file for this version.
+        manifest_size:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Size of the manifest file in bytes
+        e_tag:
+          type: string
+          description: 'Optional ETag for optimistic concurrency control.
+
+            Useful for S3 and similar object stores.
+
+            '
+        timestamp_millis:
+          type: integer
+          format: int64
+          description: Timestamp when the version was created, in milliseconds since epoch (Unix time)
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Optional key-value pairs of metadata
+    GetTableStatsRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+    BatchCommitTablesResponse:
+      type: object
+      description: 'Response for a batch commit of table operations.
+
+        Contains the results of each operation in the same order as the request.
+
+        '
+      required:
+      - results
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier for the batch commit
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitTableResult'
+          description: 'Results for each operation, in the same order as the request operations.
+
+            Each result contains the outcome of the corresponding operation.
+
+            '
+    UpdateTableTagRequest:
+      type: object
+      required:
+      - tag
+      - version
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        tag:
+          type: string
+          description: Name of the tag to update
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: New version number for the tag to point to
+    CreateNamespaceRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        mode:
+          type: string
+          description: "There are three modes when trying to create a namespace,\nto differentiate the behavior when a namespace of the same name already exists.\nCase insensitive, supports both PascalCase and snake_case. Valid values are:\n  * Create: the operation fails with 409.\n  * ExistOk: the operation succeeds and the existing namespace is kept.\n  * Overwrite: the existing namespace is dropped and a new empty namespace with this name is created.\n"
+        properties:
+          type: object
+          description: 'Properties stored on the namespace, if supported by the implementation.
+
+            '
+          additionalProperties:
+            type: string
+    Context:
+      type: object
+      description: 'Arbitrary context for a request as key-value pairs.
+
+        How to use the context is custom to the specific implementation.
+
+
+        REST NAMESPACE ONLY
+
+        Context entries are passed via HTTP headers using the naming convention
+
+        `x-lance-ctx-<key>: <value>`. For example, a context entry
+
+        `{"trace_id": "abc123"}` would be sent as the header `x-lance-ctx-trace_id: abc123`.
+
+        '
+      additionalProperties:
+        type: string
+    ListTableVersionsResponse:
+      type: object
+      required:
+      - versions
+      properties:
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TableVersion'
+          description: 'List of table versions. When `descending=true`, guaranteed to be ordered from latest to oldest.
+
+            Otherwise, ordering is implementation-defined.
+
+            '
+        page_token:
+          $ref: '#/components/schemas/PageToken'
+    BatchCreateTableVersionsRequest:
+      type: object
+      description: 'Request to atomically create new version entries for multiple tables.
+
+        The operation is atomic: all versions are created or none are.
+
+        '
+      required:
+      - entries
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateTableVersionEntry'
+          description: List of table version entries to create atomically
+    CreateTableVersionRequest:
+      type: object
+      description: 'Request to create a new table version entry.
+
+        This supports `put_if_not_exists` semantics,
+
+        where the operation fails if the version already exists.
+
+        '
+      required:
+      - version
+      - manifest_path
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+          description: The table identifier
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version number to create
+        manifest_path:
+          type: string
+          description: Path to the manifest file for this version
+        manifest_size:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Size of the manifest file in bytes
+        e_tag:
+          type: string
+          description: Optional ETag for the manifest file
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Optional metadata for the version
+        naming_scheme:
+          $ref: '#/components/schemas/ManifestNamingScheme'
+    TableBasicStats:
+      type: object
+      required:
+      - num_deleted_rows
+      - num_fragments
+      properties:
+        num_deleted_rows:
+          type: integer
+          minimum: 0
+          description: Number of deleted rows in the table
+        num_fragments:
+          type: integer
+          minimum: 0
+          description: Number of fragments in the table
+    PageLimit:
+      description: 'An inclusive upper bound of the
+
+        number of results that a caller will receive.
+
+        '
+      type: integer
+      nullable: true
+    CreateTableVersionEntry:
+      type: object
+      description: 'An entry for creating a new table version in a batch operation.
+
+        This supports `put_if_not_exists` semantics,
+
+        where the operation fails if the version already exists.
+
+        '
+      required:
+      - id
+      - version
+      - manifest_path
+      properties:
+        id:
+          type: array
+          items:
+            type: string
+          description: The table identifier
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version number to create
+        manifest_path:
+          type: string
+          description: Path to the manifest file for this version
+        manifest_size:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Size of the manifest file in bytes
+        e_tag:
+          type: string
+          description: Optional ETag for the manifest file
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Optional metadata for the version
+        naming_scheme:
+          $ref: '#/components/schemas/ManifestNamingScheme'
+    GetTableTagVersionResponse:
+      type: object
+      required:
+      - version
+      properties:
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: version number that the tag points to
+  parameters:
+    include_declared:
+      name: include_declared
+      description: 'When true (default), includes tables that have been declared in the namespace
+
+        but not yet created on storage, in addition to tables that have
+
+        been created. When false, only tables with storage
+
+        components are returned.
+
+        '
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: true
+    page_token:
+      name: page_token
+      description: Pagination token from a previous request
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/PageToken'
+    with_table_uri:
+      name: with_table_uri
+      description: Whether to include the table URI in the response
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+    delimiter:
+      name: delimiter
+      description: 'An optional delimiter of the `string identifier`, following the Lance Namespace spec.
+
+        When not specified, the `$` delimiter must be used.
+
+        '
+      in: query
+      required: false
+      schema:
+        type: string
+    load_detailed_metadata:
+      name: load_detailed_metadata
+      description: 'Whether to load detailed metadata that requires opening the dataset.
+
+        When false (default), only `location` is required in the response.
+
+        When true, the response includes additional metadata such as `version`, `schema`, and `stats`.
+
+        '
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+    id:
+      name: id
+      description: '`string identifier` of an object in a namespace, following the Lance Namespace spec.
+
+        When the value is equal to the delimiter, it represents the root namespace.
+
+        For example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.
+
+        '
+      in: path
+      required: true
+      schema:
+        type: string
+    limit:
+      name: limit
+      description: Maximum number of items to return
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/PageLimit'
+    check_declared:
+      name: check_declared
+      description: 'Whether to check if the table exists only as a namespace declaration
+
+        without storage data. When false (default), the response should return
+
+        null for `is_only_declared` unless another option such as
+
+        `load_detailed_metadata` requires the check.
+
+        '
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+  responses:
+    DropNamespaceResponse:
+      description: Result of dropping a namespace
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DropNamespaceResponse'
+    CreateNamespaceResponse:
+      description: Result of creating a namespace
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateNamespaceResponse'
+    DescribeTableResponse:
+      description: Table properties result when loading a table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DescribeTableResponse'
+    CreateTableIndexResponse:
+      description: Index created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTableIndexResponse'
+    DropTableIndexResponse:
+      description: Index drop operation result
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DropTableIndexResponse'
+    ListTablesResponse:
+      description: A list of tables
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListTablesResponse'
+    ServiceUnavailableErrorResponse:
+      description: The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/service-unavailable
+            title: Slow down
+            status: 503
+            detail: ''
+            instance: /v1/namespaces
+    DeleteTableTagResponse:
+      description: Delete tag response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeleteTableTagResponse'
+    DropTableResponse:
+      description: Response of DropTable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DropTableResponse'
+    DescribeTableIndexStatsResponse:
+      description: Index statistics
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DescribeTableIndexStatsResponse'
+    BatchCommitTablesResponse:
+      description: Result of atomically committing a batch of mixed table operations
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BatchCommitTablesResponse'
+    UpdateTableTagResponse:
+      description: Update tag response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateTableTagResponse'
+    ListTableTagsResponse:
+      description: List of table tags
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListTableTagsResponse'
+    DescribeTableVersionResponse:
+      description: Table version information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DescribeTableVersionResponse'
+    AlterTableAlterColumnsResponse:
+      description: Alter columns operation result
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AlterTableAlterColumnsResponse'
+    CreateTableTagResponse:
+      description: Create tag response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTableTagResponse'
+    UnauthorizedErrorResponse:
+      description: Unauthorized. The request lacks valid authentication credentials for the operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/unauthorized-request
+            title: No valid authentication credentials for the operation
+            status: 401
+            detail: ''
+            instance: /v1/namespaces
+    DeregisterTableResponse:
+      description: Response of DeregisterTable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeregisterTableResponse'
+    ListNamespacesResponse:
+      description: A list of namespaces
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListNamespacesResponse'
+          examples:
+            NonEmptyResponse:
+              $ref: '#/components/examples/ListNamespacesNonEmptyExample'
+            EmptyResponse:
+              $ref: '#/components/examples/ListNamespacesEmptyExample'
+    DescribeTransactionResponse:
+      description: Response of DescribeTransaction
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DescribeTransactionResponse'
+    CreateTableVersionResponse:
+      description: Result of creating a table version
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTableVersionResponse'
+    ServerErrorResponse:
+      description: A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/server-error
+            title: Internal Server Error
+            status: 500
+            detail: ''
+            instance: /v1/namespaces
+    DeclareTableResponse:
+      description: Table properties result when declaring a table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeclareTableResponse'
+    BadRequestErrorResponse:
+      description: Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/bad-request
+            title: Malformed request
+            status: 400
+            detail: ''
+            instance: /v1/namespaces
+    RegisterTableResponse:
+      description: Table properties result when registering a table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RegisterTableResponse'
+    ListTableVersionsResponse:
+      description: List of table versions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListTableVersionsResponse'
+    BatchDeleteTableVersionsResponse:
+      description: Result of deleting table version records
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BatchDeleteTableVersionsResponse'
+    RestoreTableResponse:
+      description: Table restore operation result
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RestoreTableResponse'
+    AlterTransactionResponse:
+      description: Response of AlterTransaction
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AlterTransactionResponse'
+    UnsupportedOperationErrorResponse:
+      description: Not Acceptable / Unsupported Operation. The server does not support this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/unsupported-operation
+            title: The server does not support this operation
+            status: 406
+            detail: ''
+            instance: /v1/namespaces
+    ListTableIndicesResponse:
+      description: List of indices on the table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListTableIndicesResponse'
+    ConflictErrorResponse:
+      description: The request conflicts with the current state of the target resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/conflict
+            title: The namespace has been concurrently modified
+            status: 409
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    DescribeNamespaceResponse:
+      description: Returns a namespace, as well as any properties stored on the namespace if namespace properties are supported by the server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DescribeNamespaceResponse'
+    BatchCreateTableVersionsResponse:
+      description: Result of atomically creating table versions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BatchCreateTableVersionsResponse'
+    AlterTableDropColumnsResponse:
+      description: Drop columns operation result
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AlterTableDropColumnsResponse'
+    GetTableStatsResponse:
+      description: Table statistics
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetTableStatsResponse'
+    ForbiddenErrorResponse:
+      description: Forbidden. Authenticated user does not have the necessary permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/forbidden-request
+            title: Not authorized to make this request
+            status: 403
+            detail: ''
+            instance: /v1/namespaces
+    GetTableTagVersionResponse:
+      description: Tag version information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetTableTagVersionResponse'
+    RenameTableResponse:
+      description: Table rename operation result
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RenameTableResponse'
+    NotFoundErrorResponse:
+      description: A server-side problem that means can not find the specified resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/not-found-error
+            title: Not found Error
+            status: 404
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    CreateTableScalarIndexResponse:
+      description: Scalar index created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTableScalarIndexResponse'
+  examples:
+    ListNamespacesEmptyExample:
+      summary: An empty list of namespaces
+      value:
+        namespaces: []
+    ListNamespacesNonEmptyExample:
+      summary: A non-empty list of namespaces
+      value:
+        namespaces:
+        - accounting
+        - credits
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

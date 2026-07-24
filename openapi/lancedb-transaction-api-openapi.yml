@@ -1,0 +1,918 @@
+openapi: 3.1.1
+info:
+  title: Lance Namespace Specification Data Transaction API
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+  description: 'This OpenAPI specification is a part of the Lance namespace specification. It contains 2 parts:
+
+
+    The `components/schemas`, `components/responses`, `components/examples`, `tags` sections define
+
+    the request and response shape for each operation in a Lance Namespace across all implementations.
+
+    See https://lance.org/format/namespace/operations for more details.
+
+
+    The `servers`, `security`, `paths`, `components/parameters` sections are for the
+
+    Lance REST Namespace implementation, which defines a complete REST server that can work with Lance datasets.
+
+    See https://lance.org/format/namespace/rest for more details.
+
+    '
+servers:
+- url: '{scheme}://{host}:{port}/{basePath}'
+  description: Generic server URL with all parts configurable
+  variables:
+    scheme:
+      default: http
+    host:
+      default: localhost
+    port:
+      default: '2333'
+    basePath:
+      default: ''
+- url: '{scheme}://{host}/{basePath}'
+  description: Server URL when the port can be inferred from the scheme
+  variables:
+    scheme:
+      default: http
+    host:
+      default: localhost
+    basePath:
+      default: ''
+security:
+- OAuth2: []
+- BearerAuth: []
+- ApiKeyAuth: []
+tags:
+- name: Transaction
+  description: 'Operations that are related to a transaction
+
+    '
+paths:
+  /v1/table/batch-commit:
+    parameters:
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Transaction
+      summary: Atomically commit a batch of mixed table operations
+      operationId: BatchCommitTables
+      description: 'Atomically commit a batch of table operations. This is a generalized version
+
+        of `BatchCreateTableVersions` that supports mixed operation types within a
+
+        single atomic transaction at the metadata layer.
+
+
+        Supported operation types:
+
+        - `DeclareTable`: Declare (reserve) a new table
+
+        - `CreateTableVersion`: Create a new version entry for a table
+
+        - `DeleteTableVersions`: Delete version ranges from a table
+
+        - `DeregisterTable`: Deregister (soft-delete) a table
+
+
+        All operations are committed atomically: either all succeed or none are applied.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchCommitTablesRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/BatchCommitTablesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/transaction/{id}/describe:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Transaction
+      summary: Describe information about a transaction
+      operationId: DescribeTransaction
+      description: 'Return a detailed information for a given transaction
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeTransactionRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/DescribeTransactionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+  /v1/transaction/{id}/alter:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/delimiter'
+    post:
+      tags:
+      - Transaction
+      summary: Alter information of a transaction.
+      operationId: AlterTransaction
+      description: 'Alter a transaction with a list of actions such as setting status or properties.
+
+        The server should either succeed and apply all actions, or fail and apply no action.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlterTransactionRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/AlterTransactionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestErrorResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedErrorResponse'
+        403:
+          $ref: '#/components/responses/ForbiddenErrorResponse'
+        404:
+          $ref: '#/components/responses/NotFoundErrorResponse'
+        409:
+          $ref: '#/components/responses/ConflictErrorResponse'
+        503:
+          $ref: '#/components/responses/ServiceUnavailableErrorResponse'
+        5XX:
+          $ref: '#/components/responses/ServerErrorResponse'
+components:
+  schemas:
+    DeclareTableRequest:
+      type: object
+      description: 'Request for declaring a table.
+
+        '
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+          description: 'Optional storage location for the table.
+
+            If not provided, the namespace implementation should determine the table location.
+
+            '
+        vend_credentials:
+          description: 'Whether to include vended credentials in the response `storage_options`.
+
+            When true, the implementation should provide vended credentials for accessing storage.
+
+            When not set, the implementation can decide whether to return vended credentials.
+
+            '
+          type: boolean
+        properties:
+          type: object
+          description: 'Business logic properties stored and managed by the namespace implementation outside
+
+            Lance context, if supported by the implementation.
+
+            '
+          additionalProperties:
+            type: string
+    AlterTransactionAction:
+      type: object
+      description: 'A single action that could be performed to alter a transaction.
+
+        This action holds the model definition for all types of specific actions models,
+
+        this is to minimize difference and compatibility issue across codegen in different languages.
+
+        When used, only one of the actions should be non-null for each action.
+
+        If you would like to perform multiple actions, set a list of actions in the AlterTransactionRequest.
+
+        '
+      properties:
+        setStatusAction:
+          $ref: '#/components/schemas/AlterTransactionSetStatus'
+        setPropertyAction:
+          $ref: '#/components/schemas/AlterTransactionSetProperty'
+        unsetPropertyAction:
+          $ref: '#/components/schemas/AlterTransactionUnsetProperty'
+    DeclareTableResponse:
+      type: object
+      description: 'Response for declaring a table.
+
+        '
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        location:
+          type: string
+        storage_options:
+          type: object
+          description: 'Configuration options to be used to access storage. The available
+
+            options depend on the type of storage in use. These will be
+
+            passed directly to Lance to initialize storage access.
+
+            '
+          additionalProperties:
+            type: string
+        properties:
+          type: object
+          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise it should return the properties.
+
+            '
+          additionalProperties:
+            type: string
+          example:
+            owner: Ralph
+            created_at: '1452120468'
+          default: {}
+          nullable: true
+        managed_versioning:
+          type: boolean
+          description: 'When true, the caller should use namespace table version operations
+
+            (CreateTableVersion, BatchCreateTableVersions, DescribeTableVersion, ListTableVersions, BatchDeleteTableVersions)
+
+            to manage table versions instead of relying on Lance''s native version management.
+
+            '
+    BatchDeleteTableVersionsResponse:
+      type: object
+      description: Response for deleting table version records
+      properties:
+        deleted_count:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Number of version records deleted
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    ManifestNamingScheme:
+      type: string
+      description: "The naming scheme used for manifest files in the `_versions/` directory.\n\nKnown values:\n- `V1`: `_versions/{version}.manifest` - Simple version-based naming\n- `V2`: `_versions/{inverted_version}.manifest` - Zero-padded, reversed version number\n  (uses `u64::MAX - version`) for O(1) lookup of latest version on object stores\n\nV2 is preferred for new tables as it enables efficient latest-version discovery\nwithout needing to list all versions.\n"
+      example: V2
+    AlterTransactionRequest:
+      type: object
+      description: 'Alter a transaction with a list of actions.
+
+        The server should either succeed and apply all actions, or fail and apply no action.
+
+        '
+      required:
+      - actions
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        actions:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/AlterTransactionAction'
+    DescribeTransactionResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+    DescribeTransactionRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+    TableVersion:
+      type: object
+      required:
+      - version
+      - manifest_path
+      properties:
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version number
+        manifest_path:
+          type: string
+          description: Path to the manifest file for this version.
+        manifest_size:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Size of the manifest file in bytes
+        e_tag:
+          type: string
+          description: 'Optional ETag for optimistic concurrency control.
+
+            Useful for S3 and similar object stores.
+
+            '
+        timestamp_millis:
+          type: integer
+          format: int64
+          description: Timestamp when the version was created, in milliseconds since epoch (Unix time)
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Optional key-value pairs of metadata
+    CommitTableOperation:
+      type: object
+      description: 'A single operation within a batch commit.
+
+        Provide exactly one of the operation fields to specify the operation kind.
+
+        '
+      properties:
+        declare_table:
+          $ref: '#/components/schemas/DeclareTableRequest'
+          description: Declare (reserve) a new table in the namespace
+        create_table_version:
+          $ref: '#/components/schemas/CreateTableVersionRequest'
+          description: Create a new version entry for a table
+        delete_table_versions:
+          $ref: '#/components/schemas/BatchDeleteTableVersionsRequest'
+          description: Delete version ranges from a table
+        deregister_table:
+          $ref: '#/components/schemas/DeregisterTableRequest'
+          description: Deregister (soft-delete) a table
+    Identity:
+      type: object
+      description: 'Identity information of a request.
+
+        '
+      properties:
+        api_key:
+          type: string
+          description: 'API key for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `x-api-key` header.
+
+            '
+        auth_token:
+          type: string
+          description: 'Bearer token for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `Authorization` header
+
+            with the Bearer scheme (e.g., `Bearer <token>`).
+
+            '
+    BatchCommitTablesRequest:
+      type: object
+      description: 'Request to atomically commit a batch of table operations.
+
+        This replaces `BatchCreateTableVersionsRequest` with a more general interface
+
+        that supports mixed operations (DeclareTable, CreateTableVersion,
+
+        DeleteTableVersions, DeregisterTable)
+
+        within a single atomic transaction at the metadata layer.
+
+
+        All operations are committed atomically: either all succeed or none are applied.
+
+        '
+      required:
+      - operations
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitTableOperation'
+          description: 'List of operations to commit atomically.
+
+            Supported operation types: DeclareTable, CreateTableVersion,
+
+            DeleteTableVersions, DeregisterTable.
+
+            '
+    BatchDeleteTableVersionsRequest:
+      type: object
+      description: 'Request to delete table version records.
+
+        Supports deleting ranges of versions for efficient bulk cleanup.
+
+        '
+      required:
+      - ranges
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+          description: The table identifier
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionRange'
+          description: 'List of version ranges to delete.
+
+            Each range specifies start (inclusive) and end (exclusive) versions.
+
+            '
+    DeregisterTableRequest:
+      type: object
+      description: 'The table content remains available in the storage.
+
+        '
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+    SetPropertyMode:
+      type: string
+      description: 'The behavior if the property key already exists.
+
+        Case insensitive, supports both PascalCase and snake_case. Valid values are:
+
+        - Overwrite (default): overwrite the existing value with the provided value
+
+        - Fail: fail the entire operation
+
+        - Skip: keep the existing value and skip setting the provided value
+
+        '
+    BatchCommitTablesResponse:
+      type: object
+      description: 'Response for a batch commit of table operations.
+
+        Contains the results of each operation in the same order as the request.
+
+        '
+      required:
+      - results
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier for the batch commit
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitTableResult'
+          description: 'Results for each operation, in the same order as the request operations.
+
+            Each result contains the outcome of the corresponding operation.
+
+            '
+    UnsetPropertyMode:
+      type: string
+      description: 'The behavior if the property key to unset does not exist.
+
+        Case insensitive, supports both PascalCase and snake_case. Valid values are:
+
+        - Skip (default): skip the property to unset
+
+        - Fail: fail the entire operation
+
+        '
+    CreateTableVersionResponse:
+      type: object
+      description: Response for creating a table version
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        version:
+          $ref: '#/components/schemas/TableVersion'
+    AlterTransactionUnsetProperty:
+      type: object
+      properties:
+        key:
+          type: string
+        mode:
+          $ref: '#/components/schemas/UnsetPropertyMode'
+    CommitTableResult:
+      type: object
+      description: 'Result of a single operation within a batch commit.
+
+        Each result corresponds to one operation in the request, in the same order.
+
+        Exactly one of the result fields will be set.
+
+        '
+      properties:
+        declare_table:
+          $ref: '#/components/schemas/DeclareTableResponse'
+          description: Result of a DeclareTable operation
+        create_table_version:
+          $ref: '#/components/schemas/CreateTableVersionResponse'
+          description: Result of a CreateTableVersion operation
+        delete_table_versions:
+          $ref: '#/components/schemas/BatchDeleteTableVersionsResponse'
+          description: Result of a DeleteTableVersions operation
+        deregister_table:
+          $ref: '#/components/schemas/DeregisterTableResponse'
+          description: Result of a DeregisterTable operation
+    VersionRange:
+      type: object
+      description: 'A range of versions to delete (start inclusive, end exclusive).
+
+        Special values:
+
+        - `start_version: 0` with `end_version: -1` means ALL versions
+
+        '
+      required:
+      - start_version
+      - end_version
+      properties:
+        start_version:
+          type: integer
+          format: int64
+          description: 'Start version of the range (inclusive).
+
+            Use 0 to start from the first version.
+
+            '
+        end_version:
+          type: integer
+          format: int64
+          description: 'End version of the range (exclusive).
+
+            Use -1 to indicate all versions up to and including the latest.
+
+            '
+    ErrorResponse:
+      type: object
+      description: Common JSON error response model
+      required:
+      - code
+      properties:
+        error:
+          type: string
+          description: A brief, human-readable message about the error.
+          example: Table 'users' not found in namespace 'production'
+        code:
+          type: integer
+          minimum: 0
+          description: "Lance Namespace error code identifying the error type.\n\nError codes:\n  0 - Unsupported: Operation not supported by this backend\n  1 - NamespaceNotFound: The specified namespace does not exist\n  2 - NamespaceAlreadyExists: A namespace with this name already exists\n  3 - NamespaceNotEmpty: Namespace contains tables or child namespaces\n  4 - TableNotFound: The specified table does not exist\n  5 - TableAlreadyExists: A table with this name already exists\n  6 - TableIndexNotFound: The specified table index does not exist\n  7 - TableIndexAlreadyExists: A table index with this name already exists\n  8 - TableTagNotFound: The specified table tag does not exist\n  9 - TableTagAlreadyExists: A table tag with this name already exists\n  10 - TransactionNotFound: The specified transaction does not exist\n  11 - TableVersionNotFound: The specified table version does not exist\n  12 - TableColumnNotFound: The specified table column does not exist\n  13 - InvalidInput: Malformed request or invalid parameters\n  14 - ConcurrentModification: Optimistic concurrency conflict\n  15 - PermissionDenied: User lacks permission for this operation\n  16 - Unauthenticated: Authentication credentials are missing or invalid\n  17 - ServiceUnavailable: Service is temporarily unavailable\n  18 - Internal: Unexpected server/implementation error\n  19 - InvalidTableState: Table is in an invalid state for the operation\n  20 - TableSchemaValidationError: Table schema validation failed\n"
+          example: 4
+        detail:
+          type: string
+          description: 'An optional human-readable explanation of the error.
+
+            This can be used to record additional information such as stack trace.
+
+            '
+          example: The table may have been dropped or renamed
+        instance:
+          type: string
+          description: 'A string that identifies the specific occurrence of the error.
+
+            This can be a URI, a request or response ID,
+
+            or anything that the implementation can recognize to trace specific occurrence of the error.
+
+            '
+          example: /v1/table/production$users/describe
+    TransactionStatus:
+      type: string
+      description: 'The status of a transaction.
+
+        Case insensitive, supports both PascalCase and snake_case. Valid values are:
+
+        - Queued: the transaction is queued and not yet started
+
+        - Running: the transaction is currently running
+
+        - Succeeded: the transaction has completed successfully
+
+        - Failed: the transaction has failed
+
+        - Canceled: the transaction was canceled
+
+        '
+    Context:
+      type: object
+      description: 'Arbitrary context for a request as key-value pairs.
+
+        How to use the context is custom to the specific implementation.
+
+
+        REST NAMESPACE ONLY
+
+        Context entries are passed via HTTP headers using the naming convention
+
+        `x-lance-ctx-<key>: <value>`. For example, a context entry
+
+        `{"trace_id": "abc123"}` would be sent as the header `x-lance-ctx-trace_id: abc123`.
+
+        '
+      additionalProperties:
+        type: string
+    CreateTableVersionRequest:
+      type: object
+      description: 'Request to create a new table version entry.
+
+        This supports `put_if_not_exists` semantics,
+
+        where the operation fails if the version already exists.
+
+        '
+      required:
+      - version
+      - manifest_path
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+          description: The table identifier
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version number to create
+        manifest_path:
+          type: string
+          description: Path to the manifest file for this version
+        manifest_size:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Size of the manifest file in bytes
+        e_tag:
+          type: string
+          description: Optional ETag for the manifest file
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Optional metadata for the version
+        naming_scheme:
+          $ref: '#/components/schemas/ManifestNamingScheme'
+    AlterTransactionSetProperty:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        mode:
+          $ref: '#/components/schemas/SetPropertyMode'
+    AlterTransactionResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+    AlterTransactionSetStatus:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+    DeregisterTableResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        id:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+        properties:
+          type: object
+          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise it should return the properties.
+
+            '
+          additionalProperties:
+            type: string
+          example:
+            owner: Ralph
+            created_at: '1452120468'
+          default: {}
+          nullable: true
+  responses:
+    AlterTransactionResponse:
+      description: Response of AlterTransaction
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AlterTransactionResponse'
+    DescribeTransactionResponse:
+      description: Response of DescribeTransaction
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DescribeTransactionResponse'
+    BatchCommitTablesResponse:
+      description: Result of atomically committing a batch of mixed table operations
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BatchCommitTablesResponse'
+    ServerErrorResponse:
+      description: A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/server-error
+            title: Internal Server Error
+            status: 500
+            detail: ''
+            instance: /v1/namespaces
+    BadRequestErrorResponse:
+      description: Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/bad-request
+            title: Malformed request
+            status: 400
+            detail: ''
+            instance: /v1/namespaces
+    ConflictErrorResponse:
+      description: The request conflicts with the current state of the target resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/conflict
+            title: The namespace has been concurrently modified
+            status: 409
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    ServiceUnavailableErrorResponse:
+      description: The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/service-unavailable
+            title: Slow down
+            status: 503
+            detail: ''
+            instance: /v1/namespaces
+    ForbiddenErrorResponse:
+      description: Forbidden. Authenticated user does not have the necessary permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/forbidden-request
+            title: Not authorized to make this request
+            status: 403
+            detail: ''
+            instance: /v1/namespaces
+    UnauthorizedErrorResponse:
+      description: Unauthorized. The request lacks valid authentication credentials for the operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/unauthorized-request
+            title: No valid authentication credentials for the operation
+            status: 401
+            detail: ''
+            instance: /v1/namespaces
+    NotFoundErrorResponse:
+      description: A server-side problem that means can not find the specified resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/not-found-error
+            title: Not found Error
+            status: 404
+            detail: ''
+            instance: /v1/namespaces/{ns}
+  parameters:
+    id:
+      name: id
+      description: '`string identifier` of an object in a namespace, following the Lance Namespace spec.
+
+        When the value is equal to the delimiter, it represents the root namespace.
+
+        For example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.
+
+        '
+      in: path
+      required: true
+      schema:
+        type: string
+    delimiter:
+      name: delimiter
+      description: 'An optional delimiter of the `string identifier`, following the Lance Namespace spec.
+
+        When not specified, the `$` delimiter must be used.
+
+        '
+      in: query
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
