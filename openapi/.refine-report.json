@@ -1,0 +1,28 @@
+{
+  "provider": "lancedb",
+  "sources": [
+    "lancedb-data-api-openapi.yml",
+    "lancedb-index-api-openapi.yml",
+    "lancedb-materializedview-api-openapi.yml",
+    "lancedb-metadata-api-openapi.yml",
+    "lancedb-namespace-api-openapi.yml",
+    "lancedb-table-api-openapi.yml",
+    "lancedb-tag-api-openapi.yml",
+    "lancedb-transaction-api-openapi.yml"
+  ],
+  "outputs": [
+    "lancedb-data-api-openapi.yml",
+    "lancedb-index-api-openapi.yml",
+    "lancedb-materializedview-api-openapi.yml",
+    "lancedb-metadata-api-openapi.yml",
+    "lancedb-namespace-api-openapi.yml",
+    "lancedb-table-api-openapi.yml",
+    "lancedb-tag-api-openapi.yml",
+    "lancedb-transaction-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
