@@ -456,6 +456,10 @@ apis:
   - type: Implementations
     url: https://github.com/lance-format/lance-namespace-impls
 common:
+  - type: IssueTracker
+    url: https://github.com/lance-format/lance/issues
+  - type: ContributionGuide
+    url: https://github.com/lance-format/lance/blob/main/CONTRIBUTING.md
   - type: AgenticAccess
     url: agentic-access/lancedb-agentic-access.yml
   - type: TrustCenter
