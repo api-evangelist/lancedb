@@ -1,0 +1,1127 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lance Namespace Specification Data Metadata API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/namespace/:id/create",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new namespace `id`.\n\nDuring the creation process, the implementation may modify user-provided `properties`,\nsuch as adding additional properties like `created_at` to user-provided properties,\nomitting any specific property, or performing actions based on any property value.\n"
+        },
+        {
+          "info": {
+            "name": "List namespaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/namespace/:id/list",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token from a previous request"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              }
+            ]
+          },
+          "docs": "List all child namespace names of the parent namespace `id`.\n\nREST NAMESPACE ONLY\nREST namespace uses GET to perform this operation without a request body.\nIt passes in the `ListNamespacesRequest` information in the following way:\n- `id`: pass through path parameter of the same name\n- `page_token`: pass through query parameter of the same name\n- `limit`: pass through query parameter of the same name\n"
+        },
+        {
+          "info": {
+            "name": "Describe a namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/namespace/:id/describe",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Describe the detailed information for namespace `id`.\n"
+        },
+        {
+          "info": {
+            "name": "Drop a namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/namespace/:id/drop",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Drop namespace `id` from its parent namespace.\n"
+        },
+        {
+          "info": {
+            "name": "Check if a namespace exists",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/namespace/:id/exists",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Check if namespace `id` exists.\n\nThis operation must behave exactly like the DescribeNamespace API,\nexcept it does not contain a response body.\n"
+        },
+        {
+          "info": {
+            "name": "List tables in a namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/namespace/:id/table/list",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token from a previous request"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "include_declared",
+                "value": "",
+                "type": "query",
+                "description": "When true (default), includes tables that have been declared in the namespace\nbut not yet created on storage, in addition to tables that have\nbeen created. When false, only tables with storage\ncomponents are returned.\n"
+              }
+            ]
+          },
+          "docs": "List all child table names of the parent namespace `id`.\n\nREST NAMESPACE ONLY\nREST namespace uses GET to perform this operation without a request body.\nIt passes in the `ListTablesRequest` information in the following way:\n- `id`: pass through path parameter of the same name\n- `page_token`: pass through query parameter of the same name\n- `limit`: pass through query parameter of the same name\n- `include_declared`: pass through query parameter of the same name\n"
+        },
+        {
+          "info": {
+            "name": "Register a table to a namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/register",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register an existing table at a given storage location as `id`.\n"
+        },
+        {
+          "info": {
+            "name": "Describe information of a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/describe",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              },
+              {
+                "name": "with_table_uri",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include the table URI in the response"
+              },
+              {
+                "name": "load_detailed_metadata",
+                "value": "",
+                "type": "query",
+                "description": "Whether to load detailed metadata that requires opening the dataset.\nWhen false (default), only `location` is required in the response.\nWhen true, the response includes additional metadata such as `version`, `schema`, and `stats`.\n"
+              },
+              {
+                "name": "check_declared",
+                "value": "",
+                "type": "query",
+                "description": "Whether to check if the table exists only as a namespace declaration\nwithout storage data. When false (default), the response should return\nnull for `is_only_declared` unless another option such as\n`load_detailed_metadata` requires the check.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Describe the detailed information for table `id`.\n\nREST NAMESPACE ONLY\nREST namespace passes `with_table_uri`, `load_detailed_metadata`, and `check_declared` as query parameters instead of in the request body.\n"
+        },
+        {
+          "info": {
+            "name": "Check if a table exists",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/exists",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Check if table `id` exists.\n\nThis operation should behave exactly like DescribeTable,\nexcept it does not contain a response body.\n\nFor DirectoryNamespace implementation, a table exists if either:\n- The table has Lance data versions (regular table created with CreateTable)\n- A `.lance-reserved` file exists in the table directory (declared table created with DeclareTable)\n"
+        },
+        {
+          "info": {
+            "name": "Drop a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/drop",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ]
+          },
+          "docs": "Drop table `id` and delete its data.\n\nREST NAMESPACE ONLY\nREST namespace does not use a request body for this operation.\nThe `DropTableRequest` information is passed in the following way:\n- `id`: pass through path parameter of the same name\n"
+        },
+        {
+          "info": {
+            "name": "Deregister a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/deregister",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deregister table `id` from its namespace.\n"
+        },
+        {
+          "info": {
+            "name": "Restore table to a specific version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/restore",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Restore table `id` to a specific version.\n"
+        },
+        {
+          "info": {
+            "name": "Rename a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/rename",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rename table `id` to a new name.\n"
+        },
+        {
+          "info": {
+            "name": "Update table schema metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/schema_metadata/update",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace the schema metadata for table `id` with the provided key-value pairs.\n\nREST NAMESPACE ONLY\nREST namespace uses a direct object (map of string to string) as both request and response body\ninstead of the wrapped `UpdateTableSchemaMetadataRequest` and `UpdateTableSchemaMetadataResponse`.\n"
+        },
+        {
+          "info": {
+            "name": "List all versions of a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/version/list",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token from a previous request"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "descending",
+                "value": "",
+                "type": "query",
+                "description": "When true, versions are guaranteed to be returned in descending order (latest to oldest).\nWhen false or not specified, the ordering is implementation-defined.\n"
+              }
+            ]
+          },
+          "docs": "List all versions (commits) of table `id` with their metadata.\n\nUse `descending=true` to guarantee versions are returned in descending order (latest to oldest).\nOtherwise, the ordering is implementation-defined.\n\nREST NAMESPACE ONLY\nREST namespace does not use a request body for this operation.\nThe `ListTableVersionsRequest` information is passed in the following way:\n- `id`: pass through path parameter of the same name\n- `page_token`: pass through query parameter of the same name\n- `limit`: pas"
+        },
+        {
+          "info": {
+            "name": "Create a new table version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/version/create",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new version entry for table `id`.\n\nThis operation supports `put_if_not_exists` semantics.\nThe operation will fail with 409 Conflict if the version already exists.\n"
+        },
+        {
+          "info": {
+            "name": "Describe a specific table version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/version/describe",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Describe the detailed information for a specific version of table `id`.\n\nReturns the manifest path and metadata for the specified version.\n"
+        },
+        {
+          "info": {
+            "name": "Delete table version records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/version/delete",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete version metadata records for table `id`.\n\nThis operation deletes version tracking records, NOT the actual table data.\nIt supports deleting ranges of versions for efficient bulk cleanup.\n\nSpecial range values:\n- `start_version: 0` with `end_version: -1` means delete ALL version records\n"
+        },
+        {
+          "info": {
+            "name": "Atomically create versions for multiple tables",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/version/batch-create",
+            "params": [
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Atomically create new version entries for multiple tables.\n\nThis operation is atomic: either all table versions are created successfully,\nor none are created. If any version creation fails (e.g., due to conflict),\nthe entire batch operation fails.\n\nEach entry in the request specifies the table identifier and version details.\nThis supports `put_if_not_exists` semantics for each version entry.\n"
+        },
+        {
+          "info": {
+            "name": "Atomically commit a batch of mixed table operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/batch-commit",
+            "params": [
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Atomically commit a batch of table operations. This is a generalized version\nof `BatchCreateTableVersions` that supports mixed operation types within a\nsingle atomic transaction at the metadata layer.\n\nSupported operation types:\n- `DeclareTable`: Declare (reserve) a new table\n- `CreateTableVersion`: Create a new version entry for a table\n- `DeleteTableVersions`: Delete version ranges from a table\n- `DeregisterTable`: Deregister (soft-delete) a table\n\nAll operations are committed atomically: eith"
+        },
+        {
+          "info": {
+            "name": "Modify existing columns",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/alter_columns",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify existing columns in table `id`, such as renaming or changing data types.\n"
+        },
+        {
+          "info": {
+            "name": "Remove columns from table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/drop_columns",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove specified columns from table `id`.\n"
+        },
+        {
+          "info": {
+            "name": "Get table statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/stats",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get statistics for table `id`, including row counts, data sizes, and column statistics.\n"
+        },
+        {
+          "info": {
+            "name": "Create an index on a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/create_index",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an index on a table column for faster search operations.\nSupports vector indexes (IVF_FLAT, IVF_HNSW_SQ, IVF_PQ, etc.) and scalar indexes (BTREE, BITMAP, FTS, etc.).\nIndex creation is handled asynchronously.\nUse the `ListTableIndices` and `DescribeTableIndexStats` operations to monitor index creation progress.\n"
+        },
+        {
+          "info": {
+            "name": "Create a scalar index on a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/create_scalar_index",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a scalar index on a table column for faster filtering operations.\nSupports scalar indexes (BTREE, BITMAP, LABEL_LIST, FTS, etc.).\nThis is an alias for CreateTableIndex specifically for scalar indexes.\nIndex creation is handled asynchronously.\nUse the `ListTableIndices` and `DescribeTableIndexStats` operations to monitor index creation progress.\n"
+        },
+        {
+          "info": {
+            "name": "List indexes on a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/index/list",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List all indices created on a table. Returns information about each index\nincluding name, columns, status, and UUID.\n"
+        },
+        {
+          "info": {
+            "name": "Get table index statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/index/:index_name/stats",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              },
+              {
+                "name": "index_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the index to get stats for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get statistics for a specific index on a table. Returns information about\nthe index type, distance type (for vector indices), and row counts.\n"
+        },
+        {
+          "info": {
+            "name": "Drop a specific index",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/index/:index_name/drop",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              },
+              {
+                "name": "index_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the index to drop"
+              }
+            ]
+          },
+          "docs": "Drop the specified index from table `id`.\n\nREST NAMESPACE ONLY\nREST namespace does not use a request body for this operation.\nThe `DropTableIndexRequest` information is passed in the following way:\n- `id`: pass through path parameter of the same name\n- `index_name`: pass through path parameter of the same name\n"
+        },
+        {
+          "info": {
+            "name": "List all tags for a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/tags/list",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token from a previous request"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              }
+            ]
+          },
+          "docs": "List all tags that have been created for table `id`.\nReturns a map of tag names to their corresponding version numbers and metadata.\n\nREST NAMESPACE ONLY\nREST namespace does not use a request body for this operation.\nThe `ListTableTagsRequest` information is passed in the following way:\n- `id`: pass through path parameter of the same name\n- `page_token`: pass through query parameter of the same name\n- `limit`: pass through query parameter of the same name\n"
+        },
+        {
+          "info": {
+            "name": "Get version for a specific tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/tags/version",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get the version number that a specific tag points to for table `id`.\n"
+        },
+        {
+          "info": {
+            "name": "Declare a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/declare",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Declare a table with the given name without touching storage.\nThis is a metadata-only operation that records the table existence and sets up aspects like access control.\n\nFor DirectoryNamespace implementation, this creates a `.lance-reserved` file in the table directory\nto mark the table's existence without creating actual Lance data files.\n"
+        },
+        {
+          "info": {
+            "name": "Create a new tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/tags/create",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new tag for table `id` that points to a specific version.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/tags/delete",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete an existing tag from table `id`.\n"
+        },
+        {
+          "info": {
+            "name": "Update a tag to point to a different version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/tags/update",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing tag for table `id` to point to a different version.\n"
+        },
+        {
+          "info": {
+            "name": "Describe information about a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/transaction/:id/describe",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return a detailed information for a given transaction\n"
+        },
+        {
+          "info": {
+            "name": "Alter information of a transaction.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/transaction/:id/alter",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Alter a transaction with a list of actions such as setting status or properties.\nThe server should either succeed and apply all actions, or fail and apply no action.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

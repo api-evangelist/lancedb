@@ -1,0 +1,1830 @@
+{
+  "item": [
+    {
+      "id": "b7d6dc6b-ac75-44af-bda3-45cc614bd255",
+      "name": "MaterializedView",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2f199edc-3d31-46db-bea7-e5a0cb049871",
+          "name": "Trigger an async materialized view refresh",
+          "request": {
+            "name": "Trigger an async materialized view refresh",
+            "description": {
+              "content": "Trigger an asynchronous refresh job for materialized view `id`.\nReturns a job ID for tracking.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "materialized_view",
+                ":id",
+                "refresh"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "delimiter",
+                  "value": "<string>",
+                  "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{scheme}}",
+                  "key": "scheme"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{basePath}}",
+                  "key": "basePath"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identity\": {\n    \"api_key\": \"<string>\",\n    \"auth_token\": \"<string>\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"src_version\": \"<integer,null>\",\n  \"max_rows_per_fragment\": \"<integer,null>\",\n  \"concurrency\": \"<integer,null>\",\n  \"intra_applier_concurrency\": \"<integer,null>\",\n  \"cluster\": \"<string,null>\",\n  \"output_limit\": \"<integer,null>\",\n  \"manifest\": \"<string,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ac700bd8-1d5e-4dc9-a01c-d682efdbca6b",
+              "name": "Refresh job accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"src_version\": \"<integer,null>\",\n  \"max_rows_per_fragment\": \"<integer,null>\",\n  \"concurrency\": \"<integer,null>\",\n  \"intra_applier_concurrency\": \"<integer,null>\",\n  \"cluster\": \"<string,null>\",\n  \"output_limit\": \"<integer,null>\",\n  \"manifest\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"job_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40352677-3b9f-4906-b3ae-5ae319777b21",
+              "name": "Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"src_version\": \"<integer,null>\",\n  \"max_rows_per_fragment\": \"<integer,null>\",\n  \"concurrency\": \"<integer,null>\",\n  \"intra_applier_concurrency\": \"<integer,null>\",\n  \"cluster\": \"<string,null>\",\n  \"output_limit\": \"<integer,null>\",\n  \"manifest\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/bad-request\",\n  \"title\": \"Malformed request\",\n  \"status\": 400,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eaca4c5a-5072-46fb-b186-aad0440c7291",
+              "name": "Unauthorized. The request lacks valid authentication credentials for the operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"src_version\": \"<integer,null>\",\n  \"max_rows_per_fragment\": \"<integer,null>\",\n  \"concurrency\": \"<integer,null>\",\n  \"intra_applier_concurrency\": \"<integer,null>\",\n  \"cluster\": \"<string,null>\",\n  \"output_limit\": \"<integer,null>\",\n  \"manifest\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/unauthorized-request\",\n  \"title\": \"No valid authentication credentials for the operation\",\n  \"status\": 401,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70e6e2d5-97d7-47e6-a4a0-5968e34d2da4",
+              "name": "Forbidden. Authenticated user does not have the necessary permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"src_version\": \"<integer,null>\",\n  \"max_rows_per_fragment\": \"<integer,null>\",\n  \"concurrency\": \"<integer,null>\",\n  \"intra_applier_concurrency\": \"<integer,null>\",\n  \"cluster\": \"<string,null>\",\n  \"output_limit\": \"<integer,null>\",\n  \"manifest\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/forbidden-request\",\n  \"title\": \"Not authorized to make this request\",\n  \"status\": 403,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44125afd-89d1-4e74-82ac-845ac837427f",
+              "name": "A server-side problem that means can not find the specified resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"src_version\": \"<integer,null>\",\n  \"max_rows_per_fragment\": \"<integer,null>\",\n  \"concurrency\": \"<integer,null>\",\n  \"intra_applier_concurrency\": \"<integer,null>\",\n  \"cluster\": \"<string,null>\",\n  \"output_limit\": \"<integer,null>\",\n  \"manifest\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/not-found-error\",\n  \"title\": \"Not found Error\",\n  \"status\": 404,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces/{ns}\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2da3acc-ac0f-4a71-8fc5-f7024d9c46ea",
+              "name": "The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"src_version\": \"<integer,null>\",\n  \"max_rows_per_fragment\": \"<integer,null>\",\n  \"concurrency\": \"<integer,null>\",\n  \"intra_applier_concurrency\": \"<integer,null>\",\n  \"cluster\": \"<string,null>\",\n  \"output_limit\": \"<integer,null>\",\n  \"manifest\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/service-unavailable\",\n  \"title\": \"Slow down\",\n  \"status\": 503,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c0782fc-d389-423b-b2e0-c3094d0c84a6",
+              "name": "A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"src_version\": \"<integer,null>\",\n  \"max_rows_per_fragment\": \"<integer,null>\",\n  \"concurrency\": \"<integer,null>\",\n  \"intra_applier_concurrency\": \"<integer,null>\",\n  \"cluster\": \"<string,null>\",\n  \"output_limit\": \"<integer,null>\",\n  \"manifest\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/server-error\",\n  \"title\": \"Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "52affbee-5b15-4184-aa35-bdd6f5297d0c",
+          "name": "Create a materialized view",
+          "request": {
+            "name": "Create a materialized view",
+            "description": {
+              "content": "Create a materialized view at identifier `id`. The view may be\nquery-backed, UDTF-backed, or chunker-backed, controlled by the\n`kind` discriminator.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "materialized_view",
+                ":id",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "delimiter",
+                  "value": "<string>",
+                  "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{scheme}}",
+                  "key": "scheme"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{basePath}}",
+                  "key": "basePath"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kind\": \"<string>\",\n  \"source_query\": \"<string>\",\n  \"output_schema\": \"<string>\",\n  \"identity\": {\n    \"api_key\": \"<string>\",\n    \"auth_token\": \"<string>\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"udtf_spec\": \"<null>\",\n  \"with_no_data\": true,\n  \"auto_refresh\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e6279ce8-d997-48a5-b2ac-95e81f4ab7b8",
+              "name": "Materialized view created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"kind\": \"<string>\",\n  \"source_query\": \"<string>\",\n  \"output_schema\": \"<string>\",\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"udtf_spec\": \"<null>\",\n  \"with_no_data\": true,\n  \"auto_refresh\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": 3501,\n  \"job_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e43aba3d-cb8b-4e88-9d3e-669565606b8b",
+              "name": "Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"kind\": \"<string>\",\n  \"source_query\": \"<string>\",\n  \"output_schema\": \"<string>\",\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"udtf_spec\": \"<null>\",\n  \"with_no_data\": true,\n  \"auto_refresh\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/bad-request\",\n  \"title\": \"Malformed request\",\n  \"status\": 400,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb80de68-7926-44f0-946c-3bd2c122a2fb",
+              "name": "Unauthorized. The request lacks valid authentication credentials for the operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"kind\": \"<string>\",\n  \"source_query\": \"<string>\",\n  \"output_schema\": \"<string>\",\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"udtf_spec\": \"<null>\",\n  \"with_no_data\": true,\n  \"auto_refresh\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/unauthorized-request\",\n  \"title\": \"No valid authentication credentials for the operation\",\n  \"status\": 401,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7bd4b3d7-2ec2-49e0-b85a-c8390d1fbc17",
+              "name": "Forbidden. Authenticated user does not have the necessary permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"kind\": \"<string>\",\n  \"source_query\": \"<string>\",\n  \"output_schema\": \"<string>\",\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"udtf_spec\": \"<null>\",\n  \"with_no_data\": true,\n  \"auto_refresh\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/forbidden-request\",\n  \"title\": \"Not authorized to make this request\",\n  \"status\": 403,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eccd9353-af92-4d39-b659-d65616eaf2e2",
+              "name": "A server-side problem that means can not find the specified resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"kind\": \"<string>\",\n  \"source_query\": \"<string>\",\n  \"output_schema\": \"<string>\",\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"udtf_spec\": \"<null>\",\n  \"with_no_data\": true,\n  \"auto_refresh\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/not-found-error\",\n  \"title\": \"Not found Error\",\n  \"status\": 404,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces/{ns}\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b0ea6da-fab7-4caa-ad3c-b7ec774e64e3",
+              "name": "The request conflicts with the current state of the target resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"kind\": \"<string>\",\n  \"source_query\": \"<string>\",\n  \"output_schema\": \"<string>\",\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"udtf_spec\": \"<null>\",\n  \"with_no_data\": true,\n  \"auto_refresh\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/conflict\",\n  \"title\": \"The namespace has been concurrently modified\",\n  \"status\": 409,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces/{ns}\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87d52226-5bbf-42af-94d4-79eb6c3a7270",
+              "name": "The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"kind\": \"<string>\",\n  \"source_query\": \"<string>\",\n  \"output_schema\": \"<string>\",\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"udtf_spec\": \"<null>\",\n  \"with_no_data\": true,\n  \"auto_refresh\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/service-unavailable\",\n  \"title\": \"Slow down\",\n  \"status\": 503,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1b35865-d7b7-4722-b342-589f4e2f04fe",
+              "name": "A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "materialized_view",
+                    ":id",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"kind\": \"<string>\",\n  \"source_query\": \"<string>\",\n  \"output_schema\": \"<string>\",\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"udtf_spec\": \"<null>\",\n  \"with_no_data\": true,\n  \"auto_refresh\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/server-error\",\n  \"title\": \"Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "http",
+      "key": "scheme"
+    },
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost",
+      "key": "host"
+    },
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "2333",
+      "key": "port"
+    },
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "",
+      "key": "basePath"
+    },
+    {
+      "type": "string",
+      "value": "{{scheme}}://{{host}}:{{port}}/{{basePath}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "/oauth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "aff49e38-8a3c-42a2-8f77-3bdce4762cd4",
+    "name": "Lance Namespace Specification Data MaterializedView API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This OpenAPI specification is a part of the Lance namespace specification. It contains 2 parts:\n\nThe `components/schemas`, `components/responses`, `components/examples`, `tags` sections define\nthe request and response shape for each operation in a Lance Namespace across all implementations.\nSee https://lance.org/format/namespace/operations for more details.\n\nThe `servers`, `security`, `paths`, `components/parameters` sections are for the\nLance REST Namespace implementation, which defines a complete REST server that can work with Lance datasets.\nSee https://lance.org/format/namespace/rest for more details.\n",
+      "type": "text/plain"
+    }
+  }
+}

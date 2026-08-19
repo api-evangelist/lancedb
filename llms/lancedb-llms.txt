@@ -1,0 +1,241 @@
+# LanceDB
+
+## Docs
+
+- [Quickstart](https://docs.lancedb.com/quickstart.md): Get started with LanceDB in minutes.
+- [LanceDB](https://docs.lancedb.com/index.md): Multimodal lakehouse for AI.
+- [Lance format](https://docs.lancedb.com/lance.md): Open-source lakehouse format for multimodal AI.
+- [Tables and Namespaces](https://docs.lancedb.com/tables-and-namespaces.md): Learn more about the table abstraction and namespaces in LanceDB.
+- [LanceDB Enterprise](https://docs.lancedb.com/enterprise/index.md): Features and benefits of LanceDB Enterprise.
+- [Architecture](https://docs.lancedb.com/enterprise/architecture.md): Learn how LanceDB Enterprise separates control, compute, and storage to serve remote tables at scale.
+- [Security & Compliance](https://docs.lancedb.com/enterprise/security.md): Learn about LanceDB Enterprise security features and best practices.
+- [Authentication](https://docs.lancedb.com/enterprise/authentication.md): Authentication modes for LanceDB Enterprise with an API key or OAuth credentials.
+- [Benchmarks](https://docs.lancedb.com/enterprise/benchmarks.md): Representative latency and scalability benchmarks for LanceDB Enterprise.
+- [Deployment guide](https://docs.lancedb.com/enterprise/deployment/index.md): Learn how to deploy LanceDB Enterprise in production environments.
+- [Azure deployment guide](https://docs.lancedb.com/enterprise/deployment/azure.md): Learn how to deploy LanceDB Enterprise on Azure with AKS, Private Link, and Blob Storage.
+- [Performance Tips and Best Practices](https://docs.lancedb.com/performance.md): Optimize LanceDB for your workload across ingestion, indexing, querying, and maintenance.
+- [Why LanceDB for Training](https://docs.lancedb.com/training/why-lancedb.md): Use LanceDB as the multimodal data layer for model training, fine-tuning, curation, and feature engineering workflows.
+- [Loading Data for Model Training](https://docs.lancedb.com/training/index.md): Stream, shuffle, transform, and resume model training data from LanceDB.
+- [PyTorch Integration](https://docs.lancedb.com/training/torch.md): Learn how to use LanceDB with PyTorch for training and inference.
+- [Object Detection for AV Perception](https://docs.lancedb.com/training/object-detection.md): End-to-end fine-tuning of a Faster R-CNN object detector on curated dashcam slices, using LanceDB as the data backbone from raw frames to checkpoints.
+- [Fine-tuning a VLM on TextVQA](https://docs.lancedb.com/training/vlm-finetuning.md): End-to-end fine-tuning of Qwen2.5-VL on a curated TextVQA slice, using LanceDB and Geneva to materialize expensive vision-language features once and train from cached columns.
+- [Basic Table Operations](https://docs.lancedb.com/tables/index.md): Create tables, search vectors, and append data in LanceDB.
+- [Ingesting Data](https://docs.lancedb.com/tables/create.md): Learn about different methods to ingest data into tables in LanceDB, including from various data sources and empty tables.
+- [Multimodal Data (Blobs)](https://docs.lancedb.com/tables/multimodal.md): Learn how to store and query multimodal data (images, audio, video) directly in LanceDB using binary columns.
+- [Schema and Data Evolution](https://docs.lancedb.com/tables/schema.md): Learn how to manage table schemas in LanceDB, including adding, altering, and dropping columns.
+- [Updating and Modifying Table Data](https://docs.lancedb.com/tables/update.md): Learn how to update, merge, and delete rows in a LanceDB table.
+- [Versioning and Reproducibility](https://docs.lancedb.com/tables/versioning.md): Learn how to implement versioning and ensure reproducibility in LanceDB. Includes version control, data snapshots, and audit trails.
+- [Branches](https://docs.lancedb.com/tables/branching.md): Fork isolated, writable lines of table history in LanceDB. Run experiments, backfills, and index rebuilds without disturbing production reads on main.
+- [Consistency](https://docs.lancedb.com/tables/consistency.md): Learn about consistency settings and versioning in LanceDB tables.
+- [Namespaces and the Catalog Model](https://docs.lancedb.com/namespaces/index.md): Understand LanceDB as a catalog-level abstraction over Lance's table format, and learn how namespaces help organize Lance tables.
+- [Using Namespaces](https://docs.lancedb.com/namespaces/usage.md): Use LanceDB's namespace-aware table and catalog APIs in Python, TypeScript, and Rust.
+- [Managing Embeddings](https://docs.lancedb.com/embedding/index.md): Use the embedding API in LanceDB -- registry, functions, schemas, and multi-language SDK support.
+- [Embeddings: Quickstart](https://docs.lancedb.com/embedding/quickstart.md): Quickstart guide for generating and working with embeddings.
+- [Indexing Data](https://docs.lancedb.com/indexing/index.md): Optimize search performance in LanceDB using vector indexes, full-text search, and scalar indexes. Understand IVF-PQ indexing for efficient vector similarity search.
+- [Vector Indexes](https://docs.lancedb.com/indexing/vector-index.md): Build and optimize LanceDB vector indexes, including IVF, HNSW and binary quantized indexes.
+- [Full-Text Search (FTS) Index](https://docs.lancedb.com/indexing/fts-index.md): Create and tune BM25-based full-text search indexes in LanceDB.
+- [Scalar Indexes](https://docs.lancedb.com/indexing/scalar-index.md): Learn how to use scalar indexes in LanceDB for efficient metadata filtering and query optimization.
+- [GPU-Powered Vector Indexing](https://docs.lancedb.com/indexing/gpu-indexing.md): Accelerate IVF and HNSW index builds with GPU acceleration in LanceDB.
+- [Quantization](https://docs.lancedb.com/indexing/quantization.md): Learn about quantization when creating an index in LanceDB.
+- [Keeping Indexes Up-to-Date with Reindexing](https://docs.lancedb.com/indexing/reindexing.md): Learn how to keep your indexes up-to-date in LanceDB using incremental indexing, including best practices for adding new records without full reindexing.
+- [Search](https://docs.lancedb.com/search/index.md): Comprehensive guide to all search capabilities in LanceDB including vector search, full-text search, hybrid search, and more.
+- [Vector Search](https://docs.lancedb.com/search/vector-search.md): Learn how to run vector search queries in LanceDB. Includes best practices, tips and examples.
+- [Multivector Search](https://docs.lancedb.com/search/multivector-search.md): Learn how to perform multivector search in LanceDB to handle multiple vector embeddings per document, which is ideal for late-interaction models like ColBERT and ColPaLi.
+- [Full-Text Search (FTS)](https://docs.lancedb.com/search/full-text-search.md): Learn how to implement full-text search in LanceDB using BM25 for keyword-based retrieval.
+- [Full-Text Search Examples](https://docs.lancedb.com/search/fts-examples.md): Worked examples of fuzzy search, boosting, boolean queries, and substring search with LanceDB full-text search.
+- [Hybrid Search](https://docs.lancedb.com/search/hybrid-search.md): Learn how to perform hybrid search in LanceDB by combining vector and full-text search techniques with reranking.
+- [Metadata Filtering in LanceDB](https://docs.lancedb.com/search/filtering.md): Filter search results in LanceDB based on metadata fields.
+- [Optimize Query Performance](https://docs.lancedb.com/search/optimize-queries.md): Analyze and optimize query performance in LanceDB.
+- [Query with SQL](https://docs.lancedb.com/search/sql/index.md): SQL query capabilities in LanceDB Enterprise for analytical queries and data exploration.
+- [Full-Text Search with SQL](https://docs.lancedb.com/search/sql/fts-sql.md): Use LanceDB's full-text search capabilities via SQL queries.
+- [Reranking Search Results](https://docs.lancedb.com/reranking/index.md): Use a reranker to improve search relevance.
+- [Reciprocal Rank Fusion Reranker](https://docs.lancedb.com/reranking/rrf.md): Learn about LanceDB's default Reciprocal Rank Fusion (RRF) reranker for hybrid search. Implements the Cormack et al. algorithm for optimal search result ranking.
+- [Linear Combination Reranker](https://docs.lancedb.com/reranking/linear_combination.md): Learn about LanceDB's deprecated Linear Combination Reranker for combining semantic and full-text search scores.
+- [MRR Reranker](https://docs.lancedb.com/reranking/mrr.md): Combine and rerank search results using Mean Reciprocal Rank (MRR) algorithm in LanceDB. Supports weighted scoring for hybrid and multivector search.
+- [Cross Encoder Reranker](https://docs.lancedb.com/reranking/cross_encoder.md): Implement semantic search reranking in LanceDB using Cross Encoder models. Features configurable model selection, device optimization, and comprehensive scoring options for all search types.
+- [Building Custom Rerankers](https://docs.lancedb.com/reranking/custom-reranker.md): Learn how to create custom rerankers in LanceDB by extending the base Reranker class.
+- [Evaluating Hybrid Search Performance](https://docs.lancedb.com/reranking/eval.md): Learn about evaluating hybrid search performance in LanceDB.
+- [Storage Architecture in LanceDB](https://docs.lancedb.com/storage/index.md): Understand LanceDB storage backends, tradeoffs, and how to pick the right option for your latency, scale, and cost goals.
+- [Configuring Cloud Storage in LanceDB](https://docs.lancedb.com/storage/configuration.md): Configure LanceDB to use S3, GCS, Azure Blob, and S3-compatible object stores with environment variables or storage options.
+- [Monitor LanceDB with OpenTelemetry](https://docs.lancedb.com/storage/monitoring.md): Export LanceDB object store request counts, bytes, latency, errors, and throttles to any OpenTelemetry backend.
+- [Tutorial: Use the LanceDB agent skill](https://docs.lancedb.com/build-with-ai-agents.md): Install the LanceDB skill and use an AI coding agent to quickly build a multimodal ingestion pipeline.
+- [Run experiments on branches](https://docs.lancedb.com/agent-branch-experiments.md): Use LanceDB branches to isolate agent-driven experiments from main, evaluate them on a fixed test set, and promote only the winner.
+- [Multimodal Feature Engineering with Geneva](https://docs.lancedb.com/geneva/index.md): Learn how to do multimodal feature engineering in LanceDB Enterprise to transform raw data into meaningful features for AI models.
+- [What is Feature Engineering?](https://docs.lancedb.com/geneva/overview/index.md): Learn how to transform raw data into meaningful features for AI models using LanceDB's feature engineering capabilities. Scale your feature engineering workflows with distributed processing and UDFs.
+- [Getting Started](https://docs.lancedb.com/geneva/getting-started.md): Connect to LanceDB Enterprise, define a UDF, and run a distributed backfill — from a notebook or a script.
+- [Understanding Transforms](https://docs.lancedb.com/geneva/udfs/index.md): Understand the three types of user-defined functions in Geneva — UDFs, chunkers (scalar UDTFs), and batch UDTFs — and when to use each.
+- [User-Defined Functions (UDFs)](https://docs.lancedb.com/geneva/udfs/udfs.md): Define 1:1 transforms that add computed columns to your tables — embeddings, enrichment, scoring, and more.
+- [Chunkers (Scalar UDTFs)](https://docs.lancedb.com/geneva/udfs/scalar-udtfs.md): Use chunkers (scalar UDTFs) for 1:N row expansion — split videos into clips, chunk documents, or tile images with automatic parent column inheritance and incremental refresh.
+- [Batch User-Defined Table Functions (UDTFs)](https://docs.lancedb.com/geneva/udfs/batch-udtfs.md): Use batch UDTFs for N:M transformations like deduplication, clustering, and aggregation across entire tables or partitions.
+- [Error Handling in Geneva UDFs](https://docs.lancedb.com/geneva/udfs/error_handling.md): Learn how configure retry, skip, and fail behaviors for UDFs.
+- [Profiling Stateful UDF Memory](https://docs.lancedb.com/geneva/udfs/profiling-memory.md): Find memory leaks and runaway peak usage in stateful UDFs with memray, before they cause worker OOMs in production.
+- [Blob Types in Geneva UDFs](https://docs.lancedb.com/geneva/udfs/blobs.md): Learn how to work with Lance Blobs in Geneva UDFs for handling large binary objects efficiently with lazy reading capabilities.
+- [Built-in LLM and Embedding UDFs](https://docs.lancedb.com/geneva/udfs/providers/index.md)
+- [OpenAI](https://docs.lancedb.com/geneva/udfs/providers/openai.md)
+- [Gemini](https://docs.lancedb.com/geneva/udfs/providers/gemini.md)
+- [Sentence Transformers](https://docs.lancedb.com/geneva/udfs/providers/sentence-transformers.md)
+- [Geneva Jobs](https://docs.lancedb.com/geneva/jobs/index.md): Learn about Geneva's job execution framework for distributed feature engineering workflows.
+- [Backfilling](https://docs.lancedb.com/geneva/jobs/backfilling.md): Learn how to trigger backfill operations to populate column values in your LanceDB table using Geneva's distributed framework.
+- [Bulk Loading & Updating Columns](https://docs.lancedb.com/geneva/jobs/bulk-load-columns.md): Load or update column data from external sources (Parquet, Lance, IPC) into your LanceDB table using a primary-key join.
+- [Materialized Views with UDFs](https://docs.lancedb.com/geneva/jobs/materialized-views.md): Learn how to use Geneva's materialized view feature to declaratively manage batch updates of expensive operations using UDFs.
+- [Advanced Job Configuration](https://docs.lancedb.com/geneva/jobs/advanced-job-configuration.md): Pin the dependency manifest a transform's distributed job runs with using @udf, @chunker, and @udtf.
+- [Job Lifecycle](https://docs.lancedb.com/geneva/jobs/lifecycle.md): Understanding how Geneva jobs work, their lifecycle states, and how to monitor and manage them.
+- [Backfill Conflicts](https://docs.lancedb.com/geneva/jobs/conflicts.md): Learn how Geneva handles conflicts during backfill operations and what to do when they occur.
+- [Distributed Job Performance and Cluster Sizing](https://docs.lancedb.com/geneva/jobs/performance.md): Learn how to tune Geneva distributed job performance by scaling compute resources and balancing write bandwidth.
+- [Job Metrics (Diagnostics)](https://docs.lancedb.com/geneva/jobs/job_metrics.md): Use Geneva Job Metrics to monitor and troubleshoot jobs in real time.
+- [Geneva Console](https://docs.lancedb.com/geneva/jobs/console.md)
+- [Troubleshooting Geneva Jobs](https://docs.lancedb.com/geneva/jobs/troubleshooting.md): Diagnose and fix common issues when running Geneva backfills, materialized views, and other distributed jobs.
+- [Advanced Execution Contexts](https://docs.lancedb.com/geneva/jobs/contexts.md): Configure the distributed execution backend — clusters and dependency manifests — for Geneva jobs on object-storage and local-filesystem connections.
+- [Deploy Geneva using Helm](https://docs.lancedb.com/geneva/deployment/helm.md): Learn how to deploy Geneva on Kubernetes using the Geneva Helm Chart
+- [Job and Session Startup Optimizations](https://docs.lancedb.com/geneva/jobs/startup.md): Learn how to optimize Geneva job and session startup times for faster interactive development and production workflows.
+- [Dependency Verification](https://docs.lancedb.com/geneva/deployment/dependency-verification.md): Diagnose and resolve package version mismatches between local and distributed worker environments.
+- [Advanced Configuration](https://docs.lancedb.com/geneva/udfs/advanced-configuration.md): Learn about environment variables for configuring Geneva behavior.
+- [Manual Deployment on Kubernetes](https://docs.lancedb.com/geneva/deployment/index.md): Learn how to deploy Geneva on Kubernetes using KubeRay for distributed feature engineering workflows on GKE and EKS.
+- [Troubleshooting Geneva Deployments](https://docs.lancedb.com/geneva/deployment/troubleshooting.md): Learn how to diagnose and resolve common issues with Geneva deployments, including version compatibility, permissions, and serialization errors.
+- [End-to-End Example](https://docs.lancedb.com/geneva/end-to-end.md): A complete Geneva example on LanceDB Enterprise — create a table, backfill computed columns, and build a materialized view with embeddings.
+- [Geneva Python SDK](https://docs.lancedb.com/geneva/reference.md): LanceDB Feature Engineering Python SDK Reference
+- [Troubleshooting](https://docs.lancedb.com/troubleshooting.md): Tips for troubleshooting basic LanceDB issues.
+- [Frequently Asked Questions](https://docs.lancedb.com/faq/index.md): Common questions about LanceDB
+- [LanceDB: Frequently Asked Questions](https://docs.lancedb.com/faq/faq-oss.md): Commonly asked questions about LanceDB OSS.
+- [LanceDB Enterprise FAQ](https://docs.lancedb.com/faq/faq-enterprise.md): Commonly asked questions about LanceDB Enterprise.
+- [Integrations](https://docs.lancedb.com/integrations/index.md): Connect LanceDB with popular AI providers, frameworks, and data platforms
+- [Hugging Face](https://docs.lancedb.com/integrations/embedding/huggingface.md)
+- [AWS Bedrock](https://docs.lancedb.com/integrations/embedding/aws.md)
+- [Cohere](https://docs.lancedb.com/integrations/embedding/cohere.md)
+- [ColPali](https://docs.lancedb.com/integrations/embedding/colpali.md)
+- [Gemini](https://docs.lancedb.com/integrations/embedding/gemini.md)
+- [IBM watsonx](https://docs.lancedb.com/integrations/embedding/ibm.md)
+- [ImageBind](https://docs.lancedb.com/integrations/embedding/imagebind.md)
+- [Instructor](https://docs.lancedb.com/integrations/embedding/instructor.md)
+- [Jina](https://docs.lancedb.com/integrations/embedding/jina.md)
+- [Ollama](https://docs.lancedb.com/integrations/embedding/ollama.md)
+- [OpenAI](https://docs.lancedb.com/integrations/embedding/openai.md)
+- [OpenCLIP](https://docs.lancedb.com/integrations/embedding/openclip.md)
+- [Sentence Transformers](https://docs.lancedb.com/integrations/embedding/sentence-transformers.md)
+- [VoyageAI](https://docs.lancedb.com/integrations/embedding/voyageai.md)
+- [Superlinked](https://docs.lancedb.com/integrations/embedding/superlinked.md)
+- [Answer.AI Rerankers](https://docs.lancedb.com/integrations/reranking/answerdotai.md): Use AnswerDotAI's lightweight reranking library with LanceDB. Features unified API for common reranking models, configurable model selection, and comprehensive scoring options.
+- [Cohere Reranker](https://docs.lancedb.com/integrations/reranking/cohere.md): Integrate Cohere's powerful reranking API with LanceDB for enhanced search results. Supports English and multilingual models with configurable scoring options for vector, FTS, and hybrid search.
+- [ColBERT Reranker](https://docs.lancedb.com/integrations/reranking/colbert.md): Enhance search results with ColBERT's contextual reranking in LanceDB. Features efficient model deployment, device optimization, and flexible scoring options for vector, FTS, and hybrid search.
+- [Jina Reranker](https://docs.lancedb.com/integrations/reranking/jina.md): Integrate Jina's multilingual reranking API with LanceDB for improved search results. Features model selection, API key management, and flexible scoring options for all search types.
+- [OpenAI Reranker (Experimental)](https://docs.lancedb.com/integrations/reranking/openai.md): Explore experimental search reranking using OpenAI's GPT models in LanceDB. Features configurable model selection, API key management, and comprehensive scoring options for all search types.
+- [VoyageAI Reranker](https://docs.lancedb.com/integrations/reranking/voyageai.md): Integrate VoyageAI's cutting-edge reranking models with LanceDB. Features model selection, API key management, and comprehensive scoring options for all search types.
+- [Watsonx Reranker](https://docs.lancedb.com/integrations/reranking/watsonx.md): Rerank LanceDB search results with the IBM watsonx.ai text rerank API. Supports vector, FTS, and hybrid search with configurable models, projects, and spaces.
+- [Pydantic](https://docs.lancedb.com/integrations/data/pydantic.md)
+- [DuckDB](https://docs.lancedb.com/integrations/data/duckdb.md): Learn how to use the DuckDB-Lance extension to query Lance tables with SQL.
+- [Pandas and PyArrow](https://docs.lancedb.com/integrations/data/pandas_and_pyarrow.md)
+- [Polars](https://docs.lancedb.com/integrations/data/polars_arrow.md)
+- [dlt](https://docs.lancedb.com/integrations/data/dlt.md)
+- [Voxel51](https://docs.lancedb.com/integrations/data/voxel51.md)
+- [Agno](https://docs.lancedb.com/integrations/ai/agno.md): Build a search assistant using the Agno agent framework with LanceDB as the knowledge backend.
+- [Hermes Agent](https://docs.lancedb.com/integrations/ai/hermes-agent.md): Use LanceDB as a persistent, semantic memory backend for Hermes Agent. Get durable recall across sessions with vector and hybrid search.
+- [Hugging Face Hub](https://docs.lancedb.com/integrations/ai/huggingface.md): Use LanceDB directly on Lance datasets hosted on the Hugging Face Hub for multimodal search and retrieval.
+- [LangChain](https://docs.lancedb.com/integrations/ai/langchain.md)
+- [LlamaIndex](https://docs.lancedb.com/integrations/ai/llamaIndex.md)
+- [GenKit](https://docs.lancedb.com/integrations/ai/genkit.md)
+- [Kiln AI](https://docs.lancedb.com/integrations/ai/kiln.md)
+- [PromptTools](https://docs.lancedb.com/integrations/ai/prompttools.md)
+- [Meta Llama Synthetic Data Kit](https://docs.lancedb.com/integrations/ai/synthetic-data-kit.md): Use Meta Llama's Synthetic Data Kit with LanceDB to generate high-quality synthetic datasets for LLM fine-tuning and training.
+- [Tutorials](https://docs.lancedb.com/tutorials/index.md): Step-by-step tutorials for building applications with LanceDB
+- [Search Tutorials](https://docs.lancedb.com/tutorials/search/index.md): Learn how vector, full-text and hybrid search work in LanceDB.
+- [Finding the Needle in a Haystack: Comparing Multi-vector Search Strategies](https://docs.lancedb.com/tutorials/search/multivector-needle-in-a-haystack.md): Tutorial on token-level retrieval with LanceDB multivector search.
+- [RAG and Agents](https://docs.lancedb.com/tutorials/agents/index.md): Explore a variety of RAG (Retrieval-Augmented Generation) and agent applications built with LanceDB.
+- [NVIDIA RAG Blueprint with LanceDB](https://docs.lancedb.com/tutorials/agents/nvidia-rag-blueprint/index.md): Use LanceDB as the retrieval layer for NVIDIA RAG Blueprint with a Docker-first, retrieval-only reference integration.
+- [Time-Travel RAG with versioned data](https://docs.lancedb.com/tutorials/agents/time-travel-rag/index.md): Learn how to build production-ready RAG systems with LanceDB's time-travel capabilities for regulatory compliance and audit trails.
+- [Multimodal Agent](https://docs.lancedb.com/tutorials/agents/multimodal-agent/index.md): Build an AI agent that understands both text and images to help users find recipes using LanceDB and PydanticAI
+- [Feature Engineering](https://docs.lancedb.com/tutorials/feature-engineering/index.md): Learn how to build features for your data in LanceDB.
+- [Demo Application Gallery](https://docs.lancedb.com/demos/index.md): Demo apps showcasing end-to-end applications built with LanceDB for production use cases.
+- [Datasets](https://docs.lancedb.com/datasets/index.md): Browse Lance-format datasets ready to query directly from the Hugging Face Hub.
+- [MNIST](https://docs.lancedb.com/datasets/mnist.md): A Lance-formatted version of the classic MNIST handwritten-digit dataset covering 70,000 28×28 grayscale digits across ten balanced classes. Each row carries inline PNG bytes, the digit label, the human-readable class name, and a cosine-normalized…
+- [CIFAR-10](https://docs.lancedb.com/datasets/cifar10.md): A Lance-formatted version of CIFAR-10 covering 60,000 32×32 RGB images across ten balanced object classes. Each row carries inline PNG bytes, the integer label, the human-readable class name, and a cosine-normalized CLIP image embedding, all backed…
+- [Fashion-MNIST](https://docs.lancedb.com/datasets/fashion-mnist.md): A Lance-formatted version of Fashion-MNIST covering 70,000 28×28 grayscale clothing images across ten balanced apparel classes. Each row carries inline PNG bytes, the integer label, the human-readable class name, and a cosine-normalized CLIP image…
+- [Food-101](https://docs.lancedb.com/datasets/food101.md): A Lance-formatted version of Food-101, the fine-grained dish-classification benchmark of 101,000 photos spread evenly across 101 dish classes, sourced from ethz/food101. Each row carries the inline JPEG bytes, the integer label, the human-readable…
+- [Oxford-IIIT Pet](https://docs.lancedb.com/datasets/oxford-pets.md): A Lance-formatted version of the Oxford-IIIT Pet dataset — 7,390 cat and dog photos across 37 breeds — sourced from pcuenq/oxford-pets. Each row carries the inline JPEG bytes, the breed name, a species flag distinguishing cats from dogs, and a…
+- [Stanford Cars](https://docs.lancedb.com/datasets/stanford-cars.md): A Lance-formatted version of the Stanford Cars fine-grained benchmark — 8,144 photographs across 196 make/model/year classes — sourced from Multimodal-Fatima/StanfordCars_train. Each row carries the inline JPEG bytes, the integer class id, a…
+- [ImageNet-1k Validation](https://docs.lancedb.com/datasets/imagenet-1k-val.md): A Lance-formatted version of the canonical 50,000-image ImageNet-1k (ILSVRC2012) validation split, sourced from benjamin-paine/imagenet-1k. Each row is one image with its integer class id, a string class name, and a cosine-normalized OpenCLIP image…
+- [EuroSAT](https://docs.lancedb.com/datasets/eurosat.md): A Lance-formatted version of EuroSAT, the canonical Sentinel-2 RGB land-cover benchmark, sourced from blanchon/EuroSAT_RGB. Each row is a single 64×64 RGB tile with its integer class id, the human-readable class name, and a cosine-normalized…
+- [Handwriting OCR](https://docs.lancedb.com/datasets/handwriting-ocr.md): This Lance-formatted version of the Doctor's Handwritten Prescription BD dataset contains 4,680 cropped PNG images of handwritten medicine names from Bangladesh. Each row keeps the original image bytes with the medicine and generic-name labels…
+- [COCO 2017 Detection](https://docs.lancedb.com/datasets/coco-detection-2017.md): A Lance-formatted version of the COCO 2017 object detection benchmark, sourced from detection-datasets/coco. Each row is one image with its inline JPEG bytes, the full per-image list of bounding boxes, COCO 80-class category ids and names…
+- [Pascal VOC 2012 Segmentation](https://docs.lancedb.com/datasets/pascal-voc-2012-segmentation.md): A Lance-formatted version of the Pascal VOC 2012 semantic segmentation split, sourced from nateraw/pascal-voc-2012. Each row pairs an inline JPEG image with the per-pixel PNG segmentation mask and a cosine-normalized OpenCLIP ViT-B-32 image…
+- [ADE20K](https://docs.lancedb.com/datasets/ade20k.md): A Lance-formatted version of the full ADE20K scene parsing benchmark, sourced from 1aurent/ADE20K. Each row is one scene image with its inline JPEG bytes, a per-pixel semantic segmentation map encoded as PNG bytes, an optional instance map, scene…
+- [KITTI 2D Detection](https://docs.lancedb.com/datasets/kitti-2d-detection.md): A Lance-formatted version of the KITTI 2D Object Detection benchmark, sourced from nateraw/kitti so no manual signup or download from cvlibs.net is required. Each row is a single driving frame with inline JPEG bytes, the full set of 2D and 3D…
+- [COCO Captions 2017](https://docs.lancedb.com/datasets/coco-captions-2017.md): A Lance-formatted version of the COCO Captions 2017 corpus, redistributed via lmms-lab/COCO-Caption2017. Each row is one image with 5–7 human-written captions, a cosine-normalized CLIP image embedding, and a cosine-normalized CLIP text embedding of…
+- [Flickr30k](https://docs.lancedb.com/datasets/flickr30k.md): A Lance-formatted version of Flickr30k, redistributed via lmms-lab/flickr30k. Each row is one image with 5 human-written captions, a cosine-normalized CLIP image embedding, and a cosine-normalized CLIP text embedding of the canonical caption — all…
+- [LAION-1M](https://docs.lancedb.com/datasets/laion-1m.md): A Lance-formatted slice of the LAION image-text corpus (~1M rows) with inline JPEG bytes, CLIP image embeddings (img_emb), full metadata, and a pre-built ANN index — all available directly from the Hub at…
+- [ChartQA](https://docs.lancedb.com/datasets/chartqa.md): A Lance-formatted version of ChartQA, a benchmark for question answering over scientific and business charts that demands a mix of logical and visual reasoning, redistributed via lmms-lab/ChartQA. Each row carries the chart image as inline JPEG…
+- [DocVQA](https://docs.lancedb.com/datasets/docvqa.md): A Lance-formatted version of DocVQA, a benchmark for visual question answering over document images such as industry and government scans, multi-page reports, forms, and receipts, redistributed via lmms-lab/DocVQA (DocVQA config). Each row carries…
+- [TextVQA](https://docs.lancedb.com/datasets/textvqa.md): A Lance-formatted version of TextVQA — visual question answering where the question requires reading text in the image (street signs, product labels, screen captures) — sourced from lmms-lab/textvqa. Each row carries the image bytes, the question…
+- [VQAv2](https://docs.lancedb.com/datasets/vqav2.md): A Lance-formatted version of VQAv2 — open-ended visual question answering on COCO images — sourced from lmms-lab/VQAv2. Each row is one (image, question, 10 annotator answers) triple with paired CLIP image and question embeddings drawn from the…
+- [GQA testdev-balanced](https://docs.lancedb.com/datasets/gqa-testdev-balanced.md): A Lance-formatted version of the canonical GQA testdev_balanced slice — 12,578 compositional VQA questions joined against the matching 398 images — sourced from lmms-lab/GQA. The original redistribution ships instructions and images as separate…
+- [SQuAD v2](https://docs.lancedb.com/datasets/squad-v2.md): A Lance-formatted version of SQuAD v2 — the Stanford Question Answering Dataset with both answerable and deliberately unanswerable questions over Wikipedia passages — with MiniLM question embeddings stored inline and ready for retrieval at…
+- [TriviaQA](https://docs.lancedb.com/datasets/trivia-qa.md): A Lance-formatted version of TriviaQA (rc.nocontext config) — a large reading-comprehension dataset of trivia questions paired with a canonical answer, accepted aliases, and entity-type metadata — with MiniLM question embeddings stored inline and…
+- [HotpotQA distractor](https://docs.lancedb.com/datasets/hotpotqa-distractor.md): A Lance-formatted version of HotpotQA using the distractor config — multi-hop reading-comprehension questions where each answer requires combining facts from two Wikipedia paragraphs, with 10 candidate paragraphs per question (gold + 8…
+- [Natural Questions Validation](https://docs.lancedb.com/datasets/natural-questions-val.md): A Lance-formatted version of the Natural Questions validation split — 7,830 real Google search queries paired with the full Wikipedia article a human used to answer them, plus 1–5 annotator labels per question. MiniLM question embeddings are stored…
+- [MS MARCO v2.1](https://docs.lancedb.com/datasets/ms-marco-v2.md): A Lance-formatted version of MS MARCO v2.1 — Microsoft's machine-reading-comprehension benchmark built from anonymized Bing query logs. Each row is one user query, the up-to-10 candidate passages Bing retrieved for it with relevance flags, and the…
+- [FineWeb-Edu](https://docs.lancedb.com/datasets/fineweb-edu.md): A Lance-formatted version of FineWeb-Edu — over 1.5 billion educational web passages with cleaned text, source metadata, language detection signals, and 384-dim text embeddings — available directly from the Hub at…
+- [LibriSpeech clean](https://docs.lancedb.com/datasets/librispeech-clean.md): A Lance-formatted version of the LibriSpeech ASR clean configuration, sourced from openslr/librispeech_asr. Each row is one utterance with inline FLAC audio bytes, the reference transcript, a sentence-transformers embedding of that transcript, and…
+- [OpenVid-1M](https://docs.lancedb.com/datasets/openvid.md): A Lance-formatted version of the OpenVid-1M corpus — 937,957 high-quality clips with inline MP4 bytes, 1024-dim video embeddings, captions, and rich per-clip quality signals — available directly from the Hub at…
+- [LeRobot PushT](https://docs.lancedb.com/datasets/lerobot-pusht.md): A Lance-formatted version of lerobot/pusht — the canonical PushT benchmark from the Diffusion Policy paper — packaged using the same three-table layout as lance-format/lerobot-xvla-soft-fold so consumers can flip between datasets without changing…
+- [LeRobot X-VLA Soft-Fold](https://docs.lancedb.com/datasets/lerobot-xvla-soft-fold.md): A Lance-formatted version of lerobot/xvla-soft-fold — a multi-camera robotics dataset from the X-VLA project — packaged as three Lance tables for efficient frame-level training, episode-level trajectory loading, and direct access to the original…
+- [LeRobotDataset](https://docs.lancedb.com/integrations/lerobotdataset.md): Use Lance-backed LeRobotDataset loaders and LanceDB to inspect, filter, and train on robotics datasets from the Hugging Face Hub.
+- [Stable World Model](https://docs.lancedb.com/integrations/stable-worldmodel.md): Use Stable World Model with LanceDB-backed datasets for reproducible world model research, fast data loading, and compact storage.
+- [SDKs and REST API Reference](https://docs.lancedb.com/api-reference/index.md): SDK and REST API reference for LanceDB Enterprise and OSS.
+- [REST API Reference](https://docs.lancedb.com/api-reference/rest/index.md): API reference for LanceDB
+- [Create a new namespace](https://docs.lancedb.com/api-reference/rest/namespace/create-a-new-namespace.md): Create new namespace `id`.
+- [List namespaces](https://docs.lancedb.com/api-reference/rest/namespace/list-namespaces.md): List all child namespace names of the parent namespace `id`.
+- [Describe a namespace](https://docs.lancedb.com/api-reference/rest/namespace/describe-a-namespace.md): Describe the detailed information for namespace `id`.
+- [Drop a namespace](https://docs.lancedb.com/api-reference/rest/namespace/drop-a-namespace.md): Drop namespace `id` from its parent namespace.
+- [Check if a namespace exists](https://docs.lancedb.com/api-reference/rest/namespace/check-if-a-namespace-exists.md): Check if namespace `id` exists.
+- [List tables in a namespace](https://docs.lancedb.com/api-reference/rest/namespace/list-tables-in-a-namespace.md): List all child table names of the parent namespace `id`.
+- [List all tables](https://docs.lancedb.com/api-reference/rest/table/list-all-tables.md): List all tables across all namespaces.
+- [Register a table to a namespace](https://docs.lancedb.com/api-reference/rest/table/register-a-table-to-a-namespace.md): Register an existing table at a given storage location as `id`.
+- [Describe information of a table](https://docs.lancedb.com/api-reference/rest/table/describe-information-of-a-table.md): Describe the detailed information for table `id`.
+- [Check if a table exists](https://docs.lancedb.com/api-reference/rest/table/check-if-a-table-exists.md): Check if table `id` exists.
+- [Drop a table](https://docs.lancedb.com/api-reference/rest/table/drop-a-table.md): Drop table `id` and delete its data.
+- [Deregister a table](https://docs.lancedb.com/api-reference/rest/table/deregister-a-table.md): Deregister table `id` from its namespace.
+- [Restore table to a specific version](https://docs.lancedb.com/api-reference/rest/table/restore-table-to-a-specific-version.md): Restore table `id` to a specific version.
+- [Rename a table](https://docs.lancedb.com/api-reference/rest/table/rename-a-table.md): Rename table `id` to a new name.
+- [Update table schema metadata](https://docs.lancedb.com/api-reference/rest/table/update-table-schema-metadata.md): Replace the schema metadata for table `id` with the provided key-value pairs.
+- [List all versions of a table](https://docs.lancedb.com/api-reference/rest/table/list-all-versions-of-a-table.md): List all versions (commits) of table `id` with their metadata.
+- [Create a new table version](https://docs.lancedb.com/api-reference/rest/table/create-a-new-table-version.md): Create a new version entry for table `id`.
+- [Describe a specific table version](https://docs.lancedb.com/api-reference/rest/table/describe-a-specific-table-version.md): Describe the detailed information for a specific version of table `id`.
+- [Delete table version records](https://docs.lancedb.com/api-reference/rest/table/delete-table-version-records.md): Delete version metadata records for table `id`.
+- [Atomically create versions for multiple tables](https://docs.lancedb.com/api-reference/rest/table/atomically-create-versions-for-multiple-tables.md): Atomically create new version entries for multiple tables.
+- [Atomically commit a batch of mixed table operations](https://docs.lancedb.com/api-reference/rest/table/atomically-commit-a-batch-of-mixed-table-operations.md): Atomically commit a batch of table operations. This is a generalized version of `BatchCreateTableVersions` that supports mixed operation types within a single atomic transaction at the metadata layer.
+- [Modify existing columns](https://docs.lancedb.com/api-reference/rest/table/modify-existing-columns.md): Modify existing columns in table `id`, such as renaming or changing data types.
+- [Update per-field metadata](https://docs.lancedb.com/api-reference/rest/table/update-per-field-metadata.md): Update the Arrow field (column) metadata for table `id`.
+- [Remove columns from table](https://docs.lancedb.com/api-reference/rest/table/remove-columns-from-table.md): Remove specified columns from table `id`.
+- [Get table statistics](https://docs.lancedb.com/api-reference/rest/table/get-table-statistics.md): Get statistics for table `id`, including row counts, data sizes, and column statistics.
+- [Insert records into a table](https://docs.lancedb.com/api-reference/rest/table/insert-records-into-a-table.md): Insert new records into table `id`.
+- [Merge insert (upsert) records into a table](https://docs.lancedb.com/api-reference/rest/table/merge-insert-upsert-records-into-a-table.md): Performs a merge insert (upsert) operation on table `id`. This operation updates existing rows based on a matching column and inserts new rows that don't match. It returns the number of rows inserted and updated.
+- [Update rows in a table](https://docs.lancedb.com/api-reference/rest/table/update-rows-in-a-table.md): Update existing rows in table `id`.
+- [Delete rows from a table](https://docs.lancedb.com/api-reference/rest/table/delete-rows-from-a-table.md): Delete rows from table `id`.
+- [Query a table](https://docs.lancedb.com/api-reference/rest/table/query-a-table.md): Query table `id` with vector search, full text search and optional SQL filtering. Returns results in Arrow IPC file or stream format.
+- [Count rows in a table](https://docs.lancedb.com/api-reference/rest/table/count-rows-in-a-table.md): Count the number of rows in table `id`
+- [Create a table with the given name](https://docs.lancedb.com/api-reference/rest/table/create-a-table-with-the-given-name.md): Create table `id` in the namespace with the given data in Arrow IPC stream.
+- [Get query execution plan explanation](https://docs.lancedb.com/api-reference/rest/table/get-query-execution-plan-explanation.md): Get the query execution plan for a query against table `id`. Returns a human-readable explanation of how the query will be executed.
+- [Analyze query execution plan](https://docs.lancedb.com/api-reference/rest/table/analyze-query-execution-plan.md): Analyze the query execution plan for a query against table `id`. Returns detailed statistics and analysis of the query execution plan.
+- [Add new columns to table schema](https://docs.lancedb.com/api-reference/rest/table/add-new-columns-to-table-schema.md): Add new columns to table `id` using SQL expressions or default values.
+- [Trigger an async column backfill job](https://docs.lancedb.com/api-reference/rest/table/trigger-an-async-column-backfill-job.md): Trigger an asynchronous backfill job for a computed column on table `id`. The column must be a virtual (UDF-backed) column. Returns a job ID for tracking.
+- [Create an index on a table](https://docs.lancedb.com/api-reference/rest/table/create-an-index-on-a-table.md): Create an index on a table field for faster search operations. Supports vector indexes (IVF_FLAT, IVF_HNSW_SQ, IVF_PQ, etc.) and scalar indexes (BTREE, BITMAP, FTS, etc.). Index creation is handled asynchronously. Use the `ListTableIndices` and `DescribeTableIndexStats` operations to monitor index c…
+- [Create a scalar index on a table](https://docs.lancedb.com/api-reference/rest/table/create-a-scalar-index-on-a-table.md): Create a scalar index on a table field for faster filtering operations. Supports scalar indexes (BTREE, BITMAP, LABEL_LIST, FTS, etc.). This is an alias for CreateTableIndex specifically for scalar indexes. Index creation is handled asynchronously. Use the `ListTableIndices` and `DescribeTableIndexS…
+- [List indexes on a table](https://docs.lancedb.com/api-reference/rest/table/list-indexes-on-a-table.md): List all indices created on a table. Returns information about each index including name, columns, status, and UUID.
+- [Get table index statistics](https://docs.lancedb.com/api-reference/rest/table/get-table-index-statistics.md): Get statistics for a specific index on a table. Returns information about the index type, distance type (for vector indices), and row counts.
+- [Drop a specific index](https://docs.lancedb.com/api-reference/rest/table/drop-a-specific-index.md): Drop the specified index from table `id`.
+- [List all tags for a table](https://docs.lancedb.com/api-reference/rest/table/list-all-tags-for-a-table.md): List all tags that have been created for table `id`. Returns a map of tag names to their corresponding version numbers and metadata.
+- [Get version for a specific tag](https://docs.lancedb.com/api-reference/rest/table/get-version-for-a-specific-tag.md): Get the version number that a specific tag points to for table `id`.
+- [Declare a table](https://docs.lancedb.com/api-reference/rest/table/declare-a-table.md): Declare a table with the given name without touching storage. This is a metadata-only operation that records the table existence and sets up aspects like access control.
+- [Create a new tag](https://docs.lancedb.com/api-reference/rest/table/create-a-new-tag.md): Create a new tag for table `id` that points to a specific version.
+- [Delete a tag](https://docs.lancedb.com/api-reference/rest/table/delete-a-tag.md): Delete an existing tag from table `id`.
+- [Update a tag to point to a different version](https://docs.lancedb.com/api-reference/rest/table/update-a-tag-to-point-to-a-different-version.md): Update an existing tag for table `id` to point to a different version.
+- [List all branches for a table](https://docs.lancedb.com/api-reference/rest/table/list-all-branches-for-a-table.md): List all branches that have been created for table `id`. Returns a map of branch names to their contents.
+- [Create a new branch](https://docs.lancedb.com/api-reference/rest/table/create-a-new-branch.md): Create a new branch for table `id` starting from a source ref (another branch and/or version), defaulting to the latest version of the main branch.
+- [Delete a branch](https://docs.lancedb.com/api-reference/rest/table/delete-a-branch.md): Delete an existing branch from table `id`.
+- [Trigger an async materialized view refresh](https://docs.lancedb.com/api-reference/rest/materializedview/trigger-an-async-materialized-view-refresh.md): Trigger an asynchronous refresh job for materialized view `id`. Returns a job ID for tracking.
+- [Create a materialized view](https://docs.lancedb.com/api-reference/rest/materializedview/create-a-materialized-view.md): Create a materialized view at identifier `id`. The view may be query-backed, UDTF-backed, or chunker-backed, controlled by the `kind` discriminator.
+- [Describe information about a transaction](https://docs.lancedb.com/api-reference/rest/transaction/describe-information-about-a-transaction.md): Return a detailed information for a given transaction
+- [Alter information of a transaction.](https://docs.lancedb.com/api-reference/rest/transaction/alter-information-of-a-transaction.md): Alter a transaction with a list of actions such as setting status or properties. The server should either succeed and apply all actions, or fail and apply no action.
+
+## OpenAPI Specs
+
+- [openapi](https://docs.lancedb.com/api-reference/openapi.json)

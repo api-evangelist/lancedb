@@ -1,0 +1,2684 @@
+{
+  "item": [
+    {
+      "id": "f0c06991-2ae6-4ba0-b7b8-1cabe17d5ba2",
+      "name": "Transaction",
+      "description": {
+        "content": "Operations that are related to a transaction\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "80754079-bb14-478f-9c5b-c8f864ce118d",
+          "name": "Atomically commit a batch of mixed table operations",
+          "request": {
+            "name": "Atomically commit a batch of mixed table operations",
+            "description": {
+              "content": "Atomically commit a batch of table operations. This is a generalized version\nof `BatchCreateTableVersions` that supports mixed operation types within a\nsingle atomic transaction at the metadata layer.\n\nSupported operation types:\n- `DeclareTable`: Declare (reserve) a new table\n- `CreateTableVersion`: Create a new version entry for a table\n- `DeleteTableVersions`: Delete version ranges from a table\n- `DeregisterTable`: Deregister (soft-delete) a table\n\nAll operations are committed atomically: either all succeed or none are applied.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "table",
+                "batch-commit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "delimiter",
+                  "value": "<string>",
+                  "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{scheme}}",
+                  "key": "scheme"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{basePath}}",
+                  "key": "basePath"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"operations\": [\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"<string>\",\n          \"auth_token\": \"<string>\"\n        },\n        \"context\": {\n          \"key_0\": \"<string>\"\n        },\n        \"id\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"location\": \"<string>\",\n        \"vend_credentials\": \"<boolean>\",\n        \"properties\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\",\n          \"key_2\": \"<string>\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": \"<long>\",\n        \"manifest_path\": \"<string>\",\n        \"identity\": {\n          \"api_key\": \"<string>\",\n          \"auth_token\": \"<string>\"\n        },\n        \"context\": {\n          \"key_0\": \"<string>\"\n        },\n        \"id\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"manifest_size\": \"<long>\",\n        \"e_tag\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        },\n        \"naming_scheme\": \"<string>\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": \"<long>\",\n            \"end_version\": \"<long>\"\n          },\n          {\n            \"start_version\": \"<long>\",\n            \"end_version\": \"<long>\"\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"<string>\",\n          \"auth_token\": \"<string>\"\n        },\n        \"context\": {\n          \"key_0\": \"<string>\"\n        },\n        \"id\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"<string>\",\n          \"auth_token\": \"<string>\"\n        },\n        \"context\": {\n          \"key_0\": \"<string>\"\n        },\n        \"id\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"<string>\",\n          \"auth_token\": \"<string>\"\n        },\n        \"context\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        },\n        \"id\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"location\": \"<string>\",\n        \"vend_credentials\": \"<boolean>\",\n        \"properties\": {\n          \"key_0\": \"<string>\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": \"<long>\",\n        \"manifest_path\": \"<string>\",\n        \"identity\": {\n          \"api_key\": \"<string>\",\n          \"auth_token\": \"<string>\"\n        },\n        \"context\": {\n          \"key_0\": \"<string>\"\n        },\n        \"id\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"manifest_size\": \"<long>\",\n        \"e_tag\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\",\n          \"key_2\": \"<string>\"\n        },\n        \"naming_scheme\": \"<string>\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": \"<long>\",\n            \"end_version\": \"<long>\"\n          },\n          {\n            \"start_version\": \"<long>\",\n            \"end_version\": \"<long>\"\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"<string>\",\n          \"auth_token\": \"<string>\"\n        },\n        \"context\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        },\n        \"id\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"<string>\",\n          \"auth_token\": \"<string>\"\n        },\n        \"context\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        },\n        \"id\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"<string>\",\n    \"auth_token\": \"<string>\"\n  },\n  \"context\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6028d301-559c-482c-be32-ec23cac4e8b0",
+              "name": "Result of atomically committing a batch of mixed table operations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "table",
+                    "batch-commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"operations\": [\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": false,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 9272,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 1635,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 1439,\n            \"end_version\": 1168\n          },\n          {\n            \"start_version\": 7565,\n            \"end_version\": 5378\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": true,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 827,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 3423,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 8586,\n            \"end_version\": 4272\n          },\n          {\n            \"start_version\": 3869,\n            \"end_version\": 8165\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"declare_table\": {\n        \"transaction_id\": \"string\",\n        \"location\": \"string\",\n        \"storage_options\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"properties\": {\n          \"owner\": \"Ralph\",\n          \"created_at\": \"1452120468\"\n        },\n        \"managed_versioning\": false\n      },\n      \"create_table_version\": {\n        \"transaction_id\": \"string\",\n        \"version\": {\n          \"version\": 3799,\n          \"manifest_path\": \"string\",\n          \"manifest_size\": 6446,\n          \"e_tag\": \"string\",\n          \"timestamp_millis\": 1559,\n          \"metadata\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\",\n            \"key_2\": \"string\",\n            \"key_3\": \"string\"\n          }\n        }\n      },\n      \"delete_table_versions\": {\n        \"deleted_count\": 9503,\n        \"transaction_id\": \"string\"\n      },\n      \"deregister_table\": {\n        \"transaction_id\": \"string\",\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"properties\": {\n          \"owner\": \"Ralph\",\n          \"created_at\": \"1452120468\"\n        }\n      }\n    },\n    {\n      \"declare_table\": {\n        \"transaction_id\": \"string\",\n        \"location\": \"string\",\n        \"storage_options\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"properties\": {\n          \"owner\": \"Ralph\",\n          \"created_at\": \"1452120468\"\n        },\n        \"managed_versioning\": true\n      },\n      \"create_table_version\": {\n        \"transaction_id\": \"string\",\n        \"version\": {\n          \"version\": 693,\n          \"manifest_path\": \"string\",\n          \"manifest_size\": 3257,\n          \"e_tag\": \"string\",\n          \"timestamp_millis\": 6362,\n          \"metadata\": {\n            \"key_0\": \"string\"\n          }\n        }\n      },\n      \"delete_table_versions\": {\n        \"deleted_count\": 5551,\n        \"transaction_id\": \"string\"\n      },\n      \"deregister_table\": {\n        \"transaction_id\": \"string\",\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"properties\": {\n          \"owner\": \"Ralph\",\n          \"created_at\": \"1452120468\"\n        }\n      }\n    }\n  ],\n  \"transaction_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb437ae4-1dfb-4093-ad14-cf4baaf87470",
+              "name": "Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "table",
+                    "batch-commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"operations\": [\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": false,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 9272,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 1635,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 1439,\n            \"end_version\": 1168\n          },\n          {\n            \"start_version\": 7565,\n            \"end_version\": 5378\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": true,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 827,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 3423,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 8586,\n            \"end_version\": 4272\n          },\n          {\n            \"start_version\": 3869,\n            \"end_version\": 8165\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/bad-request\",\n  \"title\": \"Malformed request\",\n  \"status\": 400,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9ad7571-ac8e-4e76-a869-ab42d53c1f58",
+              "name": "Unauthorized. The request lacks valid authentication credentials for the operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "table",
+                    "batch-commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"operations\": [\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": false,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 9272,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 1635,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 1439,\n            \"end_version\": 1168\n          },\n          {\n            \"start_version\": 7565,\n            \"end_version\": 5378\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": true,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 827,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 3423,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 8586,\n            \"end_version\": 4272\n          },\n          {\n            \"start_version\": 3869,\n            \"end_version\": 8165\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/unauthorized-request\",\n  \"title\": \"No valid authentication credentials for the operation\",\n  \"status\": 401,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dff5a615-046a-415c-8f28-f15c0c1369a8",
+              "name": "Forbidden. Authenticated user does not have the necessary permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "table",
+                    "batch-commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"operations\": [\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": false,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 9272,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 1635,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 1439,\n            \"end_version\": 1168\n          },\n          {\n            \"start_version\": 7565,\n            \"end_version\": 5378\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": true,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 827,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 3423,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 8586,\n            \"end_version\": 4272\n          },\n          {\n            \"start_version\": 3869,\n            \"end_version\": 8165\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/forbidden-request\",\n  \"title\": \"Not authorized to make this request\",\n  \"status\": 403,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b415f421-c70a-4fe1-b05b-5d4da186af22",
+              "name": "A server-side problem that means can not find the specified resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "table",
+                    "batch-commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"operations\": [\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": false,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 9272,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 1635,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 1439,\n            \"end_version\": 1168\n          },\n          {\n            \"start_version\": 7565,\n            \"end_version\": 5378\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": true,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 827,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 3423,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 8586,\n            \"end_version\": 4272\n          },\n          {\n            \"start_version\": 3869,\n            \"end_version\": 8165\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/not-found-error\",\n  \"title\": \"Not found Error\",\n  \"status\": 404,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces/{ns}\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a484541-d538-420c-aaab-2851a48cf860",
+              "name": "The request conflicts with the current state of the target resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "table",
+                    "batch-commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"operations\": [\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": false,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 9272,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 1635,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 1439,\n            \"end_version\": 1168\n          },\n          {\n            \"start_version\": 7565,\n            \"end_version\": 5378\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": true,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 827,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 3423,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 8586,\n            \"end_version\": 4272\n          },\n          {\n            \"start_version\": 3869,\n            \"end_version\": 8165\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/conflict\",\n  \"title\": \"The namespace has been concurrently modified\",\n  \"status\": 409,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces/{ns}\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a904ca23-28ce-4f2c-87a9-b609a145beb3",
+              "name": "The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "table",
+                    "batch-commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"operations\": [\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": false,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 9272,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 1635,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 1439,\n            \"end_version\": 1168\n          },\n          {\n            \"start_version\": 7565,\n            \"end_version\": 5378\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": true,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 827,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 3423,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 8586,\n            \"end_version\": 4272\n          },\n          {\n            \"start_version\": 3869,\n            \"end_version\": 8165\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/service-unavailable\",\n  \"title\": \"Slow down\",\n  \"status\": 503,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e64b7032-d649-4cbc-95fe-85ba4c74b83a",
+              "name": "A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "table",
+                    "batch-commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"operations\": [\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": false,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 9272,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 1635,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 1439,\n            \"end_version\": 1168\n          },\n          {\n            \"start_version\": 7565,\n            \"end_version\": 5378\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"declare_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"location\": \"string\",\n        \"vend_credentials\": true,\n        \"properties\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"create_table_version\": {\n        \"version\": 827,\n        \"manifest_path\": \"string\",\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ],\n        \"manifest_size\": 3423,\n        \"e_tag\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"naming_scheme\": \"V2\"\n      },\n      \"delete_table_versions\": {\n        \"ranges\": [\n          {\n            \"start_version\": 8586,\n            \"end_version\": 4272\n          },\n          {\n            \"start_version\": 3869,\n            \"end_version\": 8165\n          }\n        ],\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deregister_table\": {\n        \"identity\": {\n          \"api_key\": \"string\",\n          \"auth_token\": \"string\"\n        },\n        \"context\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"id\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/server-error\",\n  \"title\": \"Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e5179f9f-4a11-4d50-88c5-e46723b2e4f8",
+          "name": "Describe information about a transaction",
+          "request": {
+            "name": "Describe information about a transaction",
+            "description": {
+              "content": "Return a detailed information for a given transaction\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "transaction",
+                ":id",
+                "describe"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "delimiter",
+                  "value": "<string>",
+                  "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{scheme}}",
+                  "key": "scheme"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{basePath}}",
+                  "key": "basePath"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identity\": {\n    \"api_key\": \"<string>\",\n    \"auth_token\": \"<string>\"\n  },\n  \"context\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c558afd3-3935-46ca-a7f1-fd44ae9c31b6",
+              "name": "Response of DescribeTransaction",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"properties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24a901c3-5d3a-41c6-93e6-dcc3b46943e2",
+              "name": "Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/bad-request\",\n  \"title\": \"Malformed request\",\n  \"status\": 400,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf659204-1cca-42ee-8e07-1aa8db85374b",
+              "name": "Unauthorized. The request lacks valid authentication credentials for the operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/unauthorized-request\",\n  \"title\": \"No valid authentication credentials for the operation\",\n  \"status\": 401,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5eed56f-6399-4dc4-8f50-4fb3502b3e37",
+              "name": "Forbidden. Authenticated user does not have the necessary permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/forbidden-request\",\n  \"title\": \"Not authorized to make this request\",\n  \"status\": 403,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c0bae0e-da0a-4dfb-ad56-d24a6155f8b9",
+              "name": "A server-side problem that means can not find the specified resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/not-found-error\",\n  \"title\": \"Not found Error\",\n  \"status\": 404,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces/{ns}\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e7d82d2-bdd0-4348-b0ed-01d10b6ba6db",
+              "name": "The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/service-unavailable\",\n  \"title\": \"Slow down\",\n  \"status\": 503,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00122baf-47a7-495f-9007-4ad4054c8259",
+              "name": "A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/server-error\",\n  \"title\": \"Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef52d0d2-5a5d-42d3-8ecd-b2a090baef9c",
+          "name": "Alter information of a transaction.",
+          "request": {
+            "name": "Alter information of a transaction.",
+            "description": {
+              "content": "Alter a transaction with a list of actions such as setting status or properties.\nThe server should either succeed and apply all actions, or fail and apply no action.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "transaction",
+                ":id",
+                "alter"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "delimiter",
+                  "value": "<string>",
+                  "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{scheme}}",
+                  "key": "scheme"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{basePath}}",
+                  "key": "basePath"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"actions\": [\n    {\n      \"setStatusAction\": {\n        \"status\": \"<string>\"\n      },\n      \"setPropertyAction\": {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"mode\": \"<string>\"\n      },\n      \"unsetPropertyAction\": {\n        \"key\": \"<string>\",\n        \"mode\": \"<string>\"\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"<string>\",\n    \"auth_token\": \"<string>\"\n  },\n  \"context\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\",\n    \"key_4\": \"<string>\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "adc78255-324e-4b4d-8da7-542421e15650",
+              "name": "Response of AlterTransaction",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "alter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actions\": [\n    {\n      \"setStatusAction\": {\n        \"status\": \"string\"\n      },\n      \"setPropertyAction\": {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"mode\": \"string\"\n      },\n      \"unsetPropertyAction\": {\n        \"key\": \"string\",\n        \"mode\": \"string\"\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"properties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23d7ef65-f188-4ca0-b158-781e773d3623",
+              "name": "Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "alter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actions\": [\n    {\n      \"setStatusAction\": {\n        \"status\": \"string\"\n      },\n      \"setPropertyAction\": {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"mode\": \"string\"\n      },\n      \"unsetPropertyAction\": {\n        \"key\": \"string\",\n        \"mode\": \"string\"\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/bad-request\",\n  \"title\": \"Malformed request\",\n  \"status\": 400,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4f1073f-ad4c-4e36-a557-dd6528cccf0d",
+              "name": "Unauthorized. The request lacks valid authentication credentials for the operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "alter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actions\": [\n    {\n      \"setStatusAction\": {\n        \"status\": \"string\"\n      },\n      \"setPropertyAction\": {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"mode\": \"string\"\n      },\n      \"unsetPropertyAction\": {\n        \"key\": \"string\",\n        \"mode\": \"string\"\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/unauthorized-request\",\n  \"title\": \"No valid authentication credentials for the operation\",\n  \"status\": 401,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8c982f1-4513-47c8-83d1-415045bc6d35",
+              "name": "Forbidden. Authenticated user does not have the necessary permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "alter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actions\": [\n    {\n      \"setStatusAction\": {\n        \"status\": \"string\"\n      },\n      \"setPropertyAction\": {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"mode\": \"string\"\n      },\n      \"unsetPropertyAction\": {\n        \"key\": \"string\",\n        \"mode\": \"string\"\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/forbidden-request\",\n  \"title\": \"Not authorized to make this request\",\n  \"status\": 403,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98b286f6-21e4-4abc-a8c5-17da81a701ff",
+              "name": "A server-side problem that means can not find the specified resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "alter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actions\": [\n    {\n      \"setStatusAction\": {\n        \"status\": \"string\"\n      },\n      \"setPropertyAction\": {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"mode\": \"string\"\n      },\n      \"unsetPropertyAction\": {\n        \"key\": \"string\",\n        \"mode\": \"string\"\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/not-found-error\",\n  \"title\": \"Not found Error\",\n  \"status\": 404,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces/{ns}\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5746ef0-8790-4a8e-983e-3c2937b9a1c7",
+              "name": "The request conflicts with the current state of the target resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "alter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actions\": [\n    {\n      \"setStatusAction\": {\n        \"status\": \"string\"\n      },\n      \"setPropertyAction\": {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"mode\": \"string\"\n      },\n      \"unsetPropertyAction\": {\n        \"key\": \"string\",\n        \"mode\": \"string\"\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/conflict\",\n  \"title\": \"The namespace has been concurrently modified\",\n  \"status\": 409,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces/{ns}\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6afad757-0072-4acb-9d56-3eb3e9352e37",
+              "name": "The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "alter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actions\": [\n    {\n      \"setStatusAction\": {\n        \"status\": \"string\"\n      },\n      \"setPropertyAction\": {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"mode\": \"string\"\n      },\n      \"unsetPropertyAction\": {\n        \"key\": \"string\",\n        \"mode\": \"string\"\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/service-unavailable\",\n  \"title\": \"Slow down\",\n  \"status\": 503,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "659e97c2-cacd-47a3-97ae-640075326952",
+              "name": "A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transaction",
+                    ":id",
+                    "alter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "delimiter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{scheme}}",
+                      "key": "scheme"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{basePath}}",
+                      "key": "basePath"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actions\": [\n    {\n      \"setStatusAction\": {\n        \"status\": \"string\"\n      },\n      \"setPropertyAction\": {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"mode\": \"string\"\n      },\n      \"unsetPropertyAction\": {\n        \"key\": \"string\",\n        \"mode\": \"string\"\n      }\n    }\n  ],\n  \"identity\": {\n    \"api_key\": \"string\",\n    \"auth_token\": \"string\"\n  },\n  \"context\": {\n    \"key_0\": \"string\"\n  },\n  \"id\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"/errors/server-error\",\n  \"title\": \"Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"\",\n  \"instance\": \"/v1/namespaces\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "http",
+      "key": "scheme"
+    },
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost",
+      "key": "host"
+    },
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "2333",
+      "key": "port"
+    },
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "",
+      "key": "basePath"
+    },
+    {
+      "type": "string",
+      "value": "{{scheme}}://{{host}}:{{port}}/{{basePath}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "/oauth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "aa77334d-3b4c-4a8b-8a63-c1a4ad264300",
+    "name": "Lance Namespace Specification Data Transaction API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This OpenAPI specification is a part of the Lance namespace specification. It contains 2 parts:\n\nThe `components/schemas`, `components/responses`, `components/examples`, `tags` sections define\nthe request and response shape for each operation in a Lance Namespace across all implementations.\nSee https://lance.org/format/namespace/operations for more details.\n\nThe `servers`, `security`, `paths`, `components/parameters` sections are for the\nLance REST Namespace implementation, which defines a complete REST server that can work with Lance datasets.\nSee https://lance.org/format/namespace/rest for more details.\n",
+      "type": "text/plain"
+    }
+  }
+}

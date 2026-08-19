@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lance Namespace Specification Data Transaction API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transaction",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Atomically commit a batch of mixed table operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/batch-commit",
+            "params": [
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Atomically commit a batch of table operations. This is a generalized version\nof `BatchCreateTableVersions` that supports mixed operation types within a\nsingle atomic transaction at the metadata layer.\n\nSupported operation types:\n- `DeclareTable`: Declare (reserve) a new table\n- `CreateTableVersion`: Create a new version entry for a table\n- `DeleteTableVersions`: Delete version ranges from a table\n- `DeregisterTable`: Deregister (soft-delete) a table\n\nAll operations are committed atomically: eith"
+        },
+        {
+          "info": {
+            "name": "Describe information about a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/transaction/:id/describe",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return a detailed information for a given transaction\n"
+        },
+        {
+          "info": {
+            "name": "Alter information of a transaction.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/transaction/:id/alter",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Alter a transaction with a list of actions such as setting status or properties.\nThe server should either succeed and apply all actions, or fail and apply no action.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

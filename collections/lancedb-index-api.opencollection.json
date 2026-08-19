@@ -1,0 +1,182 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lance Namespace Specification Data Index API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Index",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an index on a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/create_index",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an index on a table column for faster search operations.\nSupports vector indexes (IVF_FLAT, IVF_HNSW_SQ, IVF_PQ, etc.) and scalar indexes (BTREE, BITMAP, FTS, etc.).\nIndex creation is handled asynchronously.\nUse the `ListTableIndices` and `DescribeTableIndexStats` operations to monitor index creation progress.\n"
+        },
+        {
+          "info": {
+            "name": "Create a scalar index on a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/create_scalar_index",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a scalar index on a table column for faster filtering operations.\nSupports scalar indexes (BTREE, BITMAP, LABEL_LIST, FTS, etc.).\nThis is an alias for CreateTableIndex specifically for scalar indexes.\nIndex creation is handled asynchronously.\nUse the `ListTableIndices` and `DescribeTableIndexStats` operations to monitor index creation progress.\n"
+        },
+        {
+          "info": {
+            "name": "List indexes on a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/index/list",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List all indices created on a table. Returns information about each index\nincluding name, columns, status, and UUID.\n"
+        },
+        {
+          "info": {
+            "name": "Get table index statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/index/:index_name/stats",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              },
+              {
+                "name": "index_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the index to get stats for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get statistics for a specific index on a table. Returns information about\nthe index type, distance type (for vector indices), and row counts.\n"
+        },
+        {
+          "info": {
+            "name": "Drop a specific index",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/table/:id/index/:index_name/drop",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              },
+              {
+                "name": "index_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the index to drop"
+              }
+            ]
+          },
+          "docs": "Drop the specified index from table `id`.\n\nREST NAMESPACE ONLY\nREST namespace does not use a request body for this operation.\nThe `DropTableIndexRequest` information is passed in the following way:\n- `id`: pass through path parameter of the same name\n- `index_name`: pass through path parameter of the same name\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

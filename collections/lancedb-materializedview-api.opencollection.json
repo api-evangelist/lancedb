@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lance Namespace Specification Data MaterializedView API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "MaterializedView",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Trigger an async materialized view refresh",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/materialized_view/:id/refresh",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Trigger an asynchronous refresh job for materialized view `id`.\nReturns a job ID for tracking.\n"
+        },
+        {
+          "info": {
+            "name": "Create a materialized view",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{scheme}://{host}:{port}/{basePath}/v1/materialized_view/:id/create",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`string identifier` of an object in a namespace, following the Lance Namespace spec.\nWhen the value is equal to the delimiter, it represents the root namespace.\nFor example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.\n"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "An optional delimiter of the `string identifier`, following the Lance Namespace spec.\nWhen not specified, the `$` delimiter must be used.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a materialized view at identifier `id`. The view may be\nquery-backed, UDTF-backed, or chunker-backed, controlled by the\n`kind` discriminator.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
