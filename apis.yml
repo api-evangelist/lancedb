@@ -31,6 +31,20 @@ accessModel:
 image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-network/lancedb/lancedb-logo.png
 tags:
   - Vector Database
+  - Multi-Modal
+  - Lance Format
+  - Lakehouse
+  - RAG
+  - Agent Memory
+  - Open-Source
+  - Embeddings
+  - Full-Text Search
+  - Hybrid Search
+  - Columnar Storage
+  - Arrow
+  - AI Infrastructure
+tags_raw:
+  - Vector Database
   - Multimodal
   - Lance Format
   - Lakehouse
@@ -79,6 +93,12 @@ apis:
   humanURL: https://lance.org/
   baseURL: https://github.com/lance-format/lance
   tags:
+  - File Format
+  - Columnar
+  - Arrow
+  - Open-Source
+  - Apache 2.0
+  tags_raw:
   - File Format
   - Columnar
   - Arrow
@@ -176,6 +196,10 @@ apis:
   humanURL: https://github.com/lancedb/lancedb-mcp-server
   baseURL: https://github.com/lancedb/lancedb-mcp-server
   tags:
+  - MCP
+  - Agents
+  - Tools
+  tags_raw:
   - MCP
   - Agent
   - Tools
