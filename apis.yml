@@ -15,6 +15,18 @@ description: >-
   by Midjourney, Runway, World Labs, Netflix, Character.AI, Uber, NVIDIA,
   ByteDance, Databricks, and others for RAG, agent memory, training data
   curation, feature engineering, and large-scale retrieval.
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: false
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
