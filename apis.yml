@@ -43,7 +43,7 @@ accessModel:
 image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-network/lancedb/lancedb-logo.png
 tags:
   - Vector Database
-  - Multimodal
+  - Multi-Modal
   - Lance Format
   - Lakehouse
   - RAG
