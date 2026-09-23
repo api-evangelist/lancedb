@@ -1,28 +1,28 @@
 {
   "provider": "lancedb",
   "sources": [
-    "lancedb-data-api-openapi.yml",
-    "lancedb-index-api-openapi.yml",
-    "lancedb-materializedview-api-openapi.yml",
-    "lancedb-metadata-api-openapi.yml",
-    "lancedb-namespace-api-openapi.yml",
-    "lancedb-table-api-openapi.yml",
-    "lancedb-tag-api-openapi.yml",
-    "lancedb-transaction-api-openapi.yml"
+    "_original/lance-namespace-openapi.yaml"
   ],
   "outputs": [
-    "lancedb-data-api-openapi.yml",
-    "lancedb-index-api-openapi.yml",
     "lancedb-materializedview-api-openapi.yml",
-    "lancedb-metadata-api-openapi.yml",
     "lancedb-namespace-api-openapi.yml",
     "lancedb-table-api-openapi.yml",
-    "lancedb-tag-api-openapi.yml",
     "lancedb-transaction-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "lance-namespace-openapi.yaml: upgraded openapi 3.1.1 -> OpenAPI 3.2.0",
+    "lance-namespace-openapi.yaml: declared missing tag: MaterializedView",
+    "lance-namespace-openapi.yaml: multi-axis tagging (8 tags, 4 first tags, 2.22x duplication over 50 operations) \u2014 split on first tag, 49 operations narrowed",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "lancedb-materializedview-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lancedb-namespace-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lancedb-table-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lancedb-transaction-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

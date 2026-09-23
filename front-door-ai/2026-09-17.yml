@@ -1,0 +1,36 @@
+# Front Door AI Index — lancedb — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: lancedb
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: lancedb.com
+  final_host: www.lancedb.com
+  ownership: own
+  owner: lancedb
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 151
+  host_score: 151
+  density: 23.29
+  words: 6484
+  tiers:
+    agentic: 73
+    core: 69
+    model: 9
+  ambiguous: 28
+  top_terms:
+    AI: 48
+    agent: 25
+    RAG: 24
+    embedding: 14
+    vector database: 13
+    ML: 11
+    Hugging Face: 6
+    agentic: 6
+    fine-tune: 6
+    LLMs: 5
+    retrieval-augmented: 4
+    machine learning: 3
