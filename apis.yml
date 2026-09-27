@@ -16,16 +16,21 @@ description: >-
   ByteDance, Databricks, and others for RAG, agent memory, training data
   curation, feature engineering, and large-scale retrieval.
 deliveryModel:
-  model: unknown
-  open_source: unknown
+  model: self-hosted
+  license: Apache-2.0
+  license_evidence:
+    repo: lancedb/lancedb
+    spdx: Apache-2.0
+    stars: 11527
+  open_source: true
   commercial: false
   callable_host: false
-  label: Delivery model not determined — needs a product licence on record
-  confidence: low
+  label: Self-hosted open source · you run it yourself
+  confidence: medium
   source:
   - openapi
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-license
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -48,7 +53,7 @@ tags:
   - Lakehouse
   - RAG
   - Agent Memory
-  - Open-Source
+  - Open Source
   - Embeddings
   - Full-Text Search
   - Hybrid Search
@@ -69,6 +74,7 @@ tags_raw:
   - Columnar Storage
   - Arrow
   - AI Infrastructure
+  - Open-Source
 created: '2026-05-23'
 modified: '2026-05-25'
 specificationVersion: '0.23'
@@ -80,7 +86,6 @@ apis:
     engineering, materialized views, GPU-accelerated index build via cuVS, distributed query, and direct
     training integration with PyTorch / Ray. Deployable in customer VPC on AWS, GCP, or Azure.
   humanURL: https://lancedb.com/
-  baseURL: https://lancedb.com/
   tags:
   - Enterprise
   - Managed
@@ -108,7 +113,7 @@ apis:
   - File Format
   - Columnar
   - Arrow
-  - Open-Source
+  - Open Source
   - Apache 2.0
   tags_raw:
   - File Format
@@ -116,6 +121,7 @@ apis:
   - Arrow
   - Open Source
   - Apache 2.0
+  - Open-Source
   properties:
   - type: Documentation
     url: https://lance.org/

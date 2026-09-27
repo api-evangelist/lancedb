@@ -105,161 +105,15 @@ paths:
         5XX:
           $ref: '#/components/responses/ServerErrorResponse'
 components:
-  responses:
-    BadRequestErrorResponse:
-      description: Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/bad-request
-            title: Malformed request
-            status: 400
-            detail: ''
-            instance: /v1/namespaces
-    UnauthorizedErrorResponse:
-      description: Unauthorized. The request lacks valid authentication credentials for the operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/unauthorized-request
-            title: No valid authentication credentials for the operation
-            status: 401
-            detail: ''
-            instance: /v1/namespaces
-    NotFoundErrorResponse:
-      description: A server-side problem that means can not find the specified resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/not-found-error
-            title: Not found Error
-            status: 404
-            detail: ''
-            instance: /v1/namespaces/{ns}
-    ConflictErrorResponse:
-      description: The request conflicts with the current state of the target resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/conflict
-            title: The namespace has been concurrently modified
-            status: 409
-            detail: ''
-            instance: /v1/namespaces/{ns}
-    CreateMaterializedViewResponse:
-      description: Materialized view created
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateMaterializedViewResponse'
-    RefreshMaterializedViewResponse:
-      description: Refresh job accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RefreshMaterializedViewResponse'
-    ServerErrorResponse:
-      description: A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/server-error
-            title: Internal Server Error
-            status: 500
-            detail: ''
-            instance: /v1/namespaces
-    ForbiddenErrorResponse:
-      description: Forbidden. Authenticated user does not have the necessary permissions.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/forbidden-request
-            title: Not authorized to make this request
-            status: 403
-            detail: ''
-            instance: /v1/namespaces
-    ServiceUnavailableErrorResponse:
-      description: The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/service-unavailable
-            title: Slow down
-            status: 503
-            detail: ''
-            instance: /v1/namespaces
   schemas:
-    RefreshMaterializedViewRequest:
+    RefreshMaterializedViewResponse:
       type: object
+      required:
+      - job_id
       properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        id:
-          type: array
-          items:
-            type: string
-          description: Table identifier path (namespace + table name)
-        src_version:
-          type:
-          - integer
-          - 'null'
-          description: Optional source version to refresh from
-        max_rows_per_fragment:
-          type:
-          - integer
-          - 'null'
-          description: Optional maximum rows per fragment
-        concurrency:
-          type:
-          - integer
-          - 'null'
-          description: Optional concurrency override
-        intra_applier_concurrency:
-          type:
-          - integer
-          - 'null'
-          description: Optional intra-applier concurrency override
-        cluster:
-          type:
-          - string
-          - 'null'
-          description: Optional cluster name (operational override)
-        output_limit:
-          type:
-          - integer
-          - 'null'
-          description: 'Post-trim cap on view row count after expansion. Valid only for
-
-            chunker materialized views; returns 400 if set on other kinds.
-
-            '
-        manifest:
-          type:
-          - string
-          - 'null'
-          description: 'Optional inline JSON-serialized GenevaManifest. Operational
-
-            override for this refresh only; does not mutate the view''s
-
-            snapshotted manifest. When omitted, the manifest stored in the
-
-            view''s metadata is used.
-
-            '
+        job_id:
+          type: string
+          description: The job ID for tracking the refresh job
     ErrorResponse:
       type: object
       description: Common JSON error response model
@@ -293,23 +147,6 @@ components:
 
             '
           example: /v1/table/production$users/describe
-    CreateMaterializedViewResponse:
-      type: object
-      required:
-      - version
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: The commit version that created the materialized view
-          minimum: 0
-        job_id:
-          type:
-          - string
-          - 'null'
-          description: 'Refresh job ID, populated only when `with_no_data` was false.
-
-            '
     CreateMaterializedViewRequest:
       type: object
       required:
@@ -380,6 +217,91 @@ components:
             opt-in only; the threshold and cooldown are configured on the
 
             deployment, not per-view.
+
+            '
+    RefreshMaterializedViewRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        id:
+          type: array
+          items:
+            type: string
+          description: Table identifier path (namespace + table name)
+        src_version:
+          type:
+          - integer
+          - 'null'
+          description: Optional source version to refresh from
+        max_rows_per_fragment:
+          type:
+          - integer
+          - 'null'
+          description: Optional maximum rows per fragment
+        concurrency:
+          type:
+          - integer
+          - 'null'
+          description: Optional concurrency override
+        intra_applier_concurrency:
+          type:
+          - integer
+          - 'null'
+          description: Optional intra-applier concurrency override
+        cluster:
+          type:
+          - string
+          - 'null'
+          description: Optional cluster name (operational override)
+        output_limit:
+          type:
+          - integer
+          - 'null'
+          description: 'Post-trim cap on view row count after expansion. Valid only for
+
+            chunker materialized views; returns 400 if set on other kinds.
+
+            '
+        manifest:
+          type:
+          - string
+          - 'null'
+          description: 'Optional inline JSON-serialized GenevaManifest. Operational
+
+            override for this refresh only; does not mutate the view''s
+
+            snapshotted manifest. When omitted, the manifest stored in the
+
+            view''s metadata is used.
+
+            '
+    Identity:
+      type: object
+      description: 'Identity information of a request.
+
+        '
+      properties:
+        api_key:
+          type: string
+          description: 'API key for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `x-api-key` header.
+
+            '
+        auth_token:
+          type: string
+          description: 'Bearer token for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `Authorization` header
+
+            with the Bearer scheme (e.g., `Bearer <token>`).
 
             '
     MaterializedViewUdtfEntry:
@@ -493,54 +415,24 @@ components:
           - string
           - 'null'
           description: SHA-256 checksum of the manifest content.
-    Identity:
-      type: object
-      description: 'Identity information of a request.
-
-        '
-      properties:
-        api_key:
-          type: string
-          description: 'API key for authentication.
-
-
-            REST NAMESPACE ONLY
-
-            This is passed via the `x-api-key` header.
-
-            '
-        auth_token:
-          type: string
-          description: 'Bearer token for authentication.
-
-
-            REST NAMESPACE ONLY
-
-            This is passed via the `Authorization` header
-
-            with the Bearer scheme (e.g., `Bearer <token>`).
-
-            '
-    RefreshMaterializedViewResponse:
+    CreateMaterializedViewResponse:
       type: object
       required:
-      - job_id
+      - version
       properties:
+        version:
+          type: integer
+          format: int64
+          description: The commit version that created the materialized view
+          minimum: 0
         job_id:
-          type: string
-          description: The job ID for tracking the refresh job
+          type:
+          - string
+          - 'null'
+          description: 'Refresh job ID, populated only when `with_no_data` was false.
+
+            '
   parameters:
-    delimiter:
-      name: delimiter
-      description: 'An optional delimiter of the `string identifier`, following the Lance Namespace spec.
-
-        When not specified, the `$` delimiter must be used.
-
-        '
-      in: query
-      required: false
-      schema:
-        type: string
     id:
       name: id
       description: '`string identifier` of an object in a namespace, following the Lance Namespace spec.
@@ -554,6 +446,114 @@ components:
       required: true
       schema:
         type: string
+    delimiter:
+      name: delimiter
+      description: 'An optional delimiter of the `string identifier`, following the Lance Namespace spec.
+
+        When not specified, the `$` delimiter must be used.
+
+        '
+      in: query
+      required: false
+      schema:
+        type: string
+  responses:
+    ServiceUnavailableErrorResponse:
+      description: The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/service-unavailable
+            title: Slow down
+            status: 503
+            detail: ''
+            instance: /v1/namespaces
+    NotFoundErrorResponse:
+      description: A server-side problem that means can not find the specified resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/not-found-error
+            title: Not found Error
+            status: 404
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    CreateMaterializedViewResponse:
+      description: Materialized view created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateMaterializedViewResponse'
+    RefreshMaterializedViewResponse:
+      description: Refresh job accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RefreshMaterializedViewResponse'
+    UnauthorizedErrorResponse:
+      description: Unauthorized. The request lacks valid authentication credentials for the operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/unauthorized-request
+            title: No valid authentication credentials for the operation
+            status: 401
+            detail: ''
+            instance: /v1/namespaces
+    BadRequestErrorResponse:
+      description: Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/bad-request
+            title: Malformed request
+            status: 400
+            detail: ''
+            instance: /v1/namespaces
+    ForbiddenErrorResponse:
+      description: Forbidden. Authenticated user does not have the necessary permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/forbidden-request
+            title: Not authorized to make this request
+            status: 403
+            detail: ''
+            instance: /v1/namespaces
+    ConflictErrorResponse:
+      description: The request conflicts with the current state of the target resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/conflict
+            title: The namespace has been concurrently modified
+            status: 409
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    ServerErrorResponse:
+      description: A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/server-error
+            title: Internal Server Error
+            status: 500
+            detail: ''
+            instance: /v1/namespaces
   securitySchemes:
     OAuth2:
       type: oauth2
