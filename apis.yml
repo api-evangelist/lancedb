@@ -46,6 +46,9 @@ accessModel:
   generated: '2026-07-22'
   method: derived
 image: https://kinlane-productions2.s3.amazonaws.com/api-evangelist-network/lancedb/lancedb-logo.png
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 tags:
   - Vector Database
   - Multi-Modal
@@ -60,6 +63,7 @@ tags:
   - Columnar Storage
   - Arrow
   - AI Infrastructure
+  - Vector Search
 tags_raw:
   - Vector Database
   - Multimodal
@@ -75,6 +79,7 @@ tags_raw:
   - Arrow
   - AI Infrastructure
   - Open-Source
+  - Vector Search
 created: '2026-05-23'
 modified: '2026-05-25'
 specificationVersion: '0.23'
