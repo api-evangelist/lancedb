@@ -102,146 +102,18 @@ paths:
         5XX:
           $ref: '#/components/responses/ServerErrorResponse'
 components:
-  responses:
-    AlterTransactionResponse:
-      description: Response of AlterTransaction
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AlterTransactionResponse'
-    ServiceUnavailableErrorResponse:
-      description: The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/service-unavailable
-            title: Slow down
-            status: 503
-            detail: ''
-            instance: /v1/namespaces
-    NotFoundErrorResponse:
-      description: A server-side problem that means can not find the specified resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/not-found-error
-            title: Not found Error
-            status: 404
-            detail: ''
-            instance: /v1/namespaces/{ns}
-    ServerErrorResponse:
-      description: A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/server-error
-            title: Internal Server Error
-            status: 500
-            detail: ''
-            instance: /v1/namespaces
-    ForbiddenErrorResponse:
-      description: Forbidden. Authenticated user does not have the necessary permissions.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/forbidden-request
-            title: Not authorized to make this request
-            status: 403
-            detail: ''
-            instance: /v1/namespaces
-    ConflictErrorResponse:
-      description: The request conflicts with the current state of the target resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/conflict
-            title: The namespace has been concurrently modified
-            status: 409
-            detail: ''
-            instance: /v1/namespaces/{ns}
-    UnauthorizedErrorResponse:
-      description: Unauthorized. The request lacks valid authentication credentials for the operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/unauthorized-request
-            title: No valid authentication credentials for the operation
-            status: 401
-            detail: ''
-            instance: /v1/namespaces
-    DescribeTransactionResponse:
-      description: Response of DescribeTransaction
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DescribeTransactionResponse'
-    BadRequestErrorResponse:
-      description: Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/bad-request
-            title: Malformed request
-            status: 400
-            detail: ''
-            instance: /v1/namespaces
-  parameters:
-    id:
-      name: id
-      description: '`string identifier` of an object in a namespace, following the Lance Namespace spec.
-
-        When the value is equal to the delimiter, it represents the root namespace.
-
-        For example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.
-
-        '
-      in: path
-      required: true
-      schema:
-        type: string
-    delimiter:
-      name: delimiter
-      description: 'An optional delimiter of the `string identifier`, following the Lance Namespace spec.
-
-        When not specified, the `$` delimiter must be used.
-
-        '
-      in: query
-      required: false
-      schema:
-        type: string
   schemas:
-    TransactionStatus:
-      type: string
-      description: 'The status of a transaction.
-
-        Case insensitive, supports both PascalCase and snake_case. Valid values are:
-
-        - Queued: the transaction is queued and not yet started
-
-        - Running: the transaction is currently running
-
-        - Succeeded: the transaction has completed successfully
-
-        - Failed: the transaction has failed
-
-        - Canceled: the transaction was canceled
-
-        '
+    DescribeTransactionResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        properties:
+          type: object
+          additionalProperties:
+            type: string
     SetPropertyMode:
       type: string
       description: 'The behavior if the property key already exists.
@@ -278,6 +150,112 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/AlterTransactionAction'
+    AlterTransactionSetStatus:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+    AlterTransactionUnsetProperty:
+      type: object
+      properties:
+        key:
+          type: string
+        mode:
+          $ref: '#/components/schemas/UnsetPropertyMode'
+    DescribeTransactionRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+    UnsetPropertyMode:
+      type: string
+      description: 'The behavior if the property key to unset does not exist.
+
+        Case insensitive, supports both PascalCase and snake_case. Valid values are:
+
+        - Skip (default): skip the property to unset
+
+        - Fail: fail the entire operation
+
+        '
+    AlterTransactionSetProperty:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        mode:
+          $ref: '#/components/schemas/SetPropertyMode'
+    Context:
+      type: object
+      description: 'Arbitrary context for a request as key-value pairs.
+
+        How to use the context is custom to the specific implementation.
+
+
+        REST NAMESPACE ONLY
+
+        Context entries are passed via HTTP headers using the naming convention
+
+        `x-lance-ctx-<key>: <value>`. For example, a context entry
+
+        `{"trace_id": "abc123"}` would be sent as the header `x-lance-ctx-trace_id: abc123`.
+
+        '
+      additionalProperties:
+        type: string
+    TransactionStatus:
+      type: string
+      description: 'The status of a transaction.
+
+        Case insensitive, supports both PascalCase and snake_case. Valid values are:
+
+        - Queued: the transaction is queued and not yet started
+
+        - Running: the transaction is currently running
+
+        - Succeeded: the transaction has completed successfully
+
+        - Failed: the transaction has failed
+
+        - Canceled: the transaction was canceled
+
+        '
+    Identity:
+      type: object
+      description: 'Identity information of a request.
+
+        '
+      properties:
+        api_key:
+          type: string
+          description: 'API key for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `x-api-key` header.
+
+            '
+        auth_token:
+          type: string
+          description: 'Bearer token for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `Authorization` header
+
+            with the Bearer scheme (e.g., `Bearer <token>`).
+
+            '
     AlterTransactionResponse:
       type: object
       required:
@@ -309,86 +287,6 @@ components:
           $ref: '#/components/schemas/AlterTransactionSetProperty'
         unsetPropertyAction:
           $ref: '#/components/schemas/AlterTransactionUnsetProperty'
-    UnsetPropertyMode:
-      type: string
-      description: 'The behavior if the property key to unset does not exist.
-
-        Case insensitive, supports both PascalCase and snake_case. Valid values are:
-
-        - Skip (default): skip the property to unset
-
-        - Fail: fail the entire operation
-
-        '
-    AlterTransactionUnsetProperty:
-      type: object
-      properties:
-        key:
-          type: string
-        mode:
-          $ref: '#/components/schemas/UnsetPropertyMode'
-    AlterTransactionSetStatus:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/TransactionStatus'
-    Context:
-      type: object
-      description: 'Arbitrary context for a request as key-value pairs.
-
-        How to use the context is custom to the specific implementation.
-
-
-        REST NAMESPACE ONLY
-
-        Context entries are passed via HTTP headers using the naming convention
-
-        `x-lance-ctx-<key>: <value>`. For example, a context entry
-
-        `{"trace_id": "abc123"}` would be sent as the header `x-lance-ctx-trace_id: abc123`.
-
-        '
-      additionalProperties:
-        type: string
-    Identity:
-      type: object
-      description: 'Identity information of a request.
-
-        '
-      properties:
-        api_key:
-          type: string
-          description: 'API key for authentication.
-
-
-            REST NAMESPACE ONLY
-
-            This is passed via the `x-api-key` header.
-
-            '
-        auth_token:
-          type: string
-          description: 'Bearer token for authentication.
-
-
-            REST NAMESPACE ONLY
-
-            This is passed via the `Authorization` header
-
-            with the Bearer scheme (e.g., `Bearer <token>`).
-
-            '
-    DescribeTransactionRequest:
-      type: object
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
     ErrorResponse:
       type: object
       description: Common JSON error response model
@@ -422,26 +320,128 @@ components:
 
             '
           example: /v1/table/production$users/describe
-    AlterTransactionSetProperty:
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-        mode:
-          $ref: '#/components/schemas/SetPropertyMode'
+  responses:
+    NotFoundErrorResponse:
+      description: A server-side problem that means can not find the specified resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/not-found-error
+            title: Not found Error
+            status: 404
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    UnauthorizedErrorResponse:
+      description: Unauthorized. The request lacks valid authentication credentials for the operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/unauthorized-request
+            title: No valid authentication credentials for the operation
+            status: 401
+            detail: ''
+            instance: /v1/namespaces
+    ServiceUnavailableErrorResponse:
+      description: The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/service-unavailable
+            title: Slow down
+            status: 503
+            detail: ''
+            instance: /v1/namespaces
+    ConflictErrorResponse:
+      description: The request conflicts with the current state of the target resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/conflict
+            title: The namespace has been concurrently modified
+            status: 409
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    ForbiddenErrorResponse:
+      description: Forbidden. Authenticated user does not have the necessary permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/forbidden-request
+            title: Not authorized to make this request
+            status: 403
+            detail: ''
+            instance: /v1/namespaces
+    AlterTransactionResponse:
+      description: Response of AlterTransaction
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AlterTransactionResponse'
+    BadRequestErrorResponse:
+      description: Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/bad-request
+            title: Malformed request
+            status: 400
+            detail: ''
+            instance: /v1/namespaces
     DescribeTransactionResponse:
-      type: object
-      required:
-      - status
-      properties:
-        status:
-          $ref: '#/components/schemas/TransactionStatus'
-        properties:
-          type: object
-          additionalProperties:
-            type: string
+      description: Response of DescribeTransaction
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DescribeTransactionResponse'
+    ServerErrorResponse:
+      description: A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/server-error
+            title: Internal Server Error
+            status: 500
+            detail: ''
+            instance: /v1/namespaces
+  parameters:
+    delimiter:
+      name: delimiter
+      description: 'An optional delimiter of the `string identifier`, following the Lance Namespace spec.
+
+        When not specified, the `$` delimiter must be used.
+
+        '
+      in: query
+      required: false
+      schema:
+        type: string
+    id:
+      name: id
+      description: '`string identifier` of an object in a namespace, following the Lance Namespace spec.
+
+        When the value is equal to the delimiter, it represents the root namespace.
+
+        For example, `v1/namespace/$/list` performs a `ListNamespace` on the root namespace.
+
+        '
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     OAuth2:
       type: oauth2

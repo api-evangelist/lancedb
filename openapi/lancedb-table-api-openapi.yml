@@ -1692,373 +1692,374 @@ paths:
         5XX:
           $ref: '#/components/responses/ServerErrorResponse'
 components:
-  responses:
-    BatchCreateTableVersionsResponse:
-      description: Result of atomically creating table versions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BatchCreateTableVersionsResponse'
-    DropTableResponse:
-      description: Response of DropTable
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DropTableResponse'
-    DeleteTableTagResponse:
-      description: Delete tag response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeleteTableTagResponse'
-    DeclareTableResponse:
-      description: Table properties result when declaring a table
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeclareTableResponse'
-    CreateTableResponse:
-      description: Table properties result when creating a table
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateTableResponse'
-    DropTableIndexResponse:
-      description: Index drop operation result
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DropTableIndexResponse'
-    CreateTableScalarIndexResponse:
-      description: Scalar index created successfully
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateTableScalarIndexResponse'
-    RenameTableResponse:
-      description: Table rename operation result
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RenameTableResponse'
-    ExplainTableQueryPlanResponse:
-      description: Query execution plan explanation
-      content:
-        application/json:
-          schema:
-            type: string
-            description: Human-readable query execution plan
-    CreateTableTagResponse:
-      description: Create tag response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateTableTagResponse'
-    QueryTableResponse:
-      description: Query results in Arrow IPC file format
-      content:
-        application/vnd.apache.arrow.file:
-          schema:
-            type: string
-            format: binary
-    ServiceUnavailableErrorResponse:
-      description: The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/service-unavailable
-            title: Slow down
-            status: 503
-            detail: ''
-            instance: /v1/namespaces
-    ServerErrorResponse:
-      description: A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/server-error
-            title: Internal Server Error
-            status: 500
-            detail: ''
-            instance: /v1/namespaces
-    AlterTableAddColumnsResponse:
-      description: Add columns operation result
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AlterTableAddColumnsResponse'
-    UpdateTableResponse:
-      description: Update successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateTableResponse'
-    GetTableStatsResponse:
-      description: Table statistics
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GetTableStatsResponse'
-    UpdateTableTagResponse:
-      description: Update tag response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateTableTagResponse'
-    DescribeTableIndexStatsResponse:
-      description: Index statistics
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DescribeTableIndexStatsResponse'
-    UnauthorizedErrorResponse:
-      description: Unauthorized. The request lacks valid authentication credentials for the operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/unauthorized-request
-            title: No valid authentication credentials for the operation
-            status: 401
-            detail: ''
-            instance: /v1/namespaces
-    InsertIntoTableResponse:
-      description: Result of inserting records into a table
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/InsertIntoTableResponse'
-    DescribeTableVersionResponse:
-      description: Table version information
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DescribeTableVersionResponse'
-    ListTableIndicesResponse:
-      description: List of indices on the table
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ListTableIndicesResponse'
-    DeleteFromTableResponse:
-      description: Delete successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeleteFromTableResponse'
-    DeregisterTableResponse:
-      description: Response of DeregisterTable
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeregisterTableResponse'
-    UnsupportedOperationErrorResponse:
-      description: Not Acceptable / Unsupported Operation. The server does not support this operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/unsupported-operation
-            title: The server does not support this operation
-            status: 406
-            detail: ''
-            instance: /v1/namespaces
-    ListTablesResponse:
-      description: A list of tables
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ListTablesResponse'
-    GetTableTagVersionResponse:
-      description: Tag version information
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GetTableTagVersionResponse'
-    AlterTableDropColumnsResponse:
-      description: Drop columns operation result
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AlterTableDropColumnsResponse'
-    BatchDeleteTableVersionsResponse:
-      description: Result of deleting table version records
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BatchDeleteTableVersionsResponse'
-    MergeInsertIntoTableResponse:
-      description: Result of merge insert operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/MergeInsertIntoTableResponse'
-    ListTableVersionsResponse:
-      description: List of table versions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ListTableVersionsResponse'
-    ForbiddenErrorResponse:
-      description: Forbidden. Authenticated user does not have the necessary permissions.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/forbidden-request
-            title: Not authorized to make this request
-            status: 403
-            detail: ''
-            instance: /v1/namespaces
-    RegisterTableResponse:
-      description: Table properties result when registering a table
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RegisterTableResponse'
-    ListTableTagsResponse:
-      description: List of table tags
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ListTableTagsResponse'
-    AnalyzeTableQueryPlanResponse:
-      description: Query execution plan analysis
-      content:
-        application/json:
-          schema:
-            type: string
-            description: Human-readable query execution plan analysis
-    AlterTableAlterColumnsResponse:
-      description: Alter columns operation result
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AlterTableAlterColumnsResponse'
-    NotFoundErrorResponse:
-      description: A server-side problem that means can not find the specified resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/not-found-error
-            title: Not found Error
-            status: 404
-            detail: ''
-            instance: /v1/namespaces/{ns}
-    CreateTableIndexResponse:
-      description: Index created successfully
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateTableIndexResponse'
-    CountTableRowsResponse:
-      description: Result of counting rows in a table
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CountTableRowsResponse'
-    ConflictErrorResponse:
-      description: The request conflicts with the current state of the target resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/conflict
-            title: The namespace has been concurrently modified
-            status: 409
-            detail: ''
-            instance: /v1/namespaces/{ns}
-    BatchCommitTablesResponse:
-      description: Result of atomically committing a batch of mixed table operations
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BatchCommitTablesResponse'
-    DescribeTableResponse:
-      description: Table properties result when loading a table
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DescribeTableResponse'
-    RestoreTableResponse:
-      description: Table restore operation result
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RestoreTableResponse'
-    CreateTableVersionResponse:
-      description: Result of creating a table version
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateTableVersionResponse'
-    AlterTableBackfillColumnsResponse:
-      description: Backfill job accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AlterTableBackfillColumnsResponse'
-    BadRequestErrorResponse:
-      description: Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            type: /errors/bad-request
-            title: Malformed request
-            status: 400
-            detail: ''
-            instance: /v1/namespaces
   schemas:
-    MatchQuery:
+    ManifestNamingScheme:
+      type: string
+      description: "The naming scheme used for manifest files in the `_versions/` directory.\n\nKnown values:\n- `V1`: `_versions/{version}.manifest` - Simple version-based naming\n- `V2`: `_versions/{inverted_version}.manifest` - Zero-padded, reversed version number\n  (uses `u64::MAX - version`) for O(1) lookup of latest version on object stores\n\nV2 is preferred for new tables as it enables efficient latest-version discovery\nwithout needing to list all versions.\n"
+      example: V2
+    JsonArrowField:
+      type: object
+      description: 'JSON representation of an Apache Arrow field.
+
+        '
+      required:
+      - name
+      - type
+      - nullable
+      properties:
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          propertyNames:
+            type: string
+        name:
+          type: string
+        nullable:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/JsonArrowDataType'
+    RenameTableResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    GetTableTagVersionResponse:
+      type: object
+      required:
+      - version
+      properties:
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: version number that the tag points to
+    BatchCommitTablesResponse:
+      type: object
+      description: 'Response for a batch commit of table operations.
+
+        Contains the results of each operation in the same order as the request.
+
+        '
+      required:
+      - results
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier for the batch commit
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitTableResult'
+          description: 'Results for each operation, in the same order as the request operations.
+
+            Each result contains the outcome of the corresponding operation.
+
+            '
+    JsonArrowSchema:
+      type: object
+      description: 'JSON representation of a Apache Arrow schema.
+
+        '
+      required:
+      - fields
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/JsonArrowField'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          propertyNames:
+            type: string
+    AlterTableAlterColumnsResponse:
+      type: object
+      required:
+      - version
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: The commit version associated with the operation
+          minimum: 0
+    CreateTableResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        location:
+          type: string
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+        storage_options:
+          type: object
+          description: 'Configuration options to be used to access storage. The available
+
+            options depend on the type of storage in use. These will be
+
+            passed directly to Lance to initialize storage access.
+
+            '
+          additionalProperties:
+            type: string
+        properties:
+          type: object
+          description: 'Business logic properties stored and managed by the namespace implementation outside
+
+            Lance context. If the implementation does not support table properties, it should
+
+            return null for this field.
+
+            '
+          additionalProperties:
+            type: string
+          example:
+            owner: Ralph
+            created_at: '1452120468'
+          default: {}
+          nullable: true
+    IndexContent:
+      type: object
+      required:
+      - index_name
+      - index_uuid
+      - columns
+      - status
+      properties:
+        index_name:
+          type: string
+          description: Name of the index
+        index_uuid:
+          type: string
+          description: Unique identifier for the index
+        columns:
+          type: array
+          items:
+            type: string
+          description: Columns covered by this index
+        status:
+          type: string
+          description: Current status of the index
+    QueryTableRequest:
+      type: object
+      required:
+      - vector
+      - k
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        bypass_vector_index:
+          type: boolean
+          description: Whether to bypass vector index
+        columns:
+          type: object
+          nullable: true
+          description: 'Optional columns to return. Provide either column_names or column_aliases, not both.
+
+            '
+          properties:
+            column_names:
+              type: array
+              items:
+                type: string
+              description: List of column names to return
+            column_aliases:
+              type: object
+              additionalProperties:
+                type: string
+              description: Object mapping output aliases to source column names
+        distance_type:
+          type: string
+          description: Distance metric to use
+        ef:
+          type: integer
+          minimum: 0
+          description: Search effort parameter for HNSW index
+        fast_search:
+          type: boolean
+          description: Whether to use fast search
+        filter:
+          type: string
+          description: Optional SQL filter expression
+        full_text_query:
+          type: object
+          nullable: true
+          description: Optional full-text search query. Provide either string_query or structured_query, not both.
+          properties:
+            string_query:
+              $ref: '#/components/schemas/StringFtsQuery'
+            structured_query:
+              $ref: '#/components/schemas/StructuredFtsQuery'
+        k:
+          type: integer
+          minimum: 0
+          description: Number of results to return
+        lower_bound:
+          type: number
+          format: float
+          description: Lower bound for search
+        nprobes:
+          type: integer
+          minimum: 0
+          description: Number of probes for IVF index
+        offset:
+          type: integer
+          minimum: 0
+          description: Number of results to skip
+        prefilter:
+          type: boolean
+          description: Whether to apply filtering before vector search
+        refine_factor:
+          type: integer
+          format: int32
+          minimum: 0
+          description: Refine factor for search
+        upper_bound:
+          type: number
+          format: float
+          description: Upper bound for search
+        vector:
+          type: object
+          nullable: true
+          description: Query vector(s) for similarity search. Provide either single_vector or multi_vector, not both.
+          properties:
+            single_vector:
+              type: array
+              items:
+                type: number
+                format: float
+              description: Single query vector
+            multi_vector:
+              type: array
+              items:
+                type: array
+                items:
+                  type: number
+                  format: float
+              description: Multiple query vectors for batch search
+        vector_column:
+          type: string
+          description: Name of the vector column to search
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Table version to query
+        with_row_id:
+          type: boolean
+          description: If true, return the row id as a column called `_rowid`
+    CountTableRowsResponse:
+      type: integer
+      format: int64
+      description: 'Response containing the count of rows.
+
+        Serializes transparently as just the number for backward compatibility.
+
+        '
+      minimum: 0
+    RestoreTableRequest:
+      type: object
+      required:
+      - version
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version to restore to
+    DescribeTableVersionResponse:
+      type: object
+      description: Response containing the table version information
+      required:
+      - version
+      properties:
+        version:
+          $ref: '#/components/schemas/TableVersion'
+          description: The table version information
+    BooleanQuery:
+      type: object
+      description: Boolean query with must, should, and must_not clauses
+      required:
+      - should
+      - must
+      - must_not
+      properties:
+        must:
+          type: array
+          items:
+            $ref: '#/components/schemas/FtsQuery'
+          description: Queries that must match (AND)
+        must_not:
+          type: array
+          items:
+            $ref: '#/components/schemas/FtsQuery'
+          description: Queries that must not match (NOT)
+        should:
+          type: array
+          items:
+            $ref: '#/components/schemas/FtsQuery'
+          description: Queries that should match (OR)
+    PhraseQuery:
       type: object
       required:
       - terms
       properties:
-        boost:
-          type: number
-          format: float
         column:
           type: string
-        fuzziness:
+        slop:
           type: integer
           format: int32
-          minimum: 0
-        max_expansions:
-          type: integer
-          description: 'The maximum number of terms to expand for fuzzy matching.
-
-            Default to 50.'
-          minimum: 0
-        operator:
-          $ref: '#/components/schemas/Operator'
-          description: 'The operator to use for combining terms.
-
-            This can be either `And` or `Or`, it''s ''Or'' by default.
-
-            - `And`: All terms must match.
-
-            - `Or`: At least one term must match.'
-        prefix_length:
-          type: integer
-          format: int32
-          description: 'The number of beginning characters being unchanged for fuzzy matching.
-
-            Default to 0.'
           minimum: 0
         terms:
           type: string
+    ListTableVersionsResponse:
+      type: object
+      required:
+      - versions
+      properties:
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TableVersion'
+          description: 'List of table versions. When `descending=true`, guaranteed to be ordered from latest to oldest.
+
+            Otherwise, ordering is implementation-defined.
+
+            '
+        page_token:
+          $ref: '#/components/schemas/PageToken'
+    ListTableIndicesResponse:
+      type: object
+      required:
+      - indexes
+      properties:
+        indexes:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndexContent'
+          description: List of indexes on the table
+        page_token:
+          $ref: '#/components/schemas/PageToken'
     TagContents:
       type: object
       required:
@@ -2078,6 +2079,834 @@ components:
           format: int64
           minimum: 0
           description: Size of the manifest file in bytes
+    FragmentSummary:
+      type: object
+      required:
+      - min
+      - max
+      - mean
+      - p25
+      - p50
+      - p75
+      - p99
+      properties:
+        min:
+          type: integer
+          format: int64
+          minimum: 0
+        max:
+          type: integer
+          format: int64
+          minimum: 0
+        mean:
+          type: integer
+          format: int64
+          minimum: 0
+        p25:
+          type: integer
+          format: int64
+          minimum: 0
+        p50:
+          type: integer
+          format: int64
+          minimum: 0
+        p75:
+          type: integer
+          format: int64
+          minimum: 0
+        p99:
+          type: integer
+          format: int64
+          minimum: 0
+    BatchDeleteTableVersionsRequest:
+      type: object
+      description: 'Request to delete table version records.
+
+        Supports deleting ranges of versions for efficient bulk cleanup.
+
+        '
+      required:
+      - ranges
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+          description: The table identifier
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionRange'
+          description: 'List of version ranges to delete.
+
+            Each range specifies start (inclusive) and end (exclusive) versions.
+
+            '
+    BatchDeleteTableVersionsResponse:
+      type: object
+      description: Response for deleting table version records
+      properties:
+        deleted_count:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Number of version records deleted
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    CreateTableVersionEntry:
+      type: object
+      description: 'An entry for creating a new table version in a batch operation.
+
+        This supports `put_if_not_exists` semantics,
+
+        where the operation fails if the version already exists.
+
+        '
+      required:
+      - id
+      - version
+      - manifest_path
+      properties:
+        id:
+          type: array
+          items:
+            type: string
+          description: The table identifier
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version number to create
+        manifest_path:
+          type: string
+          description: Path to the manifest file for this version
+        manifest_size:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Size of the manifest file in bytes
+        e_tag:
+          type: string
+          description: Optional ETag for the manifest file
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Optional metadata for the version
+        naming_scheme:
+          $ref: '#/components/schemas/ManifestNamingScheme'
+    DeclareTableRequest:
+      type: object
+      description: 'Request for declaring a table.
+
+        '
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+          description: 'Optional storage location for the table.
+
+            If not provided, the namespace implementation should determine the table location.
+
+            '
+        vend_credentials:
+          description: 'Whether to include vended credentials in the response `storage_options`.
+
+            When true, the implementation should provide vended credentials for accessing storage.
+
+            When not set, the implementation can decide whether to return vended credentials.
+
+            '
+          type: boolean
+        properties:
+          type: object
+          description: 'Business logic properties stored and managed by the namespace implementation outside
+
+            Lance context, if supported by the implementation.
+
+            '
+          additionalProperties:
+            type: string
+    FragmentStats:
+      type: object
+      required:
+      - num_fragments
+      - num_small_fragments
+      - lengths
+      properties:
+        num_fragments:
+          type: integer
+          format: int64
+          minimum: 0
+          description: The number of fragments in the table
+        num_small_fragments:
+          type: integer
+          format: int64
+          minimum: 0
+          description: The number of uncompacted fragments in the table
+        lengths:
+          $ref: '#/components/schemas/FragmentSummary'
+          description: Statistics on the number of rows in the table fragments
+    AddVirtualColumnEntry:
+      type: object
+      required:
+      - input_columns
+      - data_type
+      - image
+      - udf_version
+      - udf_name
+      - udf
+      properties:
+        input_columns:
+          type: array
+          items:
+            type: string
+          description: List of input column names for the virtual column
+        data_type:
+          type: object
+          description: Data type of the virtual column using JSON representation
+        image:
+          type: string
+          description: Docker image to use for the UDF
+        udf:
+          type: string
+          description: Base64 encoded pickled UDF
+        udf_name:
+          type: string
+          description: Name of the UDF
+        udf_version:
+          type: string
+          description: Version of the UDF
+        udf_backend:
+          type:
+          - string
+          - 'null'
+          description: UDF backend type (e.g. DockerUDFSpecV1)
+        auto_backfill:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to automatically backfill the column after creation
+        manifest:
+          type:
+          - string
+          - 'null'
+          description: JSON-serialized manifest for the UDF environment
+        manifest_checksum:
+          type:
+          - string
+          - 'null'
+          description: SHA-256 checksum of the manifest content
+        field_metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: User-supplied field metadata (string key-value pairs)
+    PageToken:
+      description: 'An opaque token that allows pagination for list operations (e.g. ListNamespaces).
+
+
+        For an initial request of a list operation,
+
+        if the implementation cannot return all items in one response,
+
+        or if there are more items than the page limit specified in the request,
+
+        the implementation must return a page token in the response,
+
+        indicating there are more results available.
+
+
+        After the initial request,
+
+        the value of the page token from each response must be used
+
+        as the page token value for the next request.
+
+
+        Caller must interpret either `null`,
+
+        missing value or empty string value of the page token from
+
+        the implementation''s response as the end of the listing results.
+
+        '
+      type: string
+      nullable: true
+    CommitTableOperation:
+      type: object
+      description: 'A single operation within a batch commit.
+
+        Provide exactly one of the operation fields to specify the operation kind.
+
+        '
+      properties:
+        declare_table:
+          $ref: '#/components/schemas/DeclareTableRequest'
+          description: Declare (reserve) a new table in the namespace
+        create_table_version:
+          $ref: '#/components/schemas/CreateTableVersionRequest'
+          description: Create a new version entry for a table
+        delete_table_versions:
+          $ref: '#/components/schemas/BatchDeleteTableVersionsRequest'
+          description: Delete version ranges from a table
+        deregister_table:
+          $ref: '#/components/schemas/DeregisterTableRequest'
+          description: Deregister (soft-delete) a table
+    CreateTableVersionResponse:
+      type: object
+      description: Response for creating a table version
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        version:
+          $ref: '#/components/schemas/TableVersion'
+    StringFtsQuery:
+      type: object
+      required:
+      - query
+      properties:
+        columns:
+          type: array
+          items:
+            type: string
+        query:
+          type: string
+    CreateTableTagResponse:
+      type: object
+      description: Response for create tag operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    ListTableTagsResponse:
+      type: object
+      description: Response containing table tags
+      required:
+      - tags
+      properties:
+        tags:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TagContents'
+          description: Map of tag names to their contents
+        page_token:
+          $ref: '#/components/schemas/PageToken'
+    RegisterTableRequest:
+      type: object
+      required:
+      - location
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+        mode:
+          type: string
+          description: "There are two modes when trying to register a table,\nto differentiate the behavior when a table of the same name already exists.\nCase insensitive, supports both PascalCase and snake_case. Valid values are:\n  * Create (default): the operation fails with 409.\n  * Overwrite: the existing table registration is replaced with the new registration.\n"
+        properties:
+          type: object
+          description: 'Properties stored on the table, if supported by the implementation.
+
+            '
+          additionalProperties:
+            type: string
+    DeleteTableTagRequest:
+      type: object
+      required:
+      - tag
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        tag:
+          type: string
+          description: Name of the tag to delete
+    TableBasicStats:
+      type: object
+      required:
+      - num_deleted_rows
+      - num_fragments
+      properties:
+        num_deleted_rows:
+          type: integer
+          minimum: 0
+          description: Number of deleted rows in the table
+        num_fragments:
+          type: integer
+          minimum: 0
+          description: Number of fragments in the table
+    CreateTableIndexRequest:
+      type: object
+      required:
+      - column
+      - index_type
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        column:
+          type: string
+          description: Name of the column to create index on
+        index_type:
+          type: string
+          description: Type of index to create (e.g., BTREE, BITMAP, LABEL_LIST, IVF_FLAT, IVF_PQ, IVF_HNSW_SQ, FTS)
+        name:
+          type: string
+          nullable: true
+          description: Optional name for the index. If not provided, a name will be auto-generated.
+        distance_type:
+          type: string
+          description: Distance metric type for vector indexes (e.g., l2, cosine, dot)
+        with_position:
+          type: boolean
+          nullable: true
+          description: Optional FTS parameter for position tracking
+        base_tokenizer:
+          type: string
+          nullable: true
+          description: Optional FTS parameter for base tokenizer
+        language:
+          type: string
+          nullable: true
+          description: Optional FTS parameter for language
+        max_token_length:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Optional FTS parameter for maximum token length
+        lower_case:
+          type: boolean
+          nullable: true
+          description: Optional FTS parameter for lowercase conversion
+        stem:
+          type: boolean
+          nullable: true
+          description: Optional FTS parameter for stemming
+        remove_stop_words:
+          type: boolean
+          nullable: true
+          description: Optional FTS parameter for stop word removal
+        ascii_folding:
+          type: boolean
+          nullable: true
+          description: Optional FTS parameter for ASCII folding
+    VersionRange:
+      type: object
+      description: 'A range of versions to delete (start inclusive, end exclusive).
+
+        Special values:
+
+        - `start_version: 0` with `end_version: -1` means ALL versions
+
+        '
+      required:
+      - start_version
+      - end_version
+      properties:
+        start_version:
+          type: integer
+          format: int64
+          description: 'Start version of the range (inclusive).
+
+            Use 0 to start from the first version.
+
+            '
+        end_version:
+          type: integer
+          format: int64
+          description: 'End version of the range (exclusive).
+
+            Use -1 to indicate all versions up to and including the latest.
+
+            '
+    AddColumnsEntry:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the new column
+        expression:
+          type:
+          - string
+          - 'null'
+          description: SQL expression for the column (optional if virtual_column is specified)
+        virtual_column:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/AddVirtualColumnEntry'
+          description: Virtual column definition (optional if expression is specified)
+    DeregisterTableResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        id:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+        properties:
+          type: object
+          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise it should return the properties.
+
+            '
+          additionalProperties:
+            type: string
+          example:
+            owner: Ralph
+            created_at: '1452120468'
+          default: {}
+          nullable: true
+    RenameTableRequest:
+      type: object
+      required:
+      - new_table_name
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+          description: The table identifier
+        new_table_name:
+          type: string
+          description: New name for the table
+        new_namespace_id:
+          type: array
+          items:
+            type: string
+          description: New namespace identifier to move the table to (optional, if not specified the table stays in the same namespace)
+    DeregisterTableRequest:
+      type: object
+      description: 'The table content remains available in the storage.
+
+        '
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+    CreateTableVersionRequest:
+      type: object
+      description: 'Request to create a new table version entry.
+
+        This supports `put_if_not_exists` semantics,
+
+        where the operation fails if the version already exists.
+
+        '
+      required:
+      - version
+      - manifest_path
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+          description: The table identifier
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version number to create
+        manifest_path:
+          type: string
+          description: Path to the manifest file for this version
+        manifest_size:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Size of the manifest file in bytes
+        e_tag:
+          type: string
+          description: Optional ETag for the manifest file
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Optional metadata for the version
+        naming_scheme:
+          $ref: '#/components/schemas/ManifestNamingScheme'
+    DescribeTableIndexStatsRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          nullable: true
+          description: Optional table version to get stats for
+        index_name:
+          type: string
+          description: Name of the index
+    AlterTableBackfillColumnsRequest:
+      type: object
+      required:
+      - column
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        id:
+          type: array
+          items:
+            type: string
+          description: Table identifier path (namespace + table name)
+        column:
+          type: string
+          description: Column name to backfill
+        where:
+          type:
+          - string
+          - 'null'
+          description: Optional WHERE clause filter
+        concurrency:
+          type:
+          - integer
+          - 'null'
+          description: Optional concurrency override
+        intra_applier_concurrency:
+          type:
+          - integer
+          - 'null'
+          description: Optional intra-applier concurrency override
+        min_checkpoint_size:
+          type:
+          - integer
+          - 'null'
+          description: Optional minimum checkpoint size
+        max_checkpoint_size:
+          type:
+          - integer
+          - 'null'
+          description: Optional maximum checkpoint size
+        batch_checkpoint_flush_interval_seconds:
+          type:
+          - number
+          - 'null'
+          description: Optional batch checkpoint flush interval in seconds
+        read_version:
+          type:
+          - integer
+          - 'null'
+          description: Optional table version to read from
+        task_size:
+          type:
+          - integer
+          - 'null'
+          description: Optional task size
+        num_frags:
+          type:
+          - integer
+          - 'null'
+          description: Optional number of fragments
+        checkpoint_size:
+          type:
+          - integer
+          - 'null'
+          description: Optional checkpoint size
+        commit_granularity:
+          type:
+          - integer
+          - 'null'
+          description: Optional commit granularity
+        cluster:
+          type:
+          - string
+          - 'null'
+          description: Optional cluster name
+        manifest:
+          type:
+          - string
+          - 'null'
+          description: Optional manifest name
+    BatchCreateTableVersionsRequest:
+      type: object
+      description: 'Request to atomically create new version entries for multiple tables.
+
+        The operation is atomic: all versions are created or none are.
+
+        '
+      required:
+      - entries
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateTableVersionEntry'
+          description: List of table version entries to create atomically
+    GetTableTagVersionRequest:
+      type: object
+      required:
+      - tag
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        tag:
+          type: string
+          description: Name of the tag to get version for
+    DescribeTableIndexStatsResponse:
+      type: object
+      properties:
+        distance_type:
+          type: string
+          nullable: true
+          description: Distance type for vector indexes
+        index_type:
+          type: string
+          nullable: true
+          description: Type of the index
+        num_indexed_rows:
+          type: integer
+          format: int64
+          minimum: 0
+          nullable: true
+          description: Number of indexed rows
+        num_unindexed_rows:
+          type: integer
+          format: int64
+          minimum: 0
+          nullable: true
+          description: Number of unindexed rows
+        num_indices:
+          type: integer
+          format: int32
+          minimum: 0
+          nullable: true
+          description: Number of indices
+    RestoreTableResponse:
+      type: object
+      description: Response for restore table operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    MergeInsertIntoTableResponse:
+      type: object
+      description: Response from merge insert operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        num_updated_rows:
+          type: integer
+          format: int64
+          description: Number of rows updated
+          minimum: 0
+        num_inserted_rows:
+          type: integer
+          format: int64
+          description: Number of rows inserted
+          minimum: 0
+        num_deleted_rows:
+          type: integer
+          format: int64
+          description: Number of rows deleted (typically 0 for merge insert)
+          minimum: 0
+        version:
+          type: integer
+          format: int64
+          description: The commit version associated with the operation
+          minimum: 0
+    AlterTableAlterColumnsRequest:
+      type: object
+      required:
+      - alterations
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        id:
+          type: array
+          items:
+            type: string
+          description: Table identifier path (namespace + table name)
+        alterations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlterColumnsEntry'
+          description: List of column alterations to apply to the table
+    Context:
+      type: object
+      description: 'Arbitrary context for a request as key-value pairs.
+
+        How to use the context is custom to the specific implementation.
+
+
+        REST NAMESPACE ONLY
+
+        Context entries are passed via HTTP headers using the naming convention
+
+        `x-lance-ctx-<key>: <value>`. For example, a context entry
+
+        `{"trace_id": "abc123"}` would be sent as the header `x-lance-ctx-trace_id: abc123`.
+
+        '
+      additionalProperties:
+        type: string
     GetTableStatsResponse:
       type: object
       required:
@@ -2104,381 +2933,6 @@ components:
         fragment_stats:
           $ref: '#/components/schemas/FragmentStats'
           description: Statistics on table fragments
-    CreateTableTagResponse:
-      type: object
-      description: Response for create tag operation
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-    AlterTableDropColumnsRequest:
-      type: object
-      required:
-      - columns
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-        columns:
-          type: array
-          items:
-            type: string
-          description: Names of columns to drop
-    AddColumnsEntry:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the new column
-        expression:
-          type:
-          - string
-          - 'null'
-          description: SQL expression for the column (optional if virtual_column is specified)
-        virtual_column:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/AddVirtualColumnEntry'
-          description: Virtual column definition (optional if expression is specified)
-    JsonArrowField:
-      type: object
-      description: 'JSON representation of an Apache Arrow field.
-
-        '
-      required:
-      - name
-      - type
-      - nullable
-      properties:
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-          propertyNames:
-            type: string
-        name:
-          type: string
-        nullable:
-          type: boolean
-        type:
-          $ref: '#/components/schemas/JsonArrowDataType'
-    DeleteFromTableRequest:
-      type: object
-      description: 'Delete data from table based on a SQL predicate.
-
-        Returns the number of rows that were deleted.
-
-        '
-      required:
-      - predicate
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-          description: The namespace identifier
-        predicate:
-          type: string
-          description: SQL predicate to filter rows for deletion
-    CreateTableVersionResponse:
-      type: object
-      description: Response for creating a table version
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-        version:
-          $ref: '#/components/schemas/TableVersion'
-    DeclareTableResponse:
-      type: object
-      description: 'Response for declaring a table.
-
-        '
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-        location:
-          type: string
-        storage_options:
-          type: object
-          description: 'Configuration options to be used to access storage. The available
-
-            options depend on the type of storage in use. These will be
-
-            passed directly to Lance to initialize storage access.
-
-            '
-          additionalProperties:
-            type: string
-        properties:
-          type: object
-          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise it should return the properties.
-
-            '
-          additionalProperties:
-            type: string
-          example:
-            owner: Ralph
-            created_at: '1452120468'
-          default: {}
-          nullable: true
-        managed_versioning:
-          type: boolean
-          description: 'When true, the caller should use namespace table version operations
-
-            (CreateTableVersion, BatchCreateTableVersions, DescribeTableVersion, ListTableVersions, BatchDeleteTableVersions)
-
-            to manage table versions instead of relying on Lance''s native version management.
-
-            '
-    CountTableRowsResponse:
-      type: integer
-      format: int64
-      description: 'Response containing the count of rows.
-
-        Serializes transparently as just the number for backward compatibility.
-
-        '
-      minimum: 0
-    DescribeTableIndexStatsRequest:
-      type: object
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-        version:
-          type: integer
-          format: int64
-          minimum: 0
-          nullable: true
-          description: Optional table version to get stats for
-        index_name:
-          type: string
-          description: Name of the index
-    RegisterTableRequest:
-      type: object
-      required:
-      - location
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-        location:
-          type: string
-        mode:
-          type: string
-          description: "There are two modes when trying to register a table,\nto differentiate the behavior when a table of the same name already exists.\nCase insensitive, supports both PascalCase and snake_case. Valid values are:\n  * Create (default): the operation fails with 409.\n  * Overwrite: the existing table registration is replaced with the new registration.\n"
-        properties:
-          type: object
-          description: 'Properties stored on the table, if supported by the implementation.
-
-            '
-          additionalProperties:
-            type: string
-    AlterTableDropColumnsResponse:
-      type: object
-      required:
-      - version
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-        version:
-          type: integer
-          format: int64
-          minimum: 0
-          description: Version of the table after dropping columns
-    GetTableTagVersionResponse:
-      type: object
-      required:
-      - version
-      properties:
-        version:
-          type: integer
-          format: int64
-          minimum: 0
-          description: version number that the tag points to
-    GetTableTagVersionRequest:
-      type: object
-      required:
-      - tag
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-        tag:
-          type: string
-          description: Name of the tag to get version for
-    TableBasicStats:
-      type: object
-      required:
-      - num_deleted_rows
-      - num_fragments
-      properties:
-        num_deleted_rows:
-          type: integer
-          minimum: 0
-          description: Number of deleted rows in the table
-        num_fragments:
-          type: integer
-          minimum: 0
-          description: Number of fragments in the table
-    DescribeTableVersionRequest:
-      type: object
-      description: Request to describe a specific table version
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-          description: The table identifier
-        version:
-          type: integer
-          format: int64
-          minimum: 0
-          description: Version number to describe
-    TableVersion:
-      type: object
-      required:
-      - version
-      - manifest_path
-      properties:
-        version:
-          type: integer
-          format: int64
-          minimum: 0
-          description: Version number
-        manifest_path:
-          type: string
-          description: Path to the manifest file for this version.
-        manifest_size:
-          type: integer
-          format: int64
-          minimum: 0
-          description: Size of the manifest file in bytes
-        e_tag:
-          type: string
-          description: 'Optional ETag for optimistic concurrency control.
-
-            Useful for S3 and similar object stores.
-
-            '
-        timestamp_millis:
-          type: integer
-          format: int64
-          description: Timestamp when the version was created, in milliseconds since epoch (Unix time)
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-          description: Optional key-value pairs of metadata
-    AlterVirtualColumnEntry:
-      type: object
-      properties:
-        input_columns:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: List of input column names for the virtual column (optional)
-        image:
-          type:
-          - string
-          - 'null'
-          description: Docker image to use for the UDF (optional)
-        udf:
-          type:
-          - string
-          - 'null'
-          description: Base64 encoded pickled UDF (optional)
-        udf_name:
-          type:
-          - string
-          - 'null'
-          description: Name of the UDF (optional)
-        udf_version:
-          type:
-          - string
-          - 'null'
-          description: Version of the UDF (optional)
-        udf_backend:
-          type:
-          - string
-          - 'null'
-          description: UDF backend type (e.g. DockerUDFSpecV1) (optional)
-        auto_backfill:
-          type:
-          - boolean
-          - 'null'
-          description: Whether to automatically backfill the column (optional)
-        manifest:
-          type:
-          - string
-          - 'null'
-          description: JSON-serialized manifest for the UDF environment (optional)
-        manifest_checksum:
-          type:
-          - string
-          - 'null'
-          description: SHA-256 checksum of the manifest content (optional)
-        field_metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-          description: User-supplied field metadata (optional)
-    BatchDeleteTableVersionsResponse:
-      type: object
-      description: Response for deleting table version records
-      properties:
-        deleted_count:
-          type: integer
-          format: int64
-          minimum: 0
-          description: Number of version records deleted
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-    DeleteTableTagResponse:
-      type: object
-      description: Response for delete tag operation
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
     AnalyzeTableQueryPlanRequest:
       type: object
       required:
@@ -2593,6 +3047,175 @@ components:
         with_row_id:
           type: boolean
           description: If true, return the row id as a column called `_rowid`
+    JsonArrowDataType:
+      type: object
+      description: JSON representation of an Apache Arrow DataType
+      required:
+      - type
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/JsonArrowField'
+          description: Fields for complex types like Struct, Union, etc.
+        length:
+          type: integer
+          format: int64
+          description: Length for fixed-size types
+          minimum: 0
+        type:
+          type: string
+          description: The data type name
+    Operator:
+      type: string
+      description: 'The operator to use for combining terms.
+
+        Case insensitive, supports both PascalCase and snake_case. Valid values are:
+
+        - And: All terms must match.
+
+        - Or: At least one term must match.
+
+        '
+    GetTableStatsRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+    DeleteFromTableResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        version:
+          type: integer
+          format: int64
+          description: The commit version associated with the operation
+          minimum: 0
+    UpdateTableTagRequest:
+      type: object
+      required:
+      - tag
+      - version
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        tag:
+          type: string
+          description: Name of the tag to update
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: New version number for the tag to point to
+    BoostQuery:
+      type: object
+      description: Boost query that scores documents matching positive query higher and negative query lower
+      required:
+      - positive
+      - negative
+      properties:
+        positive:
+          $ref: '#/components/schemas/FtsQuery'
+        negative:
+          $ref: '#/components/schemas/FtsQuery'
+        negative_boost:
+          type: number
+          format: float
+          description: 'Boost factor for negative query (default: 0.5)'
+          default: 0.5
+    RegisterTableResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        location:
+          type: string
+        properties:
+          type: object
+          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise, it should return the properties.
+
+            '
+          additionalProperties:
+            type: string
+    DeleteTableTagResponse:
+      type: object
+      description: Response for delete tag operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    TableVersion:
+      type: object
+      required:
+      - version
+      - manifest_path
+      properties:
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version number
+        manifest_path:
+          type: string
+          description: Path to the manifest file for this version.
+        manifest_size:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Size of the manifest file in bytes
+        e_tag:
+          type: string
+          description: 'Optional ETag for optimistic concurrency control.
+
+            Useful for S3 and similar object stores.
+
+            '
+        timestamp_millis:
+          type: integer
+          format: int64
+          description: Timestamp when the version was created, in milliseconds since epoch (Unix time)
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Optional key-value pairs of metadata
+    DeleteFromTableRequest:
+      type: object
+      description: 'Delete data from table based on a SQL predicate.
+
+        Returns the number of rows that were deleted.
+
+        '
+      required:
+      - predicate
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+          description: The namespace identifier
+        predicate:
+          type: string
+          description: SQL predicate to filter rows for deletion
     DescribeTableResponse:
       type: object
       properties:
@@ -2719,10 +3342,8 @@ components:
             may fail for declared-only tables.
 
             '
-    DeleteTableTagRequest:
+    ListTableIndicesRequest:
       type: object
-      required:
-      - tag
       properties:
         identity:
           $ref: '#/components/schemas/Identity'
@@ -2732,137 +3353,111 @@ components:
           type: array
           items:
             type: string
-        tag:
-          type: string
-          description: Name of the tag to delete
-    DropTableIndexResponse:
-      type: object
-      description: Response for drop index operation
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-    ManifestNamingScheme:
-      type: string
-      description: "The naming scheme used for manifest files in the `_versions/` directory.\n\nKnown values:\n- `V1`: `_versions/{version}.manifest` - Simple version-based naming\n- `V2`: `_versions/{inverted_version}.manifest` - Zero-padded, reversed version number\n  (uses `u64::MAX - version`) for O(1) lookup of latest version on object stores\n\nV2 is preferred for new tables as it enables efficient latest-version discovery\nwithout needing to list all versions.\n"
-      example: V2
-    RestoreTableResponse:
-      type: object
-      description: Response for restore table operation
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-    DeleteFromTableResponse:
-      type: object
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
+          description: The namespace identifier
         version:
           type: integer
           format: int64
-          description: The commit version associated with the operation
           minimum: 0
-    BatchCreateTableVersionsResponse:
+          nullable: true
+          description: Optional table version to list indexes from
+        page_token:
+          $ref: '#/components/schemas/PageToken'
+        limit:
+          $ref: '#/components/schemas/PageLimit'
+    AlterVirtualColumnEntry:
       type: object
-      description: 'Response for batch creating table versions.
+      properties:
+        input_columns:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: List of input column names for the virtual column (optional)
+        image:
+          type:
+          - string
+          - 'null'
+          description: Docker image to use for the UDF (optional)
+        udf:
+          type:
+          - string
+          - 'null'
+          description: Base64 encoded pickled UDF (optional)
+        udf_name:
+          type:
+          - string
+          - 'null'
+          description: Name of the UDF (optional)
+        udf_version:
+          type:
+          - string
+          - 'null'
+          description: Version of the UDF (optional)
+        udf_backend:
+          type:
+          - string
+          - 'null'
+          description: UDF backend type (e.g. DockerUDFSpecV1) (optional)
+        auto_backfill:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to automatically backfill the column (optional)
+        manifest:
+          type:
+          - string
+          - 'null'
+          description: JSON-serialized manifest for the UDF environment (optional)
+        manifest_checksum:
+          type:
+          - string
+          - 'null'
+          description: SHA-256 checksum of the manifest content (optional)
+        field_metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: User-supplied field metadata (optional)
+    BatchCommitTablesRequest:
+      type: object
+      description: 'Request to atomically commit a batch of table operations.
 
-        Contains the created versions for each table in the same order as the request.
+        This replaces `BatchCreateTableVersionsRequest` with a more general interface
+
+        that supports mixed operations (DeclareTable, CreateTableVersion,
+
+        DeleteTableVersions, DeregisterTable)
+
+        within a single atomic transaction at the metadata layer.
+
+
+        All operations are committed atomically: either all succeed or none are applied.
 
         '
       required:
-      - versions
+      - operations
       properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-        versions:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        operations:
           type: array
           items:
-            $ref: '#/components/schemas/TableVersion'
-          description: List of created table versions in the same order as the request entries
-    PhraseQuery:
+            $ref: '#/components/schemas/CommitTableOperation'
+          description: 'List of operations to commit atomically.
+
+            Supported operation types: DeclareTable, CreateTableVersion,
+
+            DeleteTableVersions, DeregisterTable.
+
+            '
+    DescribeTableVersionRequest:
       type: object
-      required:
-      - terms
-      properties:
-        column:
-          type: string
-        slop:
-          type: integer
-          format: int32
-          minimum: 0
-        terms:
-          type: string
-    InsertIntoTableResponse:
-      type: object
-      description: Response from inserting records into a table
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-    Context:
-      type: object
-      description: 'Arbitrary context for a request as key-value pairs.
-
-        How to use the context is custom to the specific implementation.
-
-
-        REST NAMESPACE ONLY
-
-        Context entries are passed via HTTP headers using the naming convention
-
-        `x-lance-ctx-<key>: <value>`. For example, a context entry
-
-        `{"trace_id": "abc123"}` would be sent as the header `x-lance-ctx-trace_id: abc123`.
-
-        '
-      additionalProperties:
-        type: string
-    CommitTableOperation:
-      type: object
-      description: 'A single operation within a batch commit.
-
-        Provide exactly one of the operation fields to specify the operation kind.
-
-        '
-      properties:
-        declare_table:
-          $ref: '#/components/schemas/DeclareTableRequest'
-          description: Declare (reserve) a new table in the namespace
-        create_table_version:
-          $ref: '#/components/schemas/CreateTableVersionRequest'
-          description: Create a new version entry for a table
-        delete_table_versions:
-          $ref: '#/components/schemas/BatchDeleteTableVersionsRequest'
-          description: Delete version ranges from a table
-        deregister_table:
-          $ref: '#/components/schemas/DeregisterTableRequest'
-          description: Deregister (soft-delete) a table
-    Operator:
-      type: string
-      description: 'The operator to use for combining terms.
-
-        Case insensitive, supports both PascalCase and snake_case. Valid values are:
-
-        - And: All terms must match.
-
-        - Or: At least one term must match.
-
-        '
-    CreateTableVersionRequest:
-      type: object
-      description: 'Request to create a new table version entry.
-
-        This supports `put_if_not_exists` semantics,
-
-        where the operation fails if the version already exists.
-
-        '
-      required:
-      - version
-      - manifest_path
+      description: Request to describe a specific table version
       properties:
         identity:
           $ref: '#/components/schemas/Identity'
@@ -2877,502 +3472,51 @@ components:
           type: integer
           format: int64
           minimum: 0
-          description: Version number to create
-        manifest_path:
+          description: Version number to describe
+    CreateTableScalarIndexResponse:
+      type: object
+      description: Response for create scalar index operation
+      properties:
+        transaction_id:
           type: string
-          description: Path to the manifest file for this version
-        manifest_size:
-          type: integer
-          format: int64
-          minimum: 0
-          description: Size of the manifest file in bytes
-        e_tag:
-          type: string
-          description: Optional ETag for the manifest file
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-          description: Optional metadata for the version
-        naming_scheme:
-          $ref: '#/components/schemas/ManifestNamingScheme'
-    PageToken:
-      description: 'An opaque token that allows pagination for list operations (e.g. ListNamespaces).
-
-
-        For an initial request of a list operation,
-
-        if the implementation cannot return all items in one response,
-
-        or if there are more items than the page limit specified in the request,
-
-        the implementation must return a page token in the response,
-
-        indicating there are more results available.
-
-
-        After the initial request,
-
-        the value of the page token from each response must be used
-
-        as the page token value for the next request.
-
-
-        Caller must interpret either `null`,
-
-        missing value or empty string value of the page token from
-
-        the implementation''s response as the end of the listing results.
-
-        '
-      type: string
-      nullable: true
-    GetTableStatsRequest:
+          description: Optional transaction identifier
+    DropTableResponse:
       type: object
       properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-    DeclareTableRequest:
-      type: object
-      description: 'Request for declaring a table.
-
-        '
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
         id:
           type: array
           items:
             type: string
         location:
           type: string
-          description: 'Optional storage location for the table.
-
-            If not provided, the namespace implementation should determine the table location.
-
-            '
-        vend_credentials:
-          description: 'Whether to include vended credentials in the response `storage_options`.
-
-            When true, the implementation should provide vended credentials for accessing storage.
-
-            When not set, the implementation can decide whether to return vended credentials.
-
-            '
-          type: boolean
         properties:
           type: object
-          description: 'Business logic properties stored and managed by the namespace implementation outside
-
-            Lance context, if supported by the implementation.
+          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise it should return the properties.
 
             '
           additionalProperties:
             type: string
-    CreateTableIndexResponse:
-      type: object
-      description: Response for create index operation
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-    DeregisterTableRequest:
-      type: object
-      description: 'The table content remains available in the storage.
-
-        '
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-    UpdateTableTagResponse:
-      type: object
-      description: Response for update tag operation
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-    UpdateTableTagRequest:
+          example:
+            owner: Ralph
+            created_at: '1452120468'
+          default: {}
+          nullable: true
+    AlterTableDropColumnsResponse:
       type: object
       required:
-      - tag
       - version
       properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-        tag:
+        transaction_id:
           type: string
-          description: Name of the tag to update
+          description: Optional transaction identifier
         version:
           type: integer
           format: int64
           minimum: 0
-          description: New version number for the tag to point to
-    Identity:
-      type: object
-      description: 'Identity information of a request.
-
-        '
-      properties:
-        api_key:
-          type: string
-          description: 'API key for authentication.
-
-
-            REST NAMESPACE ONLY
-
-            This is passed via the `x-api-key` header.
-
-            '
-        auth_token:
-          type: string
-          description: 'Bearer token for authentication.
-
-
-            REST NAMESPACE ONLY
-
-            This is passed via the `Authorization` header
-
-            with the Bearer scheme (e.g., `Bearer <token>`).
-
-            '
-    AlterTableAlterColumnsRequest:
-      type: object
-      required:
-      - alterations
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        id:
-          type: array
-          items:
-            type: string
-          description: Table identifier path (namespace + table name)
-        alterations:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlterColumnsEntry'
-          description: List of column alterations to apply to the table
-    AlterTableBackfillColumnsRequest:
-      type: object
-      required:
-      - column
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        id:
-          type: array
-          items:
-            type: string
-          description: Table identifier path (namespace + table name)
-        column:
-          type: string
-          description: Column name to backfill
-        where:
-          type:
-          - string
-          - 'null'
-          description: Optional WHERE clause filter
-        concurrency:
-          type:
-          - integer
-          - 'null'
-          description: Optional concurrency override
-        intra_applier_concurrency:
-          type:
-          - integer
-          - 'null'
-          description: Optional intra-applier concurrency override
-        min_checkpoint_size:
-          type:
-          - integer
-          - 'null'
-          description: Optional minimum checkpoint size
-        max_checkpoint_size:
-          type:
-          - integer
-          - 'null'
-          description: Optional maximum checkpoint size
-        batch_checkpoint_flush_interval_seconds:
-          type:
-          - number
-          - 'null'
-          description: Optional batch checkpoint flush interval in seconds
-        read_version:
-          type:
-          - integer
-          - 'null'
-          description: Optional table version to read from
-        task_size:
-          type:
-          - integer
-          - 'null'
-          description: Optional task size
-        num_frags:
-          type:
-          - integer
-          - 'null'
-          description: Optional number of fragments
-        checkpoint_size:
-          type:
-          - integer
-          - 'null'
-          description: Optional checkpoint size
-        commit_granularity:
-          type:
-          - integer
-          - 'null'
-          description: Optional commit granularity
-        cluster:
-          type:
-          - string
-          - 'null'
-          description: Optional cluster name
-        manifest:
-          type:
-          - string
-          - 'null'
-          description: Optional manifest name
-    AddVirtualColumnEntry:
-      type: object
-      required:
-      - input_columns
-      - data_type
-      - image
-      - udf_version
-      - udf_name
-      - udf
-      properties:
-        input_columns:
-          type: array
-          items:
-            type: string
-          description: List of input column names for the virtual column
-        data_type:
-          type: object
-          description: Data type of the virtual column using JSON representation
-        image:
-          type: string
-          description: Docker image to use for the UDF
-        udf:
-          type: string
-          description: Base64 encoded pickled UDF
-        udf_name:
-          type: string
-          description: Name of the UDF
-        udf_version:
-          type: string
-          description: Version of the UDF
-        udf_backend:
-          type:
-          - string
-          - 'null'
-          description: UDF backend type (e.g. DockerUDFSpecV1)
-        auto_backfill:
-          type:
-          - boolean
-          - 'null'
-          description: Whether to automatically backfill the column after creation
-        manifest:
-          type:
-          - string
-          - 'null'
-          description: JSON-serialized manifest for the UDF environment
-        manifest_checksum:
-          type:
-          - string
-          - 'null'
-          description: SHA-256 checksum of the manifest content
-        field_metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-          description: User-supplied field metadata (string key-value pairs)
-    ErrorResponse:
-      type: object
-      description: Common JSON error response model
-      required:
-      - code
-      properties:
-        error:
-          type: string
-          description: A brief, human-readable message about the error.
-          example: Table 'users' not found in namespace 'production'
-        code:
-          type: integer
-          minimum: 0
-          description: "Lance Namespace error code identifying the error type.\n\nError codes:\n  0 - Unsupported: Operation not supported by this backend\n  1 - NamespaceNotFound: The specified namespace does not exist\n  2 - NamespaceAlreadyExists: A namespace with this name already exists\n  3 - NamespaceNotEmpty: Namespace contains tables or child namespaces\n  4 - TableNotFound: The specified table does not exist\n  5 - TableAlreadyExists: A table with this name already exists\n  6 - TableIndexNotFound: The specified table index does not exist\n  7 - TableIndexAlreadyExists: A table index with this name already exists\n  8 - TableTagNotFound: The specified table tag does not exist\n  9 - TableTagAlreadyExists: A table tag with this name already exists\n  10 - TransactionNotFound: The specified transaction does not exist\n  11 - TableVersionNotFound: The specified table version does not exist\n  12 - TableColumnNotFound: The specified table column does not exist\n  13 - InvalidInput: Malformed request or invalid parameters\n  14 - ConcurrentModification: Optimistic concurrency conflict\n  15 - PermissionDenied: User lacks permission for this operation\n  16 - Unauthenticated: Authentication credentials are missing or invalid\n  17 - ServiceUnavailable: Service is temporarily unavailable\n  18 - Internal: Unexpected server/implementation error\n  19 - InvalidTableState: Table is in an invalid state for the operation\n  20 - TableSchemaValidationError: Table schema validation failed\n"
-          example: 4
-        detail:
-          type: string
-          description: 'An optional human-readable explanation of the error.
-
-            This can be used to record additional information such as stack trace.
-
-            '
-          example: The table may have been dropped or renamed
-        instance:
-          type: string
-          description: 'A string that identifies the specific occurrence of the error.
-
-            This can be a URI, a request or response ID,
-
-            or anything that the implementation can recognize to trace specific occurrence of the error.
-
-            '
-          example: /v1/table/production$users/describe
-    ListTableIndicesResponse:
-      type: object
-      required:
-      - indexes
-      properties:
-        indexes:
-          type: array
-          items:
-            $ref: '#/components/schemas/IndexContent'
-          description: List of indexes on the table
-        page_token:
-          $ref: '#/components/schemas/PageToken'
-    TableExistsRequest:
-      type: object
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-        version:
-          description: 'Version of the table to check existence.
-
-            If not specified, server should resolve it to the latest version.
-
-            '
-          type: integer
-          format: int64
-          minimum: 0
-    FragmentSummary:
-      type: object
-      required:
-      - min
-      - max
-      - mean
-      - p25
-      - p50
-      - p75
-      - p99
-      properties:
-        min:
-          type: integer
-          format: int64
-          minimum: 0
-        max:
-          type: integer
-          format: int64
-          minimum: 0
-        mean:
-          type: integer
-          format: int64
-          minimum: 0
-        p25:
-          type: integer
-          format: int64
-          minimum: 0
-        p50:
-          type: integer
-          format: int64
-          minimum: 0
-        p75:
-          type: integer
-          format: int64
-          minimum: 0
-        p99:
-          type: integer
-          format: int64
-          minimum: 0
-    CreateTableIndexRequest:
-      type: object
-      required:
-      - column
-      - index_type
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-        column:
-          type: string
-          description: Name of the column to create index on
-        index_type:
-          type: string
-          description: Type of index to create (e.g., BTREE, BITMAP, LABEL_LIST, IVF_FLAT, IVF_PQ, IVF_HNSW_SQ, FTS)
-        name:
-          type: string
-          nullable: true
-          description: Optional name for the index. If not provided, a name will be auto-generated.
-        distance_type:
-          type: string
-          description: Distance metric type for vector indexes (e.g., l2, cosine, dot)
-        with_position:
-          type: boolean
-          nullable: true
-          description: Optional FTS parameter for position tracking
-        base_tokenizer:
-          type: string
-          nullable: true
-          description: Optional FTS parameter for base tokenizer
-        language:
-          type: string
-          nullable: true
-          description: Optional FTS parameter for language
-        max_token_length:
-          type: integer
-          nullable: true
-          minimum: 0
-          description: Optional FTS parameter for maximum token length
-        lower_case:
-          type: boolean
-          nullable: true
-          description: Optional FTS parameter for lowercase conversion
-        stem:
-          type: boolean
-          nullable: true
-          description: Optional FTS parameter for stemming
-        remove_stop_words:
-          type: boolean
-          nullable: true
-          description: Optional FTS parameter for stop word removal
-        ascii_folding:
-          type: boolean
-          nullable: true
-          description: Optional FTS parameter for ASCII folding
+          description: Version of the table after dropping columns
     PageLimit:
       description: 'An inclusive upper bound of the
 
@@ -3381,129 +3525,56 @@ components:
         '
       type: integer
       nullable: true
-    ListTableTagsResponse:
+    DeclareTableResponse:
       type: object
-      description: Response containing table tags
-      required:
-      - tags
-      properties:
-        tags:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/TagContents'
-          description: Map of tag names to their contents
-        page_token:
-          $ref: '#/components/schemas/PageToken'
-    ListTablesResponse:
-      type: object
-      required:
-      - tables
-      properties:
-        tables:
-          type: array
-          uniqueItems: true
-          description: 'The list of names of all the tables under the connected namespace implementation.
-
-            This should recursively list all the tables in all child namespaces.
-
-            Each string in the list is the full identifier in string form.
-
-            '
-          items:
-            type: string
-        page_token:
-          $ref: '#/components/schemas/PageToken'
-    FragmentStats:
-      type: object
-      required:
-      - num_fragments
-      - num_small_fragments
-      - lengths
-      properties:
-        num_fragments:
-          type: integer
-          format: int64
-          minimum: 0
-          description: The number of fragments in the table
-        num_small_fragments:
-          type: integer
-          format: int64
-          minimum: 0
-          description: The number of uncompacted fragments in the table
-        lengths:
-          $ref: '#/components/schemas/FragmentSummary'
-          description: Statistics on the number of rows in the table fragments
-    DescribeTableIndexStatsResponse:
-      type: object
-      properties:
-        distance_type:
-          type: string
-          nullable: true
-          description: Distance type for vector indexes
-        index_type:
-          type: string
-          nullable: true
-          description: Type of the index
-        num_indexed_rows:
-          type: integer
-          format: int64
-          minimum: 0
-          nullable: true
-          description: Number of indexed rows
-        num_unindexed_rows:
-          type: integer
-          format: int64
-          minimum: 0
-          nullable: true
-          description: Number of unindexed rows
-        num_indices:
-          type: integer
-          format: int32
-          minimum: 0
-          nullable: true
-          description: Number of indices
-    CreateTableVersionEntry:
-      type: object
-      description: 'An entry for creating a new table version in a batch operation.
-
-        This supports `put_if_not_exists` semantics,
-
-        where the operation fails if the version already exists.
+      description: 'Response for declaring a table.
 
         '
-      required:
-      - id
-      - version
-      - manifest_path
       properties:
-        id:
-          type: array
-          items:
-            type: string
-          description: The table identifier
-        version:
-          type: integer
-          format: int64
-          minimum: 0
-          description: Version number to create
-        manifest_path:
+        transaction_id:
           type: string
-          description: Path to the manifest file for this version
-        manifest_size:
-          type: integer
-          format: int64
-          minimum: 0
-          description: Size of the manifest file in bytes
-        e_tag:
+          description: Optional transaction identifier
+        location:
           type: string
-          description: Optional ETag for the manifest file
-        metadata:
+        storage_options:
           type: object
+          description: 'Configuration options to be used to access storage. The available
+
+            options depend on the type of storage in use. These will be
+
+            passed directly to Lance to initialize storage access.
+
+            '
           additionalProperties:
             type: string
-          description: Optional metadata for the version
-        naming_scheme:
-          $ref: '#/components/schemas/ManifestNamingScheme'
+        properties:
+          type: object
+          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise it should return the properties.
+
+            '
+          additionalProperties:
+            type: string
+          example:
+            owner: Ralph
+            created_at: '1452120468'
+          default: {}
+          nullable: true
+        managed_versioning:
+          type: boolean
+          description: 'When true, the caller should use namespace table version operations
+
+            (CreateTableVersion, BatchCreateTableVersions, DescribeTableVersion, ListTableVersions, BatchDeleteTableVersions)
+
+            to manage table versions instead of relying on Lance''s native version management.
+
+            '
+    InsertIntoTableResponse:
+      type: object
+      description: Response from inserting records into a table
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
     UpdateTableRequest:
       type: object
       description: 'Each update consists of a column name and an SQL expression that will be
@@ -3544,83 +3615,10 @@ components:
             '
           additionalProperties:
             type: string
-    BooleanQuery:
-      type: object
-      description: Boolean query with must, should, and must_not clauses
-      required:
-      - should
-      - must
-      - must_not
-      properties:
-        must:
-          type: array
-          items:
-            $ref: '#/components/schemas/FtsQuery'
-          description: Queries that must match (AND)
-        must_not:
-          type: array
-          items:
-            $ref: '#/components/schemas/FtsQuery'
-          description: Queries that must not match (NOT)
-        should:
-          type: array
-          items:
-            $ref: '#/components/schemas/FtsQuery'
-          description: Queries that should match (OR)
-    FtsQuery:
-      type: object
-      description: 'Full-text search query. Exactly one query type field must be provided.
-
-        This structure follows the same pattern as AlterTransactionAction to minimize
-
-        differences and compatibility issues across codegen in different languages.
-
-        '
-      properties:
-        match:
-          $ref: '#/components/schemas/MatchQuery'
-        phrase:
-          $ref: '#/components/schemas/PhraseQuery'
-        boost:
-          $ref: '#/components/schemas/BoostQuery'
-        multi_match:
-          $ref: '#/components/schemas/MultiMatchQuery'
-        boolean:
-          $ref: '#/components/schemas/BooleanQuery'
-    StructuredFtsQuery:
+    AlterTableDropColumnsRequest:
       type: object
       required:
-      - query
-      properties:
-        query:
-          $ref: '#/components/schemas/FtsQuery'
-    BatchCommitTablesResponse:
-      type: object
-      description: 'Response for a batch commit of table operations.
-
-        Contains the results of each operation in the same order as the request.
-
-        '
-      required:
-      - results
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier for the batch commit
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/CommitTableResult'
-          description: 'Results for each operation, in the same order as the request operations.
-
-            Each result contains the outcome of the corresponding operation.
-
-            '
-    CreateTableTagRequest:
-      type: object
-      required:
-      - tag
-      - version
+      - columns
       properties:
         identity:
           $ref: '#/components/schemas/Identity'
@@ -3630,25 +3628,170 @@ components:
           type: array
           items:
             type: string
-        tag:
-          type: string
-          description: Name of the tag to create
-        version:
-          type: integer
-          format: int64
-          minimum: 0
-          description: Version number for the tag to point to
-    StringFtsQuery:
-      type: object
-      required:
-      - query
-      properties:
         columns:
           type: array
           items:
             type: string
-        query:
+          description: Names of columns to drop
+    UpdateTableResponse:
+      type: object
+      required:
+      - updated_rows
+      - version
+      properties:
+        transaction_id:
           type: string
+          description: Optional transaction identifier
+        updated_rows:
+          type: integer
+          format: int64
+          description: Number of rows updated
+          minimum: 0
+        version:
+          type: integer
+          format: int64
+          description: The commit version associated with the operation
+          minimum: 0
+        properties:
+          type: object
+          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise, it should return the properties.
+
+            '
+          additionalProperties:
+            type: string
+    MatchQuery:
+      type: object
+      required:
+      - terms
+      properties:
+        boost:
+          type: number
+          format: float
+        column:
+          type: string
+        fuzziness:
+          type: integer
+          format: int32
+          minimum: 0
+        max_expansions:
+          type: integer
+          description: 'The maximum number of terms to expand for fuzzy matching.
+
+            Default to 50.'
+          minimum: 0
+        operator:
+          $ref: '#/components/schemas/Operator'
+          description: 'The operator to use for combining terms.
+
+            This can be either `And` or `Or`, it''s ''Or'' by default.
+
+            - `And`: All terms must match.
+
+            - `Or`: At least one term must match.'
+        prefix_length:
+          type: integer
+          format: int32
+          description: 'The number of beginning characters being unchanged for fuzzy matching.
+
+            Default to 0.'
+          minimum: 0
+        terms:
+          type: string
+    ErrorResponse:
+      type: object
+      description: Common JSON error response model
+      required:
+      - code
+      properties:
+        error:
+          type: string
+          description: A brief, human-readable message about the error.
+          example: Table 'users' not found in namespace 'production'
+        code:
+          type: integer
+          minimum: 0
+          description: "Lance Namespace error code identifying the error type.\n\nError codes:\n  0 - Unsupported: Operation not supported by this backend\n  1 - NamespaceNotFound: The specified namespace does not exist\n  2 - NamespaceAlreadyExists: A namespace with this name already exists\n  3 - NamespaceNotEmpty: Namespace contains tables or child namespaces\n  4 - TableNotFound: The specified table does not exist\n  5 - TableAlreadyExists: A table with this name already exists\n  6 - TableIndexNotFound: The specified table index does not exist\n  7 - TableIndexAlreadyExists: A table index with this name already exists\n  8 - TableTagNotFound: The specified table tag does not exist\n  9 - TableTagAlreadyExists: A table tag with this name already exists\n  10 - TransactionNotFound: The specified transaction does not exist\n  11 - TableVersionNotFound: The specified table version does not exist\n  12 - TableColumnNotFound: The specified table column does not exist\n  13 - InvalidInput: Malformed request or invalid parameters\n  14 - ConcurrentModification: Optimistic concurrency conflict\n  15 - PermissionDenied: User lacks permission for this operation\n  16 - Unauthenticated: Authentication credentials are missing or invalid\n  17 - ServiceUnavailable: Service is temporarily unavailable\n  18 - Internal: Unexpected server/implementation error\n  19 - InvalidTableState: Table is in an invalid state for the operation\n  20 - TableSchemaValidationError: Table schema validation failed\n"
+          example: 4
+        detail:
+          type: string
+          description: 'An optional human-readable explanation of the error.
+
+            This can be used to record additional information such as stack trace.
+
+            '
+          example: The table may have been dropped or renamed
+        instance:
+          type: string
+          description: 'A string that identifies the specific occurrence of the error.
+
+            This can be a URI, a request or response ID,
+
+            or anything that the implementation can recognize to trace specific occurrence of the error.
+
+            '
+          example: /v1/table/production$users/describe
+    DropTableIndexResponse:
+      type: object
+      description: Response for drop index operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    CountTableRowsRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        version:
+          description: 'Version of the table to describe.
+
+            If not specified, server should resolve it to the latest version.
+
+            '
+          type: integer
+          format: int64
+          minimum: 0
+        predicate:
+          description: 'Optional SQL predicate to filter rows for counting
+
+            '
+          type: string
+    AlterTableAddColumnsResponse:
+      type: object
+      required:
+      - version
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: The commit version associated with the operation
+          minimum: 0
+    TableExistsRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        version:
+          description: 'Version of the table to check existence.
+
+            If not specified, server should resolve it to the latest version.
+
+            '
+          type: integer
+          format: int64
+          minimum: 0
     DescribeTableRequest:
       type: object
       properties:
@@ -3715,134 +3858,6 @@ components:
 
             '
           type: boolean
-    DescribeTableVersionResponse:
-      type: object
-      description: Response containing the table version information
-      required:
-      - version
-      properties:
-        version:
-          $ref: '#/components/schemas/TableVersion'
-          description: The table version information
-    AlterTableAddColumnsResponse:
-      type: object
-      required:
-      - version
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: The commit version associated with the operation
-          minimum: 0
-    UpdateTableResponse:
-      type: object
-      required:
-      - updated_rows
-      - version
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-        updated_rows:
-          type: integer
-          format: int64
-          description: Number of rows updated
-          minimum: 0
-        version:
-          type: integer
-          format: int64
-          description: The commit version associated with the operation
-          minimum: 0
-        properties:
-          type: object
-          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise, it should return the properties.
-
-            '
-          additionalProperties:
-            type: string
-    BatchCreateTableVersionsRequest:
-      type: object
-      description: 'Request to atomically create new version entries for multiple tables.
-
-        The operation is atomic: all versions are created or none are.
-
-        '
-      required:
-      - entries
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateTableVersionEntry'
-          description: List of table version entries to create atomically
-    BatchDeleteTableVersionsRequest:
-      type: object
-      description: 'Request to delete table version records.
-
-        Supports deleting ranges of versions for efficient bulk cleanup.
-
-        '
-      required:
-      - ranges
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-          description: The table identifier
-        ranges:
-          type: array
-          items:
-            $ref: '#/components/schemas/VersionRange'
-          description: 'List of version ranges to delete.
-
-            Each range specifies start (inclusive) and end (exclusive) versions.
-
-            '
-    JsonArrowSchema:
-      type: object
-      description: 'JSON representation of a Apache Arrow schema.
-
-        '
-      required:
-      - fields
-      properties:
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/JsonArrowField'
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-          propertyNames:
-            type: string
-    RestoreTableRequest:
-      type: object
-      required:
-      - version
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-        version:
-          type: integer
-          format: int64
-          minimum: 0
-          description: Version to restore to
     ExplainTableQueryPlanRequest:
       type: object
       required:
@@ -3862,66 +3877,190 @@ components:
           type: boolean
           default: false
           description: Whether to return verbose explanation
-    VersionRange:
+    AlterTableBackfillColumnsResponse:
       type: object
-      description: 'A range of versions to delete (start inclusive, end exclusive).
+      required:
+      - job_id
+      properties:
+        job_id:
+          type: string
+          description: The job ID for tracking the backfill job
+    FtsQuery:
+      type: object
+      description: 'Full-text search query. Exactly one query type field must be provided.
 
-        Special values:
+        This structure follows the same pattern as AlterTransactionAction to minimize
 
-        - `start_version: 0` with `end_version: -1` means ALL versions
+        differences and compatibility issues across codegen in different languages.
 
         '
-      required:
-      - start_version
-      - end_version
       properties:
-        start_version:
-          type: integer
-          format: int64
-          description: 'Start version of the range (inclusive).
-
-            Use 0 to start from the first version.
-
-            '
-        end_version:
-          type: integer
-          format: int64
-          description: 'End version of the range (exclusive).
-
-            Use -1 to indicate all versions up to and including the latest.
-
-            '
-    BoostQuery:
+        match:
+          $ref: '#/components/schemas/MatchQuery'
+        phrase:
+          $ref: '#/components/schemas/PhraseQuery'
+        boost:
+          $ref: '#/components/schemas/BoostQuery'
+        multi_match:
+          $ref: '#/components/schemas/MultiMatchQuery'
+        boolean:
+          $ref: '#/components/schemas/BooleanQuery'
+    MultiMatchQuery:
       type: object
-      description: Boost query that scores documents matching positive query higher and negative query lower
       required:
-      - positive
-      - negative
+      - match_queries
       properties:
-        positive:
-          $ref: '#/components/schemas/FtsQuery'
-        negative:
-          $ref: '#/components/schemas/FtsQuery'
-        negative_boost:
-          type: number
-          format: float
-          description: 'Boost factor for negative query (default: 0.5)'
-          default: 0.5
-    RegisterTableResponse:
+        match_queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/MatchQuery'
+    UpdateTableTagResponse:
       type: object
+      description: Response for update tag operation
       properties:
         transaction_id:
           type: string
           description: Optional transaction identifier
-        location:
+    CreateTableTagRequest:
+      type: object
+      required:
+      - tag
+      - version
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        context:
+          $ref: '#/components/schemas/Context'
+        id:
+          type: array
+          items:
+            type: string
+        tag:
           type: string
-        properties:
-          type: object
-          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise, it should return the properties.
+          description: Name of the tag to create
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Version number for the tag to point to
+    AlterTableAddColumnsRequest:
+      type: object
+      required:
+      - new_columns
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        id:
+          type: array
+          items:
+            type: string
+          description: Table identifier path (namespace + table name)
+        new_columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddColumnsEntry'
+          description: List of new columns to add to the table
+    CommitTableResult:
+      type: object
+      description: 'Result of a single operation within a batch commit.
+
+        Each result corresponds to one operation in the request, in the same order.
+
+        Exactly one of the result fields will be set.
+
+        '
+      properties:
+        declare_table:
+          $ref: '#/components/schemas/DeclareTableResponse'
+          description: Result of a DeclareTable operation
+        create_table_version:
+          $ref: '#/components/schemas/CreateTableVersionResponse'
+          description: Result of a CreateTableVersion operation
+        delete_table_versions:
+          $ref: '#/components/schemas/BatchDeleteTableVersionsResponse'
+          description: Result of a DeleteTableVersions operation
+        deregister_table:
+          $ref: '#/components/schemas/DeregisterTableResponse'
+          description: Result of a DeregisterTable operation
+    Identity:
+      type: object
+      description: 'Identity information of a request.
+
+        '
+      properties:
+        api_key:
+          type: string
+          description: 'API key for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `x-api-key` header.
 
             '
-          additionalProperties:
+        auth_token:
+          type: string
+          description: 'Bearer token for authentication.
+
+
+            REST NAMESPACE ONLY
+
+            This is passed via the `Authorization` header
+
+            with the Bearer scheme (e.g., `Bearer <token>`).
+
+            '
+    StructuredFtsQuery:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          $ref: '#/components/schemas/FtsQuery'
+    BatchCreateTableVersionsResponse:
+      type: object
+      description: 'Response for batch creating table versions.
+
+        Contains the created versions for each table in the same order as the request.
+
+        '
+      required:
+      - versions
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TableVersion'
+          description: List of created table versions in the same order as the request entries
+    CreateTableIndexResponse:
+      type: object
+      description: Response for create index operation
+      properties:
+        transaction_id:
+          type: string
+          description: Optional transaction identifier
+    ListTablesResponse:
+      type: object
+      required:
+      - tables
+      properties:
+        tables:
+          type: array
+          uniqueItems: true
+          description: 'The list of names of all the tables under the connected namespace implementation.
+
+            This should recursively list all the tables in all child namespaces.
+
+            Each string in the list is the full identifier in string form.
+
+            '
+          items:
             type: string
+        page_token:
+          $ref: '#/components/schemas/PageToken'
     AlterColumnsEntry:
       type: object
       required:
@@ -3948,474 +4087,351 @@ components:
           - type: 'null'
           - $ref: '#/components/schemas/AlterVirtualColumnEntry'
           description: Virtual column alterations (optional)
-    ListTableIndicesRequest:
-      type: object
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-          description: The namespace identifier
-        version:
-          type: integer
-          format: int64
-          minimum: 0
-          nullable: true
-          description: Optional table version to list indexes from
-        page_token:
-          $ref: '#/components/schemas/PageToken'
-        limit:
-          $ref: '#/components/schemas/PageLimit'
-    AlterTableBackfillColumnsResponse:
-      type: object
-      required:
-      - job_id
-      properties:
-        job_id:
-          type: string
-          description: The job ID for tracking the backfill job
-    AlterTableAlterColumnsResponse:
-      type: object
-      required:
-      - version
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: The commit version associated with the operation
-          minimum: 0
-    BatchCommitTablesRequest:
-      type: object
-      description: 'Request to atomically commit a batch of table operations.
-
-        This replaces `BatchCreateTableVersionsRequest` with a more general interface
-
-        that supports mixed operations (DeclareTable, CreateTableVersion,
-
-        DeleteTableVersions, DeregisterTable)
-
-        within a single atomic transaction at the metadata layer.
-
-
-        All operations are committed atomically: either all succeed or none are applied.
-
-        '
-      required:
-      - operations
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/CommitTableOperation'
-          description: 'List of operations to commit atomically.
-
-            Supported operation types: DeclareTable, CreateTableVersion,
-
-            DeleteTableVersions, DeregisterTable.
-
-            '
-    CreateTableScalarIndexResponse:
-      type: object
-      description: Response for create scalar index operation
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-    MergeInsertIntoTableResponse:
-      type: object
-      description: Response from merge insert operation
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-        num_updated_rows:
-          type: integer
-          format: int64
-          description: Number of rows updated
-          minimum: 0
-        num_inserted_rows:
-          type: integer
-          format: int64
-          description: Number of rows inserted
-          minimum: 0
-        num_deleted_rows:
-          type: integer
-          format: int64
-          description: Number of rows deleted (typically 0 for merge insert)
-          minimum: 0
-        version:
-          type: integer
-          format: int64
-          description: The commit version associated with the operation
-          minimum: 0
-    RenameTableRequest:
-      type: object
-      required:
-      - new_table_name
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-          description: The table identifier
-        new_table_name:
-          type: string
-          description: New name for the table
-        new_namespace_id:
-          type: array
-          items:
-            type: string
-          description: New namespace identifier to move the table to (optional, if not specified the table stays in the same namespace)
-    JsonArrowDataType:
-      type: object
-      description: JSON representation of an Apache Arrow DataType
-      required:
-      - type
-      properties:
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/JsonArrowField'
-          description: Fields for complex types like Struct, Union, etc.
-        length:
-          type: integer
-          format: int64
-          description: Length for fixed-size types
-          minimum: 0
-        type:
-          type: string
-          description: The data type name
-    CommitTableResult:
-      type: object
-      description: 'Result of a single operation within a batch commit.
-
-        Each result corresponds to one operation in the request, in the same order.
-
-        Exactly one of the result fields will be set.
-
-        '
-      properties:
-        declare_table:
-          $ref: '#/components/schemas/DeclareTableResponse'
-          description: Result of a DeclareTable operation
-        create_table_version:
-          $ref: '#/components/schemas/CreateTableVersionResponse'
-          description: Result of a CreateTableVersion operation
-        delete_table_versions:
-          $ref: '#/components/schemas/BatchDeleteTableVersionsResponse'
-          description: Result of a DeleteTableVersions operation
-        deregister_table:
-          $ref: '#/components/schemas/DeregisterTableResponse'
-          description: Result of a DeregisterTable operation
-    QueryTableRequest:
-      type: object
-      required:
-      - vector
-      - k
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-        bypass_vector_index:
-          type: boolean
-          description: Whether to bypass vector index
-        columns:
-          type: object
-          nullable: true
-          description: 'Optional columns to return. Provide either column_names or column_aliases, not both.
-
-            '
-          properties:
-            column_names:
-              type: array
-              items:
-                type: string
-              description: List of column names to return
-            column_aliases:
-              type: object
-              additionalProperties:
-                type: string
-              description: Object mapping output aliases to source column names
-        distance_type:
-          type: string
-          description: Distance metric to use
-        ef:
-          type: integer
-          minimum: 0
-          description: Search effort parameter for HNSW index
-        fast_search:
-          type: boolean
-          description: Whether to use fast search
-        filter:
-          type: string
-          description: Optional SQL filter expression
-        full_text_query:
-          type: object
-          nullable: true
-          description: Optional full-text search query. Provide either string_query or structured_query, not both.
-          properties:
-            string_query:
-              $ref: '#/components/schemas/StringFtsQuery'
-            structured_query:
-              $ref: '#/components/schemas/StructuredFtsQuery'
-        k:
-          type: integer
-          minimum: 0
-          description: Number of results to return
-        lower_bound:
-          type: number
-          format: float
-          description: Lower bound for search
-        nprobes:
-          type: integer
-          minimum: 0
-          description: Number of probes for IVF index
-        offset:
-          type: integer
-          minimum: 0
-          description: Number of results to skip
-        prefilter:
-          type: boolean
-          description: Whether to apply filtering before vector search
-        refine_factor:
-          type: integer
-          format: int32
-          minimum: 0
-          description: Refine factor for search
-        upper_bound:
-          type: number
-          format: float
-          description: Upper bound for search
-        vector:
-          type: object
-          nullable: true
-          description: Query vector(s) for similarity search. Provide either single_vector or multi_vector, not both.
-          properties:
-            single_vector:
-              type: array
-              items:
-                type: number
-                format: float
-              description: Single query vector
-            multi_vector:
-              type: array
-              items:
-                type: array
-                items:
-                  type: number
-                  format: float
-              description: Multiple query vectors for batch search
-        vector_column:
-          type: string
-          description: Name of the vector column to search
-        version:
-          type: integer
-          format: int64
-          minimum: 0
-          description: Table version to query
-        with_row_id:
-          type: boolean
-          description: If true, return the row id as a column called `_rowid`
-    DropTableResponse:
-      type: object
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-        id:
-          type: array
-          items:
-            type: string
-        location:
-          type: string
-        properties:
-          type: object
-          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise it should return the properties.
-
-            '
-          additionalProperties:
-            type: string
+  responses:
+    CreateTableIndexResponse:
+      description: Index created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTableIndexResponse'
+    NotFoundErrorResponse:
+      description: A server-side problem that means can not find the specified resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
           example:
-            owner: Ralph
-            created_at: '1452120468'
-          default: {}
-          nullable: true
-    IndexContent:
-      type: object
-      required:
-      - index_name
-      - index_uuid
-      - columns
-      - status
-      properties:
-        index_name:
-          type: string
-          description: Name of the index
-        index_uuid:
-          type: string
-          description: Unique identifier for the index
-        columns:
-          type: array
-          items:
-            type: string
-          description: Columns covered by this index
-        status:
-          type: string
-          description: Current status of the index
-    CountTableRowsRequest:
-      type: object
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        context:
-          $ref: '#/components/schemas/Context'
-        id:
-          type: array
-          items:
-            type: string
-        version:
-          description: 'Version of the table to describe.
-
-            If not specified, server should resolve it to the latest version.
-
-            '
-          type: integer
-          format: int64
-          minimum: 0
-        predicate:
-          description: 'Optional SQL predicate to filter rows for counting
-
-            '
-          type: string
-    MultiMatchQuery:
-      type: object
-      required:
-      - match_queries
-      properties:
-        match_queries:
-          type: array
-          items:
-            $ref: '#/components/schemas/MatchQuery'
-    DeregisterTableResponse:
-      type: object
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-        id:
-          type: array
-          items:
-            type: string
-        location:
-          type: string
-        properties:
-          type: object
-          description: 'If the implementation does not support table properties, it should return null for this field. Otherwise it should return the properties.
-
-            '
-          additionalProperties:
-            type: string
-          example:
-            owner: Ralph
-            created_at: '1452120468'
-          default: {}
-          nullable: true
-    RenameTableResponse:
-      type: object
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-    CreateTableResponse:
-      type: object
-      properties:
-        transaction_id:
-          type: string
-          description: Optional transaction identifier
-        location:
-          type: string
-        version:
-          type: integer
-          format: int64
-          minimum: 0
-        storage_options:
-          type: object
-          description: 'Configuration options to be used to access storage. The available
-
-            options depend on the type of storage in use. These will be
-
-            passed directly to Lance to initialize storage access.
-
-            '
-          additionalProperties:
-            type: string
-        properties:
-          type: object
-          description: 'Business logic properties stored and managed by the namespace implementation outside
-
-            Lance context. If the implementation does not support table properties, it should
-
-            return null for this field.
-
-            '
-          additionalProperties:
-            type: string
-          example:
-            owner: Ralph
-            created_at: '1452120468'
-          default: {}
-          nullable: true
-    AlterTableAddColumnsRequest:
-      type: object
-      required:
-      - new_columns
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity'
-        id:
-          type: array
-          items:
-            type: string
-          description: Table identifier path (namespace + table name)
-        new_columns:
-          type: array
-          items:
-            $ref: '#/components/schemas/AddColumnsEntry'
-          description: List of new columns to add to the table
+            type: /errors/not-found-error
+            title: Not found Error
+            status: 404
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    DropTableIndexResponse:
+      description: Index drop operation result
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DropTableIndexResponse'
+    RegisterTableResponse:
+      description: Table properties result when registering a table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RegisterTableResponse'
     ListTableVersionsResponse:
-      type: object
-      required:
-      - versions
-      properties:
-        versions:
-          type: array
-          items:
-            $ref: '#/components/schemas/TableVersion'
-          description: 'List of table versions. When `descending=true`, guaranteed to be ordered from latest to oldest.
-
-            Otherwise, ordering is implementation-defined.
-
-            '
-        page_token:
-          $ref: '#/components/schemas/PageToken'
+      description: List of table versions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListTableVersionsResponse'
+    ServiceUnavailableErrorResponse:
+      description: The service is not ready to handle the request. The client should wait and retry. The service may additionally send a Retry-After header to indicate when to retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/service-unavailable
+            title: Slow down
+            status: 503
+            detail: ''
+            instance: /v1/namespaces
+    UpdateTableResponse:
+      description: Update successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateTableResponse'
+    DropTableResponse:
+      description: Response of DropTable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DropTableResponse'
+    CreateTableScalarIndexResponse:
+      description: Scalar index created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTableScalarIndexResponse'
+    MergeInsertIntoTableResponse:
+      description: Result of merge insert operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MergeInsertIntoTableResponse'
+    GetTableStatsResponse:
+      description: Table statistics
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetTableStatsResponse'
+    AlterTableAlterColumnsResponse:
+      description: Alter columns operation result
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AlterTableAlterColumnsResponse'
+    BadRequestErrorResponse:
+      description: Indicates a bad request error. It could be caused by an unexpected request body format or other forms of request validation failure, such as invalid json. Usually serves application/json content, although in some cases simple text/plain content might be returned by the server's middleware.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/bad-request
+            title: Malformed request
+            status: 400
+            detail: ''
+            instance: /v1/namespaces
+    RestoreTableResponse:
+      description: Table restore operation result
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RestoreTableResponse'
+    ServerErrorResponse:
+      description: A server-side problem that might not be addressable from the client side. Used for server 5xx errors without more specific documentation in individual routes.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/server-error
+            title: Internal Server Error
+            status: 500
+            detail: ''
+            instance: /v1/namespaces
+    DescribeTableIndexStatsResponse:
+      description: Index statistics
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DescribeTableIndexStatsResponse'
+    DescribeTableVersionResponse:
+      description: Table version information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DescribeTableVersionResponse'
+    UpdateTableTagResponse:
+      description: Update tag response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateTableTagResponse'
+    DeregisterTableResponse:
+      description: Response of DeregisterTable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeregisterTableResponse'
+    AlterTableBackfillColumnsResponse:
+      description: Backfill job accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AlterTableBackfillColumnsResponse'
+    UnsupportedOperationErrorResponse:
+      description: Not Acceptable / Unsupported Operation. The server does not support this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/unsupported-operation
+            title: The server does not support this operation
+            status: 406
+            detail: ''
+            instance: /v1/namespaces
+    ForbiddenErrorResponse:
+      description: Forbidden. Authenticated user does not have the necessary permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/forbidden-request
+            title: Not authorized to make this request
+            status: 403
+            detail: ''
+            instance: /v1/namespaces
+    AnalyzeTableQueryPlanResponse:
+      description: Query execution plan analysis
+      content:
+        application/json:
+          schema:
+            type: string
+            description: Human-readable query execution plan analysis
+    CreateTableResponse:
+      description: Table properties result when creating a table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTableResponse'
+    AlterTableDropColumnsResponse:
+      description: Drop columns operation result
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AlterTableDropColumnsResponse'
+    AlterTableAddColumnsResponse:
+      description: Add columns operation result
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AlterTableAddColumnsResponse'
+    BatchCommitTablesResponse:
+      description: Result of atomically committing a batch of mixed table operations
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BatchCommitTablesResponse'
+    BatchCreateTableVersionsResponse:
+      description: Result of atomically creating table versions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BatchCreateTableVersionsResponse'
+    ConflictErrorResponse:
+      description: The request conflicts with the current state of the target resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/conflict
+            title: The namespace has been concurrently modified
+            status: 409
+            detail: ''
+            instance: /v1/namespaces/{ns}
+    DeleteTableTagResponse:
+      description: Delete tag response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeleteTableTagResponse'
+    DeleteFromTableResponse:
+      description: Delete successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeleteFromTableResponse'
+    QueryTableResponse:
+      description: Query results in Arrow IPC file format
+      content:
+        application/vnd.apache.arrow.file:
+          schema:
+            type: string
+            format: binary
+    InsertIntoTableResponse:
+      description: Result of inserting records into a table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InsertIntoTableResponse'
+    CountTableRowsResponse:
+      description: Result of counting rows in a table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CountTableRowsResponse'
+    ExplainTableQueryPlanResponse:
+      description: Query execution plan explanation
+      content:
+        application/json:
+          schema:
+            type: string
+            description: Human-readable query execution plan
+    GetTableTagVersionResponse:
+      description: Tag version information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetTableTagVersionResponse'
+    DeclareTableResponse:
+      description: Table properties result when declaring a table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeclareTableResponse'
+    ListTablesResponse:
+      description: A list of tables
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListTablesResponse'
+    ListTableTagsResponse:
+      description: List of table tags
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListTableTagsResponse'
+    CreateTableTagResponse:
+      description: Create tag response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTableTagResponse'
+    UnauthorizedErrorResponse:
+      description: Unauthorized. The request lacks valid authentication credentials for the operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            type: /errors/unauthorized-request
+            title: No valid authentication credentials for the operation
+            status: 401
+            detail: ''
+            instance: /v1/namespaces
+    CreateTableVersionResponse:
+      description: Result of creating a table version
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTableVersionResponse'
+    ListTableIndicesResponse:
+      description: List of indices on the table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListTableIndicesResponse'
+    BatchDeleteTableVersionsResponse:
+      description: Result of deleting table version records
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BatchDeleteTableVersionsResponse'
+    RenameTableResponse:
+      description: Table rename operation result
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RenameTableResponse'
+    DescribeTableResponse:
+      description: Table properties result when loading a table
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DescribeTableResponse'
   parameters:
+    include_declared:
+      name: include_declared
+      description: 'When true (default), includes tables that have been declared in the namespace
+
+        but not yet created on storage, in addition to tables that have
+
+        been created. When false, only tables with storage
+
+        components are returned.
+
+        '
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: true
     check_declared:
       name: check_declared
       description: 'Whether to check if the table exists only as a namespace declaration
@@ -4432,13 +4448,6 @@ components:
       schema:
         type: boolean
         default: false
-    page_token:
-      name: page_token
-      description: Pagination token from a previous request
-      in: query
-      required: false
-      schema:
-        $ref: '#/components/schemas/PageToken'
     delimiter:
       name: delimiter
       description: 'An optional delimiter of the `string identifier`, following the Lance Namespace spec.
@@ -4457,6 +4466,13 @@ components:
       required: false
       schema:
         $ref: '#/components/schemas/PageLimit'
+    page_token:
+      name: page_token
+      description: Pagination token from a previous request
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/PageToken'
     id:
       name: id
       description: '`string identifier` of an object in a namespace, following the Lance Namespace spec.
@@ -4470,22 +4486,14 @@ components:
       required: true
       schema:
         type: string
-    include_declared:
-      name: include_declared
-      description: 'When true (default), includes tables that have been declared in the namespace
-
-        but not yet created on storage, in addition to tables that have
-
-        been created. When false, only tables with storage
-
-        components are returned.
-
-        '
+    with_table_uri:
+      name: with_table_uri
+      description: Whether to include the table URI in the response
       in: query
       required: false
       schema:
         type: boolean
-        default: true
+        default: false
     load_detailed_metadata:
       name: load_detailed_metadata
       description: 'Whether to load detailed metadata that requires opening the dataset.
@@ -4495,14 +4503,6 @@ components:
         When true, the response includes additional metadata such as `version`, `schema`, and `stats`.
 
         '
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-    with_table_uri:
-      name: with_table_uri
-      description: Whether to include the table URI in the response
       in: query
       required: false
       schema:
