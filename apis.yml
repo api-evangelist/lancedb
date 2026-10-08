@@ -366,6 +366,12 @@ apis:
   - type: Implementations
     url: https://github.com/lance-format/lance-namespace-impls
 common:
+  - type: Plans
+    url: plans/lancedb-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/lancedb-rate-limits.yml
+  - type: FinOps
+    url: finops/lancedb-finops.yml
   - type: IssueTracker
     url: https://github.com/lance-format/lance/issues
   - type: ContributionGuide
