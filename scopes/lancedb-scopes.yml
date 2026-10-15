@@ -1,14 +1,28 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/lance-namespace-openapi.yaml
-docs: https://docs.lancedb.com/api-reference/rest
-note: LanceDB does not publish OAuth scopes; all requests to LanceDB Cloud/Enterprise
-  APIs authenticate with an x-api-key header and no scope-based permissions are
-  documented (https://docs.lancedb.com/api-reference/rest).
+generated: '2026-10-14'
+method: none
+source: openapi/lancedb-materializedview-api-openapi.yml, openapi/lancedb-namespace-api-openapi.yml,
+  openapi/lancedb-table-api-openapi.yml, openapi/lancedb-transaction-api-openapi.yml
 schemes:
 - name: OAuth2
-  source: openapi/lance-namespace-openapi.yaml
+  source: openapi/lancedb-materializedview-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+- name: OAuth2
+  source: openapi/lancedb-namespace-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+- name: OAuth2
+  source: openapi/lancedb-table-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+- name: OAuth2
+  source: openapi/lancedb-transaction-api-openapi.yml
   flows:
   - flow: clientCredentials
     tokenUrl: /oauth/token
 scopes: []
+note: The OAuth2 security scheme(s) in the OpenAPI declare no scopes, and no security requirement
+  references one.
