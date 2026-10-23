@@ -9,6 +9,7 @@ checked:
 - https://buf.build/buf.registry.module.v1.ModuleService/ListModules
 - https://buf.build/buf.registry.owner.v1.OwnerService/GetOwners
 - https://buf.build/explore
+- hugging-face/integrations/hugging-face-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: Microsoft Azure Marketplace
@@ -110,6 +111,26 @@ edges:
     detected: '2026-10-23'
   detected_by: sweep-buf-schema-registry.py
   first_seen: '2026-10-23'
+- partner_name: Hugging Face (hugging-face-hub)
+  partner: hugging-face
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: hugging-face-hub
+  evidence: https://huggingface.co/lancedb
+  mirror_of: hugging-face/integrations/hugging-face-integration-edges.yml
+  apps:
+  - lancedb/magical_kingdom
+  - lancedb
+  listing_count: 2
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Hugging Face Hub datasets
+  badges:
+  - Verified publisher (Hugging Face verified organisation)
 source:
 - https://github.com/cncf/landscape
 - https://github.com/cncf/k8s-conformance
