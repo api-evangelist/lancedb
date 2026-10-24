@@ -1,28 +1,39 @@
 {
   "provider": "lancedb",
   "sources": [
-    "_original/lance-namespace-openapi.yaml"
+    "_original/lancedb-openapi.json"
   ],
   "outputs": [
-    "lancedb-materializedview-api-openapi.yml",
-    "lancedb-namespace-api-openapi.yml",
-    "lancedb-table-api-openapi.yml",
-    "lancedb-transaction-api-openapi.yml"
+    "lancedb-api-tokens-api-openapi.yml",
+    "lancedb-categories-api-openapi.yml",
+    "lancedb-crates-api-openapi.yml",
+    "lancedb-keywords-api-openapi.yml",
+    "lancedb-other-api-openapi.yml",
+    "lancedb-owners-api-openapi.yml",
+    "lancedb-publish-api-openapi.yml",
+    "lancedb-teams-api-openapi.yml",
+    "lancedb-trusted-publishing-api-openapi.yml",
+    "lancedb-users-api-openapi.yml",
+    "lancedb-versions-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
-    "lance-namespace-openapi.yaml: upgraded openapi 3.1.1 -> OpenAPI 3.2.0",
-    "lance-namespace-openapi.yaml: declared missing tag: MaterializedView",
-    "lance-namespace-openapi.yaml: multi-axis tagging (8 tags, 4 first tags, 2.22x duplication over 50 operations) \u2014 split on first tag, 49 operations narrowed",
-    "apis.yml register: already-registered"
+    "lancedb-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "lancedb-openapi.json: declared missing tag: api_tokens",
+    "lancedb-openapi.json: declared missing tag: categories",
+    "lancedb-openapi.json: declared missing tag: crates",
+    "lancedb-openapi.json: declared missing tag: keywords",
+    "lancedb-openapi.json: declared missing tag: other",
+    "lancedb-openapi.json: declared missing tag: owners",
+    "lancedb-openapi.json: declared missing tag: publish",
+    "lancedb-openapi.json: declared missing tag: teams",
+    "lancedb-openapi.json: declared missing tag: trusted_publishing",
+    "lancedb-openapi.json: declared missing tag: users",
+    "lancedb-openapi.json: declared missing tag: versions",
+    "apis.yml register: written (+11 apis, 19 total)"
   ],
-  "skipped": [
-    "lancedb-materializedview-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "lancedb-namespace-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "lancedb-table-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "lancedb-transaction-api-openapi.yml: previously refined output, superseded by openapi/_original/"
-  ]
+  "skipped": []
 }
