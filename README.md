@@ -64,56 +64,186 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-> The AI-Native multimodal lakehouse built on the open-source Lance columnar storage format.
+LanceDB is the AI-Native multimodal lakehouse built on the open-source Lance columnar storage format. It pairs an Apache 2.0 licensed embedded retrieval library (Python, TypeScript, Rust, Go, C, Java SDKs) with a managed cloud service (LanceDB Cloud) and an enterprise lakehouse (LanceDB Enterprise) that unify vector, full-text, hybrid, and SQL search across billions of multimodal records. The REST surface is governed by the open Lance Namespace specification (OpenAPI 3.1) covering namespace, table, index, tag, and transaction operations with first-class support for materialized views, schema evolution, and time-travel versioning. LanceDB is used in production by Midjourney, Runway, World Labs, Netflix, Character.AI, Uber, NVIDIA, ByteDance, Databricks, and others for RAG, agent memory, training data curation, feature engineering, and large-scale retrieval.
 
-LanceDB pairs an Apache 2.0 licensed embedded retrieval library (Python, TypeScript, Rust, Go, C, Java) with a managed cloud service (LanceDB Cloud) and an enterprise lakehouse (LanceDB Enterprise). It unifies vector, full-text, hybrid, and SQL search across billions of multimodal records.
+**Areas:** Vector Search · Multi-Modal · Lance Format · Lakehouse · RAG · Agent Memory · Open Source · Embeddings · Full-Text Search · Hybrid Search · Columnar Storage · Arrow
 
-This repository is the API Evangelist catalog entry for LanceDB. It captures the provider's machine-readable APIs.json profile, the canonical Lance Namespace REST OpenAPI spec, capability definitions, schemas, examples, vocabulary, Spectral rules, plans, rate limits, and FinOps mapping.
+## LanceDB on APIs.io
 
-## Surface area covered
+Everything profiled for LanceDB is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/lancedb/](https://apis.io/providers/lancedb/)** — or go straight to one of the APIs or properties below.
 
-- **LanceDB OSS** — Apache 2.0 embedded library, [github.com/lancedb/lancedb](https://github.com/lancedb/lancedb) (10.4k stars).
-- **LanceDB Cloud** — managed serverless service exposing the Lance Namespace REST API.
-- **LanceDB Enterprise** — distributed multimodal lakehouse with GPU-accelerated index build (cuVS), materialized views, Python UDF feature engineering, and PyTorch / Ray training integration. Deployable in customer VPC on AWS, GCP, or Azure.
-- **Lance Format** — Apache 2.0 columnar Parquet replacement at [lance.org](https://lance.org/) and [github.com/lance-format/lance](https://github.com/lance-format/lance) (6.5k stars).
-- **Lance Namespace Spec** — open OpenAPI 3.1 contract at [github.com/lance-format/lance-namespace](https://github.com/lance-format/lance-namespace) with reference implementations for Apache Hive, Apache Polaris, Apache Gravitino, Unity Catalog, and AWS Glue.
-- **SDKs** — Python, TypeScript, Rust, Go, C, plus an MCP server.
+### APIs (12)
 
-## Repository contents
+- [LanceDB Enterprise](https://apis.io/apis/lancedb/enterprise/) — Distributed, multi-tenant multimodal lakehouse. Adds curation and deduplication, Python UDF feature engineering, materialized views, GPU-accelerated index…
+- [Lance Format](https://apis.io/apis/lancedb/lance-format/) — Apache 2.0 open lakehouse format for multimodal AI. Columnar Parquet replacement offering 100x faster random access, zero-copy reads, vector indexes, and…
+- [LanceDB Python SDK](https://apis.io/apis/lancedb/python-sdk/) — Primary client library. First-class Arrow, Pandas, Polars, and Pydantic integration; pluggable embedding functions covering OpenAI, Cohere, Jina, Hugging…
+- [LanceDB TypeScript SDK](https://apis.io/apis/lancedb/typescript-sdk/) — Node.js / TypeScript / JavaScript client library for LanceDB OSS, Cloud, and Enterprise. Bundles native bindings via napi-rs.
+- [LanceDB Rust SDK](https://apis.io/apis/lancedb/rust-sdk/) — Native Rust client library; the LanceDB core and storage layer are written in Rust.
+- [LanceDB Go SDK](https://apis.io/apis/lancedb/go-sdk/) — Official Go client library for LanceDB OSS, Cloud, and Enterprise.
+- [LanceDB C Bindings](https://apis.io/apis/lancedb/c-sdk/) — C ABI bindings for LanceDB enabling embedding into C, C++, and other FFI-capable hosts.
+- [LanceDB MCP Server](https://apis.io/apis/lancedb/mcp-server/) — Model Context Protocol (MCP) server exposing LanceDB tables as retrieval tools for MCP-aware agents and IDEs.
+- [LanceDB MaterializedView API](https://apis.io/apis/lancedb/lancedb-materializedview-api/) — The MaterializedView API from LanceDB — 2 operation(s) for materializedview.
+- [LanceDB Namespace API](https://apis.io/apis/lancedb/lancedb-namespace-api/) — Operations that are related to a namespace
+- [LanceDB Table API](https://apis.io/apis/lancedb/lancedb-table-api/) — Operations that are related to a table
+- [LanceDB Transaction API](https://apis.io/apis/lancedb/lancedb-transaction-api/) — Operations that are related to a transaction
 
-| Path | What it contains |
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Lancedb Agentic Access](https://apis.io/agentic-access/lancedb/lancedb-agentic-access/)
+
+#### JSON Schema (3)
+
+The data models the API reads and writes.
+
+- [Lance Namespace](https://apis.io/schemas/lancedb/lancedb-namespace/)
+- [LanceDB Query Request](https://apis.io/schemas/lancedb/lancedb-query/)
+- [LanceDB Table](https://apis.io/schemas/lancedb/lancedb-table/)
+
+#### JSON Structure (1)
+
+Data models expressed in JSON Structure.
+
+- [Lancedb Table Structure](https://apis.io/json-structure/lancedb/lancedb-table-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Lancedb Context](https://apis.io/jsonld/lancedb/lancedb-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Lancedb Vocabulary](https://apis.io/vocabularies/lancedb/lancedb-vocabulary/)
+
+#### Examples (5)
+
+Example requests and responses.
+
+- [Lancedb Create Table Example](https://apis.io/examples/lancedb/lancedb-create-table-example/)
+- [Lancedb Create Tag Example](https://apis.io/examples/lancedb/lancedb-create-tag-example/)
+- [Lancedb Create Vector Index Example](https://apis.io/examples/lancedb/lancedb-create-vector-index-example/)
+- [Lancedb Hybrid Query Example](https://apis.io/examples/lancedb/lancedb-hybrid-query-example/)
+- [Lancedb Merge Insert Example](https://apis.io/examples/lancedb/lancedb-merge-insert-example/)
+
+#### Collections (8)
+
+Postman and Open Collection request collections.
+
+- [Lance Namespace Specification Data API](https://apis.io/collections/lancedb/open-lancedb-data-api/)
+- [Lance Namespace Specification Data Index API](https://apis.io/collections/lancedb/open-lancedb-index-api/)
+- [Lance Namespace Specification Data MaterializedView API](https://apis.io/collections/lancedb/open-lancedb-materializedview-api/)
+- [Lance Namespace Specification Data Metadata API](https://apis.io/collections/lancedb/open-lancedb-metadata-api/)
+- [Lance Specification Data Namespace API](https://apis.io/collections/lancedb/open-lancedb-namespace-api/)
+- [Lance Namespace Specification Data Table API](https://apis.io/collections/lancedb/open-lancedb-table-api/)
+- [Lance Namespace Specification Data Tag API](https://apis.io/collections/lancedb/open-lancedb-tag-api/)
+- [Lance Namespace Specification Data Transaction API](https://apis.io/collections/lancedb/open-lancedb-transaction-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [LanceDB — jsonschema rules](https://apis.io/rules/lancedb/lancedb-jsonschema-spectral-rules/)
+- [LanceDB API Rules](https://apis.io/rules/lancedb/lancedb-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Lancedb Authentication](https://apis.io/security/lancedb/lancedb-authentication/)
+- [Lancedb Domain Security](https://apis.io/security/lancedb/lancedb-domain-security/)
+- [Lancedb Trust Center](https://apis.io/security/lancedb/lancedb-trust-center/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Lancedb Scopes](https://apis.io/scopes/lancedb/lancedb-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Lancedb Plans Pricing](https://apis.io/plans/lancedb/lancedb-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Lancedb Rate Limits](https://apis.io/rate-limits/lancedb/lancedb-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Lancedb Finops](https://apis.io/finops/lancedb/lancedb-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://lancedb.com/)
+- [Documentation](https://docs.lancedb.com/)
+- [Blog](https://lancedb.com/blog)
+
+## API Evangelist rating
+
+**Kin Score 41.5** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
 |---|---|
-| `apis.yml` | APIs.json 0.20 profile listing every LanceDB API, SDK, and surface, plus integrations and use cases. |
-| `openapi/lance-namespace-openapi.yaml` | Canonical Lance Namespace OpenAPI 3.1 spec mirrored from `lance-format/lance-namespace`. 50+ operations across namespaces, tables, indices, tags, transactions, and materialized views. |
-| `capabilities/shared/lancedb-rest.yaml` | Per-API shared capability bundle for the REST surface. |
-| `capabilities/multimodal-retrieval.yaml` | Workflow capability: provision namespace, declare table, upsert, build indexes, hybrid-query, pin reproducibility tag. |
-| `capabilities/training-curation.yaml` | Workflow capability: dedupe, score, snapshot, and tag a training corpus. |
-| `json-schema/` | JSON Schemas for the Table, Query, and Namespace resources. |
-| `json-structure/` | JSON Structure (typed) variant of the Table schema. |
-| `json-ld/lancedb-context.jsonld` | JSON-LD context mapping LanceDB concepts to schema.org and the LanceDB vocabulary. |
-| `examples/` | Realistic request payloads: create table, hybrid query, vector index, merge-insert, create tag. |
-| `vocabulary/lancedb-vocabulary.yml` | Domain vocabulary covering namespaces, tables, indexes, search modes, embedding providers, and operations. |
-| `rules/lancedb-rules.yml` | Spectral ruleset enforcing Lance Namespace conventions (path prefixes, tag enums, operationId casing, security, error shape). |
-| `plans/lancedb-plans-pricing.yml` | API Commons Plans 0.1 capturing OSS, Cloud Free, Cloud Business, and Enterprise tiers. |
-| `rate-limits/lancedb-rate-limits.yml` | API Commons Rate Limits 0.1 capturing the per-tier rate posture. |
-| `finops/lancedb-finops.yml` | FinOps Framework / FOCUS 1.1 mapping of LanceDB's billable entities and cost allocation dimensions. |
+| Discoverability | 64.3 |
+| Contract quality | 50.7 |
+| Contract governance | 27.3 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 40.5 |
+| Access clarity | 15.8 |
 
-## Quick links
+**Agent readiness 24.1** — agent-aware
 
-- Website — [lancedb.com](https://lancedb.com/)
-- Documentation — [docs.lancedb.com](https://docs.lancedb.com/)
-- llms.txt — [docs.lancedb.com/llms.txt](https://docs.lancedb.com/llms.txt)
-- GitHub (product) — [github.com/lancedb](https://github.com/lancedb)
-- GitHub (format) — [github.com/lance-format](https://github.com/lance-format)
-- Trust Center — [trust.lancedb.com](https://trust.lancedb.com/)
-- Discord — [discord.com/invite/G5DcmnZWKB](https://discord.com/invite/G5DcmnZWKB)
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
 
-## Notes
+**Regulatory alignment 29.1** — AI & Biometrics
 
-- The Lance Namespace OpenAPI is authoritative; this repo mirrors the upstream `docs/src/spec.yaml` and references it as the canonical contract.
-- Plans, rate limits, and FinOps reflect the public posture (free tier + contact-sales business + annual enterprise contract). Where LanceDB does not publish list prices, the value is marked `contact-sales`.
-- LanceDB is headquartered in San Francisco. Series A ($30M) closed in 2025.
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/lancedb/](https://apis.io/providers/lancedb/).
 
-## License
+## How this profile is made
 
-Catalog files in this repository are CC BY 4.0 unless noted otherwise. The mirrored Lance Namespace OpenAPI spec retains its upstream Apache 2.0 license header.
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for LanceDB: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/lancedb/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
